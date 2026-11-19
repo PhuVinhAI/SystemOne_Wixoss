@@ -1,0 +1,128 @@
+[
+  {
+    "id": "WXDi-D01-001",
+    "name": "At =Noll=, the Opened Gate",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-002",
+    "name": "At =Ett=, the Opened Gate",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-003",
+    "name": "At =Tva=, the Opened Gate",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-004",
+    "name": "At =Tre=, the Opened Gate",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-005",
+    "name": "Tawil =Noll=, Awakened One",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-006",
+    "name": "Tawil =Screech=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-007",
+    "name": "Tawil =Rainbow=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-008",
+    "name": "Umr =Noll=, Key to Salvation",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-009",
+    "name": "Umr =Draw=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-010",
+    "name": "Umr =Down=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-011",
+    "name": "Harmonic Call",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D01-012",
+    "name": "Camelopar, Natural Planet",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-013",
+    "name": "Sen no Rikyu, Jade General",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-014",
+    "name": "Zwei =Slow Loris=",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-015",
+    "name": "Tobiel, Full Armed",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-016",
+    "name": "Assylen, Natural Crystal",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-017",
+    "name": "Atalanta, Jade Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-018",
+    "name": "Water Buffalo, Phantom Aquatic Beast",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-019",
+    "name": "Koalala, Phantom Terra Beast",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-020",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D01-021",
+    "name": "Polygenesis",
+    "type": "SPELL",
+    "count": 4
+  }
+]
