@@ -421,9 +421,9 @@ export async function verifyOperation(
     ? state.frames.findLast(({ source }) => source === args["card"]) : undefined;
   if (sourceFrame || (top && closesFrame)) {
     const affected = sourceFrame ? [sourceFrame] : state.frames.slice(-(operation === "closeFrames" ? Number(args["count"]) : 1));
-    const records = affected.map(({ kind, source, step }) => {
+    const records = affected.map(({ kind, actor, source, step, declaration }) => {
       const printed = source && deck.cards[state.cards[source]!.definition];
-      return { kind, step, source, ...(printed ? { name: printed.name, text: kind === "burst" ? printed.burst : printed.text } : {}) };
+      return { kind, actor, step, source, declaration, ...(printed ? { name: printed.name, text: kind === "burst" ? printed.burst : printed.text } : {}) };
     });
     const cleanupState = `FRAMES TO CHECK\n${JSON.stringify(records)}\n\nPROPOSED CLEANUP\n${meaning}\n\n${snapshot}`;
     const questions: Parameters<DrexClient["decideBatch"]>[1] = {

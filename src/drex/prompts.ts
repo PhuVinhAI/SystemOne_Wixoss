@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v9";
+export const promptVersion = "wixoss-table-v10";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -35,7 +35,7 @@ export const refreshFocus = `Refresh can span several operations. Read the top r
 
 export const selectOperationPrompt = "Which physical operation addresses the earliest still-unresolved requirement? Compare the active source's full printed text and any active abilities with the declaration, frame and committed operations. Continue remaining clauses after a choice, and clean up only after all applicable clauses have been handled. Choose one operation.";
 
-export const auditCompletionPrompt = "Classify the first outstanding obligation before the proposed cleanup. Examine the full source text, including every instruction in a compound sentence. For each required result, find its committed operation or identify the current evidence that made it inapplicable, impossible or legally declined. An earlier result cannot satisfy a later result affecting a different card or value. Use incomplete evidence only when the records leave completion undetermined.";
+export const auditCompletionPrompt = "Classify the first outstanding obligation belonging to FRAMES TO CHECK that must finish before the proposed cleanup. Match each listed frame's actor, saved declaration and source text to its own committed results. Follow every instruction in a compound sentence. An earlier result cannot satisfy a later result affecting a different card or value. Account for a result skipped due to inapplicability, impossibility or a legal choice. Later phase work may remain after a completed frame closes. Use halt if the evidence leaves completion undetermined.";
 
 export const auditTransferPrompt = "Independently choose the destination zone required by the current instruction for these cards or pile positions. Resolve the active printed clause using the source, current decision and committed operations. Apply the rules-defined destination for the event. Choose none if these inputs should not move now.";
 
