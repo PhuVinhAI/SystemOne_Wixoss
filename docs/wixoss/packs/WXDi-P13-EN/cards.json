@@ -1,0 +1,770 @@
+[
+  {
+    "id": "WXDi-P13-001",
+    "number": "001",
+    "name": "Unrest☆UN☆REST!",
+    "type": "PIECE",
+    "color": "U",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P13-002",
+    "number": "002",
+    "name": "Instigate",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P13-003A",
+    "number": "003A",
+    "name": "Mysterious Rendezvous",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP,UR,SP"
+  },
+  {
+    "id": "WXDi-P13-003B",
+    "number": "003B",
+    "name": "Mayu, Unknown Miko",
+    "type": "LRIG",
+    "color": "WB",
+    "rarity": "PI,LRP,UR,SP"
+  },
+  {
+    "id": "WXDi-P13-004A",
+    "number": "004A",
+    "name": "Unknown",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P13-004B",
+    "number": "004B",
+    "name": "UNKNOWN - CODE - RU -",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P13-005",
+    "number": "005",
+    "name": "Brain Hearts",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P13-006",
+    "number": "006",
+    "name": "Remember Tempest, Miko of Fantasia",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P13-007",
+    "number": "007",
+    "name": "Hirana, a Step Towards the Check",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P13-008",
+    "number": "008",
+    "name": "Code Piruluk Ultimate",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P13-009",
+    "number": "009",
+    "name": "Midoriko, Dispersal Three",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P13-010",
+    "number": "010",
+    "name": "Nanashi, Part Three Calamity",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P13-011",
+    "number": "011",
+    "name": "Remember Fine, Miko of Fantasia",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-012",
+    "number": "012",
+    "name": "Remember Cloud, Miko of Fantasia",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-013",
+    "number": "013",
+    "name": "Remember Rain, Miko of Fantasia",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-014",
+    "number": "014",
+    "name": "Hirana, a Step Towards the Battle",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-015",
+    "number": "015",
+    "name": "Hirana, a Step Towards the Initiative",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-016",
+    "number": "016",
+    "name": "Hirana, a Step Towards the Slash",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-017",
+    "number": "017",
+    "name": "Code Piruluk Initiate",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-018",
+    "number": "018",
+    "name": "Code Piruluk Advance",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-019",
+    "number": "019",
+    "name": "Code Piruluk Decide",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-020",
+    "number": "020",
+    "name": "Midoriko, Spirit Zero",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-021",
+    "number": "021",
+    "name": "Midoriko, One - By - One",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-022",
+    "number": "022",
+    "name": "Midoriko, Two - By - Two",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-023",
+    "number": "023",
+    "name": "Nanashi, Part Zero Calamity",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-024",
+    "number": "024",
+    "name": "Nanashi, Part One Calamity",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-025",
+    "number": "025",
+    "name": "Nanashi, Part Two Calamity",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P13-026",
+    "number": "026",
+    "name": "Sashe Nouvelle, Eternal Emissary",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-027",
+    "number": "027",
+    "name": "Sashe Undulation",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-028",
+    "number": "028",
+    "name": "Sashe Jiggle",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-029",
+    "number": "029",
+    "name": "Sashe Baladi",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-030",
+    "number": "030",
+    "name": "Sashe Isolate",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-031",
+    "number": "031",
+    "name": "Sashe Snake",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-032",
+    "number": "032",
+    "name": "Iona, Zero/Maiden",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-033",
+    "number": "033",
+    "name": "Iona Shouty",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-034",
+    "number": "034",
+    "name": "Iona Eibon",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-035",
+    "number": "035",
+    "name": "Iona Full Moon",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-036",
+    "number": "036",
+    "name": "Iona the Beam",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-037",
+    "number": "037",
+    "name": "Iona Dark Matter",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-038",
+    "number": "038",
+    "name": "Myu=Hatch",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-039",
+    "number": "039",
+    "name": "Myu - Musk",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-040",
+    "number": "040",
+    "name": "Myu - Black Swallowtail",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-041",
+    "number": "041",
+    "name": "Myu - Purple Emperor",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-042",
+    "number": "042",
+    "name": "Myu - Large Map",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-043",
+    "number": "043",
+    "name": "Myu - Blue Admiral",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-044",
+    "number": "044",
+    "name": "Highty//Dissona, Blessed Evil Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-045",
+    "number": "045",
+    "name": "Akino//Dissona, Aquatic Phantom Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-046",
+    "number": "046",
+    "name": "Sadistal//Dissona, Planet Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-047",
+    "number": "047",
+    "name": "LOVIT//Dissona, Phantom Beast Deity",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-048",
+    "number": "048",
+    "name": "Apex//Dissona, Crimson Angel Queen",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-049",
+    "number": "049",
+    "name": "Aya//Dissona, Master Trickster",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-050",
+    "number": "050",
+    "name": "Save//Dissona, Code: Heart",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-051",
+    "number": "051",
+    "name": "Ann//Dissona, Jade Beauty Queen",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-052",
+    "number": "052",
+    "name": "Lupal//Dissona, Phantom Beast Deity",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-053",
+    "number": "053",
+    "name": "Alfou//Dissona, Doomed Evil Queen",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-054",
+    "number": "054",
+    "name": "Guzuko//Dissona, Tragic Party Queen",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-055",
+    "number": "055",
+    "name": "Hedonym//Dissona, Bacteria Queen",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P13-056",
+    "number": "056",
+    "name": "LION//Dissona, Code: Art",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-057",
+    "number": "057",
+    "name": "Broom//Dissona, Code: Anti",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-058",
+    "number": "058",
+    "name": "Mokumoren//Dissona, Phantom Spirit",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-059",
+    "number": "059",
+    "name": "Raguel//Dissona, Blessed Angel",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-060",
+    "number": "060",
+    "name": "Cometty//Dissona, Natural Planet",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-061",
+    "number": "061",
+    "name": "Rhythmic Fortune",
+    "type": "SPELL",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-062",
+    "number": "062",
+    "name": "Carnival//Dissona, Natural Planet",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-063",
+    "number": "063",
+    "name": "Chupasaburo//Dissona, Phantom Spirit",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-064",
+    "number": "064",
+    "name": "Qilin//Dissona, Phantom Dragon",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-065",
+    "number": "065",
+    "name": "Ex//Dissona, Phantom Spirit",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-066",
+    "number": "066",
+    "name": "Rb//Dissona, Natural Element",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-067",
+    "number": "067",
+    "name": "Atlas//Dissona, Phantom Insect",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-068",
+    "number": "068",
+    "name": "Flamboyant Tactics",
+    "type": "SPELL",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-069",
+    "number": "069",
+    "name": "Futase//Dissona, Azure Beauty",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-070",
+    "number": "070",
+    "name": "Rei//Dissona, Natural Crystal",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-071",
+    "number": "071",
+    "name": "Ohkaso//Dissona, Code: Maze",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-072",
+    "number": "072",
+    "name": "Milulun//Dissona, Natural Element",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-073",
+    "number": "073",
+    "name": "Yubanda//Dissona, Azure Angel",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-074",
+    "number": "074",
+    "name": "Coffee//Dissona, Code: Eat",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-075",
+    "number": "075",
+    "name": "DEEP FREEZE",
+    "type": "SPELL",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-076",
+    "number": "076",
+    "name": "Mama//Dissona, Jade Mind",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-077",
+    "number": "077",
+    "name": "Paching//Dissona, Small Cannon",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-078",
+    "number": "078",
+    "name": "Konotoxin//Dissona Type: Eins",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-079",
+    "number": "079",
+    "name": "WOLF//Dissona, Erupting Cannon",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-080",
+    "number": "080",
+    "name": "Shingen//Dissona, Jade General",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-081",
+    "number": "081",
+    "name": "Hellsgate//Dissona, Jade Evil",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-082",
+    "number": "082",
+    "name": "Soulspear",
+    "type": "SPELL",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-083",
+    "number": "083",
+    "name": "Deus//Dissona, Lightly Armed",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-084",
+    "number": "084",
+    "name": "Mikazuki//Dissona, Natural Planet",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-085",
+    "number": "085",
+    "name": "Miyama//Dissona, Phantom Insect",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-086",
+    "number": "086",
+    "name": "Machina//Dissona, Code: Ride",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-087",
+    "number": "087",
+    "name": "Carcharo//Dissona, Phantom Dragon",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-088",
+    "number": "088",
+    "name": "Dig - Dig",
+    "type": "SPELL",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-089",
+    "number": "089",
+    "name": "Mugen//Dissona",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P13-090",
+    "number": "090",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P13-091",
+    "number": "091",
+    "name": "Deneblog",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P13-CO-01",
+    "number": "CO-01",
+    "name": "COIN",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "CO,CO(P)"
+  },
+  {
+    "id": "WXDi-P13-TK01A",
+    "number": "TK01A",
+    "name": "Servant ZERO",
+    "type": "SIGNI CRAFT",
+    "color": "C",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-P13-TK01B",
+    "number": "TK01B",
+    "name": "【Virus】",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  }
+]

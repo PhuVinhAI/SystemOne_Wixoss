@@ -1,0 +1,770 @@
+[
+  {
+    "id": "WXDi-P12-001",
+    "number": "001",
+    "name": "Sunspot Memory",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P12-002",
+    "number": "002",
+    "name": "Unbalanced Dance",
+    "type": "PIECE",
+    "color": "R",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P12-003",
+    "number": "003",
+    "name": "Lancer in the Dark",
+    "type": "PIECE",
+    "color": "G",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P12-004",
+    "number": "004",
+    "name": "Dissonance",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P12-005",
+    "number": "005",
+    "name": "Unknown Memory",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P12-006",
+    "number": "006",
+    "name": "Yuki, Savage Miko",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P12-007",
+    "number": "007",
+    "name": "Hanayo Tragic, Flame Dance",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P12-008",
+    "number": "008",
+    "name": "Mikomiko☆Three - Three Mix - Mix",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P12-009",
+    "number": "009",
+    "name": "Mel - Lady of the Camellias",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P12-010",
+    "number": "010",
+    "name": "Tamayorihime, Enduring Darkness Miko",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P12-011",
+    "number": "011",
+    "name": "Yuki, Hundred Calamity Miko",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-012",
+    "number": "012",
+    "name": "Yuki, Pure and Impure Miko",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-013",
+    "number": "013",
+    "name": "Yuki, Authentic Miko",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-014",
+    "number": "014",
+    "name": "Hanayo, Daybreak",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-015",
+    "number": "015",
+    "name": "Hanayo, Strange Land Fairy",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-016",
+    "number": "016",
+    "name": "Hanayo Mimic, Ominous Disaster",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-017",
+    "number": "017",
+    "name": "Mikomiko☆Zero - Zero",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-018",
+    "number": "018",
+    "name": "Mikomiko☆One - Mix",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-019",
+    "number": "019",
+    "name": "Mikomiko☆Two Mix - Mix",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-020",
+    "number": "020",
+    "name": "Mel - Cherry Blossom",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-021",
+    "number": "021",
+    "name": "Mel - Evergreen",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-022",
+    "number": "022",
+    "name": "Mel - Snow Country",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-023",
+    "number": "023",
+    "name": "Tamayorihime, Discordant Miko",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-024",
+    "number": "024",
+    "name": "Tamayorihime, Unequal Miko",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-025",
+    "number": "025",
+    "name": "Tamayorihime, Displeased Miko",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P12-026",
+    "number": "026",
+    "name": "Layla =Neutral=",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-027",
+    "number": "027",
+    "name": "Layla the Vanish",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-028",
+    "number": "028",
+    "name": "Layla the Fang",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-029",
+    "number": "029",
+    "name": "Layla the Roaring Vigor",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-030",
+    "number": "030",
+    "name": "Layla the Crack",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-031",
+    "number": "031",
+    "name": "Layla the Ranbu",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-032",
+    "number": "032",
+    "name": "Eldora × Mark ０",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-033",
+    "number": "033",
+    "name": "Eldora! Exclamation!",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-034",
+    "number": "034",
+    "name": "Eldora! Searcher!",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-035",
+    "number": "035",
+    "name": "Eldora! Burst Rush!",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-036",
+    "number": "036",
+    "name": "Eldora! On Stage!",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-037",
+    "number": "037",
+    "name": "Eldora! Stone!",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-038",
+    "number": "038",
+    "name": "Aiyai ★ Bet",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-039",
+    "number": "039",
+    "name": "Aiyai, Miracle Rolling",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-040",
+    "number": "040",
+    "name": "Aiyai, Kinetic Card",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-041",
+    "number": "041",
+    "name": "Aiyai, Nin - Nin",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-042",
+    "number": "042",
+    "name": "Aiyai, Hide and Attack",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-043",
+    "number": "043",
+    "name": "Aiyai, Breaking",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P12-044",
+    "number": "044",
+    "name": "Dona//Dissona, Phantom Spirit Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-045",
+    "number": "045",
+    "name": "Connect//Dissona, Code: Labyrinth",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-046",
+    "number": "046",
+    "name": "Yuzuki//Dissona, Dragon Queen",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-047",
+    "number": "047",
+    "name": "SeekLove//Dissona, Crystal Brilliance",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-048",
+    "number": "048",
+    "name": "Allos Piruluk//Dissona, Giant Insect",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-049",
+    "number": "049",
+    "name": "Tamago//Dissona, Planet Queen",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-050",
+    "number": "050",
+    "name": "Miko Fan//Dissona, Bacteria Queen",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-051",
+    "number": "051",
+    "name": "Bang//Dissona, Jade Evil Queen",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-052",
+    "number": "052",
+    "name": "BFF//Dissona, Code: Order",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-053",
+    "number": "053",
+    "name": "Umr//Dissona, Code: Ancients",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-054",
+    "number": "054",
+    "name": "Destro//Dissona, Full Armed",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-055",
+    "number": "055",
+    "name": "Urith//Dissona, Lucent Evil Queen",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P12-056",
+    "number": "056",
+    "name": "Tawil//Dissona, Blessed Angel",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-057",
+    "number": "057",
+    "name": "Nova//Dissona, Natural Planet",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-058",
+    "number": "058",
+    "name": "Pale Laby//Dissona, Code: Maze",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-059",
+    "number": "059",
+    "name": "Yukayuka//Dissona, Medium Trickster",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-060",
+    "number": "060",
+    "name": "Guillotine//Dissona, High Armed",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-061",
+    "number": "061",
+    "name": "Yukime//Dissona, Blessed General",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-062",
+    "number": "062",
+    "name": "New Problem",
+    "type": "SPELL",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-063",
+    "number": "063",
+    "name": "Ril//Dissona, Crimson General",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-064",
+    "number": "064",
+    "name": "Ano Uzu//Dissona, Crimson Angel",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-065",
+    "number": "065",
+    "name": "Firecracker//Dissona, Small Cannon",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-066",
+    "number": "066",
+    "name": "Lala Ru//Dissona, Code: Art",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-067",
+    "number": "067",
+    "name": "Komainu//Dissona, Phantom Beast",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-068",
+    "number": "068",
+    "name": "Rickshaw//Dissona, Code: Ride",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-069",
+    "number": "069",
+    "name": "Opening Signal",
+    "type": "SPELL",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-070",
+    "number": "070",
+    "name": "Madoka//Dissona, Code: Anti",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-071",
+    "number": "071",
+    "name": "Matcha Frappe//Dissona, Code: Eat",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-072",
+    "number": "072",
+    "name": "Pond Turtle//Dissona, Phantom Beast",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-073",
+    "number": "073",
+    "name": "Soui//Dissona, Azure General",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-074",
+    "number": "074",
+    "name": "Hope Dia//Dissona, Natural Crystal",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-075",
+    "number": "075",
+    "name": "EXTRA",
+    "type": "SPELL",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-076",
+    "number": "076",
+    "name": "Sanga//Dissona Type: Eins",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-077",
+    "number": "077",
+    "name": "Moving Picture//Dissona, Jade Beauty",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-078",
+    "number": "078",
+    "name": "Wawolf//Dissona, Phantom Terra Beast",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-079",
+    "number": "079",
+    "name": "At//Dissona, Code: Maze",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-080",
+    "number": "080",
+    "name": "Ivy//Dissona, Natural Plant",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-081",
+    "number": "081",
+    "name": "Mad Dogma//Dissona, Jade Mind",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-082",
+    "number": "082",
+    "name": "Emergence",
+    "type": "SPELL",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-083",
+    "number": "083",
+    "name": "Muzica//Dissona, Code: Maze",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-084",
+    "number": "084",
+    "name": "Mahomaho//Dissona, Natural Element",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-085",
+    "number": "085",
+    "name": "Monkey's Paw//Dissona, Code: Anti",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-086",
+    "number": "086",
+    "name": "Hanare//Dissona Type: Drei",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-087",
+    "number": "087",
+    "name": "Kagomeka//Dissona, Mimicry Play",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-088",
+    "number": "088",
+    "name": "Oryzill//Dissona, Natural Bacteria",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P12-089",
+    "number": "089",
+    "name": "Black Aura",
+    "type": "SPELL",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-090",
+    "number": "090",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P12-CO-01",
+    "number": "CO-01",
+    "name": "COIN",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-P12-SP",
+    "number": "SP",
+    "name": "Tama",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-P12-TK01A",
+    "number": "TK01A",
+    "name": "【LRIG Barrier】",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-P12-TK01B",
+    "number": "TK01B",
+    "name": "【Mikomiko Defense Squad】",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-P12-TK02A",
+    "number": "TK02A",
+    "name": "【SIGNI Barrier】",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-P12-TK02B",
+    "number": "TK02B",
+    "name": "【Mikomiko Defense Squad】",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  }
+]

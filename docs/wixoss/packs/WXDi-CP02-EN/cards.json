@@ -1,0 +1,914 @@
+[
+  {
+    "id": "WXDi-CP02-001",
+    "number": "001",
+    "name": "Tea Party",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP02-002",
+    "number": "002",
+    "name": "Seminar",
+    "type": "PIECE",
+    "color": "U",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP02-003",
+    "number": "003",
+    "name": "Masked Swimsuit Gang",
+    "type": "PIECE",
+    "color": "G",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP02-004",
+    "number": "004",
+    "name": "Gehenna Prefect Team",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP02-005",
+    "number": "005",
+    "name": "General Student Council",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP02-006",
+    "number": "006",
+    "name": "Kronos School of Journalism",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP02-007",
+    "number": "007",
+    "name": "Shirasu Azusa [intulit mortem]",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP02-008",
+    "number": "008",
+    "name": "Mikamo Neru [You Got a Death Wish or Somethin'?]",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP02-009",
+    "number": "009",
+    "name": "Sunaookami Shiroko [Drone Support]",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP02-010",
+    "number": "010",
+    "name": "Sorasaki Hina [Denouement: Ishbosheth]",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP02-011",
+    "number": "011",
+    "name": "Shirasu Azusa",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-012",
+    "number": "012",
+    "name": "Shirasu Azusa [Kick 'em While They're Down]",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-013",
+    "number": "013",
+    "name": "Shirasu Azusa [sagitta mortis]",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-014",
+    "number": "014",
+    "name": "Mikamo Neru",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-015",
+    "number": "015",
+    "name": "Mikamo Neru [Enhanced Rage]",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-016",
+    "number": "016",
+    "name": "Mikamo Neru [Cruisin' for a Bruisin'!]",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-017",
+    "number": "017",
+    "name": "Sunaookami Shiroko",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-018",
+    "number": "018",
+    "name": "Sunaookami Shiroko [Very Rapid Fire]",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-019",
+    "number": "019",
+    "name": "Sunaookami Shiroko [Grenade Lob]",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-020",
+    "number": "020",
+    "name": "Sorasaki Hina",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-021",
+    "number": "021",
+    "name": "Sorasaki Hina [Out-and-Out]",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-022",
+    "number": "022",
+    "name": "Sorasaki Hina [Lock & Load]",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP02-023",
+    "number": "023",
+    "name": "Make-Up Work Club",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-024",
+    "number": "024",
+    "name": "Urawa Hanako",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-025",
+    "number": "025",
+    "name": "Ajitani Hifumi",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-026",
+    "number": "026",
+    "name": "Urawa Hanako [Want to Break the Rules?]",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-027",
+    "number": "027",
+    "name": "Urawa Hanako (Swimsuit)",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-028",
+    "number": "028",
+    "name": "Ajitani Hifumi [Help Me, Peroro!]",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-029",
+    "number": "029",
+    "name": "Ajitani Hifumi (Swimsuit)",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-030",
+    "number": "030",
+    "name": "C＆C",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-031",
+    "number": "031",
+    "name": "Ichinose Asuna",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-032",
+    "number": "032",
+    "name": "Kakudate Karin",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-033",
+    "number": "033",
+    "name": "Ichinose Asuna [On My Way!]",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-034",
+    "number": "034",
+    "name": "Ichinose Asuna (Bunny)",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-035",
+    "number": "035",
+    "name": "Kakudate Karin [Target Removal]",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-036",
+    "number": "036",
+    "name": "Kakudate Karin (Bunny)",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-037",
+    "number": "037",
+    "name": "Foreclosure Task Force",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-038",
+    "number": "038",
+    "name": "Okusora Ayane",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-039",
+    "number": "039",
+    "name": "Izayoi Nonomi",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-040",
+    "number": "040",
+    "name": "Okusora Ayane [Special Delivery: Combat Supplies]",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-041",
+    "number": "041",
+    "name": "Okusora Ayane (Swimsuit)",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-042",
+    "number": "042",
+    "name": "Izayoi Nonomi [Punishment Time!]",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-043",
+    "number": "043",
+    "name": "Izayoi Nonomi (Swimsuit)",
+    "type": "ASSIST LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-044",
+    "number": "044",
+    "name": "Prefect Team",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-045",
+    "number": "045",
+    "name": "Shiromi Iori",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-046",
+    "number": "046",
+    "name": "Hinomiya Chinatsu",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-047",
+    "number": "047",
+    "name": "Shiromi Iori [Major Roundup]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-048",
+    "number": "048",
+    "name": "Shiromi Iori (Swimsuit)",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-049",
+    "number": "049",
+    "name": "Hinomiya Chinatsu [Tactical First Aid]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-050",
+    "number": "050",
+    "name": "Hinomiya Chinatsu (Hot Spring)",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP02-051",
+    "number": "051",
+    "name": "Utazumi Sakurako",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-052",
+    "number": "052",
+    "name": "Misono Mika",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-053",
+    "number": "053",
+    "name": "Aomori Mine",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-054",
+    "number": "054",
+    "name": "Tendou Aris",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-055",
+    "number": "055",
+    "name": "Nekozuka Hibiki",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-056",
+    "number": "056",
+    "name": "Hayase Yuuka",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-057",
+    "number": "057",
+    "name": "Kuda Izuna",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-058",
+    "number": "058",
+    "name": "Takanashi Hoshino",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-059",
+    "number": "059",
+    "name": "Kosaka Wakamo",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-060",
+    "number": "060",
+    "name": "Rikuhachima Aru",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-061",
+    "number": "061",
+    "name": "Natsume Iroha",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-062",
+    "number": "062",
+    "name": "Kurodate Haruna",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP02-063",
+    "number": "063",
+    "name": "Shimoe Koharu",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-064",
+    "number": "064",
+    "name": "Morizuki Suzumi",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-065",
+    "number": "065",
+    "name": "Sumi Serina",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-066",
+    "number": "066",
+    "name": "Shizuyama Mashiro",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-067",
+    "number": "067",
+    "name": "Iochi Mari",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-068",
+    "number": "068",
+    "name": "Kozeki Ui",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-069",
+    "number": "069",
+    "name": "Kyoyama Kazusa",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-070",
+    "number": "070",
+    "name": "Kirifuji Nagisa",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-071",
+    "number": "071",
+    "name": "Hanekawa Hasumi",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-072",
+    "number": "072",
+    "name": "Kenzaki Tsurugi",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-073",
+    "number": "073",
+    "name": "Murokasa Akane",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-074",
+    "number": "074",
+    "name": "Otose Kotama",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-075",
+    "number": "075",
+    "name": "Kurosaki Koyuki",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-076",
+    "number": "076",
+    "name": "Kagami Chihiro",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-077",
+    "number": "077",
+    "name": "Hanaoka Yuzu",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-078",
+    "number": "078",
+    "name": "Asuma Toki",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-079",
+    "number": "079",
+    "name": "Akeboshi Himari",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-080",
+    "number": "080",
+    "name": "Saiba Momoi",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-081",
+    "number": "081",
+    "name": "Saiba Midori",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-082",
+    "number": "082",
+    "name": "Ushio Noa",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-083",
+    "number": "083",
+    "name": "Isami Kaede",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-084",
+    "number": "084",
+    "name": "Ono Tsukuyo",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-085",
+    "number": "085",
+    "name": "Asahina Pina",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-086",
+    "number": "086",
+    "name": "Chidori Michiru",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-087",
+    "number": "087",
+    "name": "Mizuha Mimori",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-088",
+    "number": "088",
+    "name": "Kawawa Shizuko",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-089",
+    "number": "089",
+    "name": "Kuromi Serika",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-090",
+    "number": "090",
+    "name": "Waraku Chise",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-091",
+    "number": "091",
+    "name": "Kasuga Tsubaki",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-092",
+    "number": "092",
+    "name": "Kuwakami Kaho",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-093",
+    "number": "093",
+    "name": "Shishidou Izumi",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-094",
+    "number": "094",
+    "name": "Onikata Kayoko",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-095",
+    "number": "095",
+    "name": "Ushimaki Juri",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-096",
+    "number": "096",
+    "name": "Himuro Sena",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-097",
+    "number": "097",
+    "name": "Igusa Haruka",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-098",
+    "number": "098",
+    "name": "Wanibuchi Akari",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-099",
+    "number": "099",
+    "name": "Akashi Junko",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-100",
+    "number": "100",
+    "name": "Aikiyo Fuuka",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-101",
+    "number": "101",
+    "name": "Asagi Mutsuki",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-102",
+    "number": "102",
+    "name": "Amau Ako",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP02-103",
+    "number": "103",
+    "name": "Activating the Story",
+    "type": "SPELL",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-104",
+    "number": "104",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP02-SP01",
+    "number": "SP01",
+    "name": "Shirasu Azusa",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP02-SP02",
+    "number": "SP02",
+    "name": "Mikamo Neru",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP02-SP03",
+    "number": "SP03",
+    "name": "Sunaookami Shiroko",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP02-SP04",
+    "number": "SP04",
+    "name": "Sorasaki Hina",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP02-TK01A",
+    "number": "TK01A",
+    "name": "Peroro plush",
+    "type": "SIGNI CRAFT",
+    "color": "W",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP02-TK01B",
+    "number": "TK01B",
+    "name": "【SIGNI Barrier】",
+    "type": "—",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP02-TK02A",
+    "number": "TK02A",
+    "name": "Water Cloud",
+    "type": "SIGNI CRAFT",
+    "color": "G",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP02-TK02B",
+    "number": "TK02B",
+    "name": "{1/Game} Already Used",
+    "type": "—",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP02-TK03A",
+    "number": "TK03A",
+    "name": "Toramaru",
+    "type": "SIGNI CRAFT",
+    "color": "B",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP02-TK03B",
+    "number": "TK03B",
+    "name": "Crusadie",
+    "type": "SIGNI CRAFT",
+    "color": "W",
+    "rarity": "TK,TK(P)"
+  }
+]

@@ -1,0 +1,682 @@
+[
+  {
+    "id": "WXDi-P10-001",
+    "number": "001",
+    "name": "March of the Toy Soldiers",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P10-002",
+    "number": "002",
+    "name": "Afternoon Tea Show",
+    "type": "PIECE",
+    "color": "G",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P10-003",
+    "number": "003",
+    "name": "Like Friends",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P10-004",
+    "number": "004",
+    "name": "Let's Begin Our Idol Life!",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P10-005",
+    "number": "005",
+    "name": "Remember Dinner, Miko of Feasting",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P10-006",
+    "number": "006",
+    "name": "Hanayo Three, Blazing Banquet",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P10-007",
+    "number": "007",
+    "name": "Milulun Setsuna",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P10-008",
+    "number": "008",
+    "name": "Midoriko, Third Entry",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P10-009",
+    "number": "009",
+    "name": "Hanare, Mourner of Seizure",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P10-010",
+    "number": "010",
+    "name": "Remember, Miko of Feasting",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-011",
+    "number": "011",
+    "name": "Remember Break, Miko of Feasting",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-012",
+    "number": "012",
+    "name": "Remember Lunch, Miko of Feasting",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-013",
+    "number": "013",
+    "name": "Hanayo One",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-014",
+    "number": "014",
+    "name": "Hanayo Two",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-015",
+    "number": "015",
+    "name": "Milulun Nought",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-016",
+    "number": "016",
+    "name": "Milulun Nano",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-017",
+    "number": "017",
+    "name": "Milulun Pico",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-018",
+    "number": "018",
+    "name": "Midoriko, First Girl",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-019",
+    "number": "019",
+    "name": "Midoriko, Second Girl",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-020",
+    "number": "020",
+    "name": "Hanare, Mourner",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-021",
+    "number": "021",
+    "name": "Hanare, Mourner of Regrets",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-022",
+    "number": "022",
+    "name": "Hanare, Mourner of Dreams",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P10-023",
+    "number": "023",
+    "name": "Yuzuki Garnet",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-024",
+    "number": "024",
+    "name": "Yuzuki Ruby",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-025",
+    "number": "025",
+    "name": "Yuzuki Red Beryl",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-026",
+    "number": "026",
+    "name": "Yuzuki Andesine",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-027",
+    "number": "027",
+    "name": "Yuzuki Rubellite",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-028",
+    "number": "028",
+    "name": "Urith Scare",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-029",
+    "number": "029",
+    "name": "Urith Mad",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-030",
+    "number": "030",
+    "name": "Urith Aura",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-031",
+    "number": "031",
+    "name": "Urith Bloody",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-032",
+    "number": "032",
+    "name": "Urith Afflict",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P10-033",
+    "number": "033",
+    "name": "Manaka Laala, Pripara Idol",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-034",
+    "number": "034",
+    "name": "Yuki//Memoria, Natural Plant Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-035",
+    "number": "035",
+    "name": "Siren, Aquatic Phantom Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-036",
+    "number": "036",
+    "name": "Andromeda, Galactic Queen",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-037",
+    "number": "037",
+    "name": "Orochi, Phantom Dragon Diva",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-038",
+    "number": "038",
+    "name": "Shikyoin Hibiki, Pripara Idol",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-039",
+    "number": "039",
+    "name": "Rich Racer, Azure Evil Queen",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-040",
+    "number": "040",
+    "name": "Eldora//Memoria, Code: Order",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-041",
+    "number": "041",
+    "name": "Tanabata, Natural Plant Queen",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-042",
+    "number": "042",
+    "name": "Piruluk W//Memoria, Code: Heart",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-043",
+    "number": "043",
+    "name": "Myu//Memoria, Galactic Queen",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-044",
+    "number": "044",
+    "name": "Muzica//Memoria, Code: Labyrinth",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P10-045",
+    "number": "045",
+    "name": "Hojo Sophy, Pripara Idol",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-046",
+    "number": "046",
+    "name": "Artemis, Blessed Angel",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-047",
+    "number": "047",
+    "name": "Tama//Memoria, Great Knowledge Play",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-048",
+    "number": "048",
+    "name": "Minami Mirei, Pripara Idol",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-049",
+    "number": "049",
+    "name": "Kokkuri-san, Phantom Spirit",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-050",
+    "number": "050",
+    "name": "Call Out",
+    "type": "SPELL",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-051",
+    "number": "051",
+    "name": "Gaaruru, Pripara Idol",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-052",
+    "number": "052",
+    "name": "Ril//Memoria, Lightly Armed",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-053",
+    "number": "053",
+    "name": "H-Ot Carpet, Code: Art",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-054",
+    "number": "054",
+    "name": "Shiratama Mikan, Pripara Idol",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-055",
+    "number": "055",
+    "name": "Promeus, Crimson Angel",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-056",
+    "number": "056",
+    "name": "Kurosu Aroma, Pripara Idol",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-057",
+    "number": "057",
+    "name": "Vulcanic Scythe",
+    "type": "SPELL",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-058",
+    "number": "058",
+    "name": "Midorikaze Fuwari, Pripara Idol",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-059",
+    "number": "059",
+    "name": "Saitou, Azure General",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-060",
+    "number": "060",
+    "name": "Madoka//Memoria, Code: Anti",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-061",
+    "number": "061",
+    "name": "Falulu, Pripara Idol",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-062",
+    "number": "062",
+    "name": "Allos Piruluk//Memoria, Azure Evil",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-063",
+    "number": "063",
+    "name": "INVESTIGATE",
+    "type": "SPELL",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-064",
+    "number": "064",
+    "name": "Taiyo Pepper, Pripara Idol",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-065",
+    "number": "065",
+    "name": "Mandragora, Jade Evil",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-066",
+    "number": "066",
+    "name": "Mel//Memoria, Natural Bacteria",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-067",
+    "number": "067",
+    "name": "Tsukikawa Chili, Pripara Idol",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-068",
+    "number": "068",
+    "name": "Sanga//Memoria Type: Zwei",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-069",
+    "number": "069",
+    "name": "Manaka Non, Pripara Idol",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-070",
+    "number": "070",
+    "name": "Bookmark",
+    "type": "SPELL",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-071",
+    "number": "071",
+    "name": "Reona West, Pripara Idol",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-072",
+    "number": "072",
+    "name": "Alfou//Memoria, Doomed Beauty",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-073",
+    "number": "073",
+    "name": "Guzuko//Memoria, Small Trickster",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-074",
+    "number": "074",
+    "name": "Dorothy West, Pripara Idol",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-075",
+    "number": "075",
+    "name": "Urith//Memoria, Phantom Dragon",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-076",
+    "number": "076",
+    "name": "Todo Sion, Pripara Idol",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P10-077",
+    "number": "077",
+    "name": "Welcome Back",
+    "type": "SPELL",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-078",
+    "number": "078",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P10-079",
+    "number": "079",
+    "name": "Hanayo, Zero",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-P10-080",
+    "number": "080",
+    "name": "Yuzuki Zero",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-P10-081",
+    "number": "081",
+    "name": "Midoriko, Battle Girl",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-P10-082",
+    "number": "082",
+    "name": "Urith, Enma",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-P10-1st01",
+    "number": "1st01",
+    "name": "Yukayuka",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "1st"
+  },
+  {
+    "id": "WXDi-P10-1st02",
+    "number": "1st02",
+    "name": "Mikomiko",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "1st"
+  },
+  {
+    "id": "WXDi-P10-1st03",
+    "number": "1st03",
+    "name": "Mahomaho",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "1st"
+  }
+]

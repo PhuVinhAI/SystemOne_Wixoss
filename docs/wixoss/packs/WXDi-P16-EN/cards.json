@@ -1,0 +1,778 @@
+[
+  {
+    "id": "WXDi-P16-001A",
+    "number": "001A",
+    "name": "NEXT GATE",
+    "type": "PIECE",
+    "color": "WB",
+    "rarity": "PI,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-001B",
+    "number": "001B",
+    "name": "Ut'ulls, Gate Overseer",
+    "type": "LRIG",
+    "color": "WB",
+    "rarity": "PI,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-002",
+    "number": "002",
+    "name": "D - (A)LIVE!!",
+    "type": "PIECE",
+    "color": "RWU",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P16-003",
+    "number": "003",
+    "name": "Pure White Barrier",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P16-004",
+    "number": "004",
+    "name": "Crimson Heat Ray",
+    "type": "PIECE",
+    "color": "R",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P16-005",
+    "number": "005",
+    "name": "Sparkling Blue",
+    "type": "PIECE",
+    "color": "U",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P16-006",
+    "number": "006",
+    "name": "Jade Cooking",
+    "type": "PIECE",
+    "color": "G",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P16-007",
+    "number": "007",
+    "name": "Black Surprise",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-P16-008",
+    "number": "008",
+    "name": "Tawil =Tre=, Gate Overseer",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-009",
+    "number": "009",
+    "name": "Gabriela, Guidance Gatherer",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-010",
+    "number": "010",
+    "name": "Azaela, Shining Beyond",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-011",
+    "number": "011",
+    "name": "Michaela, Beginning and End of Hope",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-012",
+    "number": "012",
+    "name": "At =Tre=, the Converged Gate",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-013",
+    "number": "013",
+    "name": "Umr =Tre=, Gate Overseer",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-P16-014",
+    "number": "014",
+    "name": "Tawil =Noll=, Ancient One",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-015",
+    "number": "015",
+    "name": "Tawil =Ett=, Ancient One",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-016",
+    "number": "016",
+    "name": "Tawil =Två=, Ancient One",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-017",
+    "number": "017",
+    "name": "Gabriela, Weaver of Will",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-018",
+    "number": "018",
+    "name": "Gabriela, Brimming with Ingenuity",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-019",
+    "number": "019",
+    "name": "Gabriela, Collector of Truth",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-020",
+    "number": "020",
+    "name": "Azaela, Towards the Future",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-021",
+    "number": "021",
+    "name": "Azaela, Lighting Up the Board",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-022",
+    "number": "022",
+    "name": "Azaela, Soaring Towards the Ideal",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-023",
+    "number": "023",
+    "name": "Michaela, Reality's Whereabouts",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-024",
+    "number": "024",
+    "name": "Michaela, Rekindled Strength",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-025",
+    "number": "025",
+    "name": "Michaela, Forefront Resolve",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-026",
+    "number": "026",
+    "name": "At =Noll=, the Opened Gate",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-027",
+    "number": "027",
+    "name": "At =Ett=, the Opened Gate",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-028",
+    "number": "028",
+    "name": "At =Två=, the Opened Gate",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-029",
+    "number": "029",
+    "name": "Umr =Noll=, Key to Creation",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-030",
+    "number": "030",
+    "name": "Umr =Ett=, Key to Chaos",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-031",
+    "number": "031",
+    "name": "Umr =Två=, Key to Chaos",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-P16-032",
+    "number": "032",
+    "name": "Gabriela, Majestic!!",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-033",
+    "number": "033",
+    "name": "Gabriela, Dazzling!!",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-034",
+    "number": "034",
+    "name": "Gabriela, Brilliant!!",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-035",
+    "number": "035",
+    "name": "Gabriela, Graceful!!",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-036",
+    "number": "036",
+    "name": "Gabriela, Bye - Bye!!",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-037",
+    "number": "037",
+    "name": "Azaela \"Arrow of Courage\"",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-038",
+    "number": "038",
+    "name": "Azaela \"Smiling Wings\"",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-039",
+    "number": "039",
+    "name": "Azaela \"Flames of Reversal\"",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-040",
+    "number": "040",
+    "name": "Azaela \"Fists of Victory\"",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-041",
+    "number": "041",
+    "name": "Azaela \"Invincible Shield\"",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-042",
+    "number": "042",
+    "name": "Michaela, Pierce",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-043",
+    "number": "043",
+    "name": "Michaela, Dance",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-044",
+    "number": "044",
+    "name": "Michaela, Fangs",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-045",
+    "number": "045",
+    "name": "Michaela, Kick",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-046",
+    "number": "046",
+    "name": "Michaela, Blade",
+    "type": "ASSIST LRIG",
+    "color": "U",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-P16-047",
+    "number": "047",
+    "name": "Sashe//Dissona, Galactic Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-048",
+    "number": "048",
+    "name": "Zeusias, Mugen Crimson Angel Queen",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-049",
+    "number": "049",
+    "name": "Heavy Machine Gun, Roaring Cannon",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-050",
+    "number": "050",
+    "name": "Milulun//Fesonne, Element Queen",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-051",
+    "number": "051",
+    "name": "Tobira, Code: Labyrinth",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-052",
+    "number": "052",
+    "name": "Grizzly, Phantom Beast Deity",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-053",
+    "number": "053",
+    "name": "Cao Cao, Doomed General Queen",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-054",
+    "number": "054",
+    "name": "Akino//THE DOOR, Aquatic Queen",
+    "type": "SIGNI",
+    "color": "WU",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-055",
+    "number": "055",
+    "name": "Yog - Niggura, Ultra Gate Angel Queen",
+    "type": "SIGNI",
+    "color": "WB",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-056",
+    "number": "056",
+    "name": "Piruluk//THE DOOR, Code: Heart",
+    "type": "SIGNI",
+    "color": "UR",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-057",
+    "number": "057",
+    "name": "Urith//THE DOOR, Doomed Jade Queen",
+    "type": "SIGNI",
+    "color": "BG",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-058",
+    "number": "058",
+    "name": "Spinner of Stories//Memoria",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-P16-059",
+    "number": "059",
+    "name": "Deus//THE DOOR, Lightly Armed",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-060",
+    "number": "060",
+    "name": "Nova//Fesonne, Natural Planet",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-061",
+    "number": "061",
+    "name": "Kamakama, Lightly Armed",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-062",
+    "number": "062",
+    "name": "Machina//THE DOOR, Code: Ride",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-063",
+    "number": "063",
+    "name": "Alto//Disonna, Erupting Cannon",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-064",
+    "number": "064",
+    "name": "Iona//THE DOOR, Code: Anti",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-065",
+    "number": "065",
+    "name": "Ril//Fesonne, Crimson General",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-066",
+    "number": "066",
+    "name": "Mule Hare, Phantom Terra Beast",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-067",
+    "number": "067",
+    "name": "Tama//THE DOOR, High Armed",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-068",
+    "number": "068",
+    "name": "Layla//Dissona, Code: Ride",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-069",
+    "number": "069",
+    "name": "Futase//THE DOOR, Azure Beauty",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-070",
+    "number": "070",
+    "name": "Sanga//THE DOOR, Type: Eins",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-071",
+    "number": "071",
+    "name": "Tamago//Fesonne, Natural Planet",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-072",
+    "number": "072",
+    "name": "Murmurn, Azure Evil",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-073",
+    "number": "073",
+    "name": "Ann//THE DOOR, Azure Beauty",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-074",
+    "number": "074",
+    "name": "Madoka//THE DOOR, Code: Anti",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-075",
+    "number": "075",
+    "name": "Eldora//Dissona, Aquatic Beast",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-076",
+    "number": "076",
+    "name": "Hanare//THE DOOR, Type: Eins",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-077",
+    "number": "077",
+    "name": "Bang//Fesonne, Jade Evil",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-078",
+    "number": "078",
+    "name": "Vidar, Jade Angel",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-079",
+    "number": "079",
+    "name": "Remember//THE DOOR, Natural Planet",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-080",
+    "number": "080",
+    "name": "Aiyai//Dissona, Second Play",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-081",
+    "number": "081",
+    "name": "Haity//THE DOOR, Doomed Evil",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-082",
+    "number": "082",
+    "name": "Guzuko//Fesonne, Strange Blood Play",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-083",
+    "number": "083",
+    "name": "Alfou//THE DOOR, Doomed Evil",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-084",
+    "number": "084",
+    "name": "Myu//Dissona, Phantom Insect",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-085",
+    "number": "085",
+    "name": "Pb, Natural Element",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-086",
+    "number": "086",
+    "name": "L - Mic, Code: Art",
+    "type": "SIGNI",
+    "color": "WRG",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-087",
+    "number": "087",
+    "name": "H - Mic, Natural Crystal",
+    "type": "SIGNI",
+    "color": "RWU",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-088",
+    "number": "088",
+    "name": "A - Arrow, Chaos Angel",
+    "type": "SIGNI",
+    "color": "RWU",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-089",
+    "number": "089",
+    "name": "E - Cutter, Code: Ride",
+    "type": "SIGNI",
+    "color": "RB",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-090",
+    "number": "090",
+    "name": "T - Cymbal, Natural Planet",
+    "type": "SIGNI",
+    "color": "UWG",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-091",
+    "number": "091",
+    "name": "M - Ruler, Natural Bacteria",
+    "type": "SIGNI",
+    "color": "UWB",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-092",
+    "number": "092",
+    "name": "Tru'nembra, Code: Maze",
+    "type": "SIGNI",
+    "color": "GRU",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-093",
+    "number": "093",
+    "name": "M - Ball, Type: Eins",
+    "type": "SIGNI",
+    "color": "BUG",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P16-094",
+    "number": "094",
+    "name": "Beacon to the Future",
+    "type": "SPELL",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-095",
+    "number": "095",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P16-TK01",
+    "number": "TK01",
+    "name": "Invincible Story",
+    "type": "PIECE CRAFT",
+    "color": "RWU",
+    "rarity": "TK"
+  }
+]

@@ -1,0 +1,722 @@
+[
+  {
+    "id": "WXDi-CP01-001",
+    "number": "001",
+    "name": "SELENE Girls' Academy, After School",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP01-002",
+    "number": "002",
+    "name": "SELENE Girls' Academy, Moon Night",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP01-003",
+    "number": "003",
+    "name": "OBSYDIA SALVAGE",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP01-004",
+    "number": "004",
+    "name": "LazuLight FLASH",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "PI,LRP"
+  },
+  {
+    "id": "WXDi-CP01-005",
+    "number": "005",
+    "name": "[Center] Lize, Level 3'",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP01-006",
+    "number": "006",
+    "name": "[Center] Ange, Level 3'",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP01-007",
+    "number": "007",
+    "name": "[Center] Toko, Level 3'",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP01-008",
+    "number": "008",
+    "name": "[Center] Mito, Level 3",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR,LRP,UR"
+  },
+  {
+    "id": "WXDi-CP01-009",
+    "number": "009",
+    "name": "Mito, Level 0",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-010",
+    "number": "010",
+    "name": "[Center] Mito, Level 1",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP01-011",
+    "number": "011",
+    "name": "[Center] Mito, Level 2",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "LC,LR"
+  },
+  {
+    "id": "WXDi-CP01-012",
+    "number": "012",
+    "name": "[Assist] Lize, Level 1 [Sword]",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-013",
+    "number": "013",
+    "name": "[Assist] Lize, Level 2 [Ice Wall]",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-014",
+    "number": "014",
+    "name": "[Assist] Ange, Level 1 [Love]",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-015",
+    "number": "015",
+    "name": "[Assist] Ange, Level 2 [Alchemy]",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-016",
+    "number": "016",
+    "name": "[Assist] Toko, Level 1 [Cudgel]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-017",
+    "number": "017",
+    "name": "[Assist] Toko, Level 2 [Ranbu]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-018",
+    "number": "018",
+    "name": "[Assist] Mito, Level 1 [Hatchet]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-019",
+    "number": "019",
+    "name": "[Assist] Mito, Level 1 [Mallet]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-020",
+    "number": "020",
+    "name": "[Assist] Mito, Level 1 [Sin]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-021",
+    "number": "021",
+    "name": "[Assist] Mito, Level 2 [Eternity]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-022",
+    "number": "022",
+    "name": "[Assist] Mito, Level 2 [Strike]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-023",
+    "number": "023",
+    "name": "[Assist] Mito, Level 2 [Concealment]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-024",
+    "number": "024",
+    "name": "[Assist] Mito, Level 2 [Diagnosis]",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "LC,LC(P)"
+  },
+  {
+    "id": "WXDi-CP01-025",
+    "number": "025",
+    "name": "Shiina Yuika, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-026",
+    "number": "026",
+    "name": "Amamiya Kokoro, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-027",
+    "number": "027",
+    "name": "Furen E Lustario, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-028",
+    "number": "028",
+    "name": "Nishizono Chigusa, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-029",
+    "number": "029",
+    "name": "Sasaki Saku, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-030",
+    "number": "030",
+    "name": "Takamiya Rion, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-031",
+    "number": "031",
+    "name": "Suo Sango, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-032",
+    "number": "032",
+    "name": "Lain Paterson, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR,SRP"
+  },
+  {
+    "id": "WXDi-CP01-033",
+    "number": "033",
+    "name": "Machita Chima, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-034",
+    "number": "034",
+    "name": "Sorahoshi Kirame, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-035",
+    "number": "035",
+    "name": "Asahina Akane, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP01-036",
+    "number": "036",
+    "name": "Elira Pendora, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P),ENR"
+  },
+  {
+    "id": "WXDi-CP01-037",
+    "number": "037",
+    "name": "Suzuka Utako, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-038",
+    "number": "038",
+    "name": "Sukoya Kana, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-039",
+    "number": "039",
+    "name": "Todo Kohaku, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP01-040",
+    "number": "040",
+    "name": "Pomu Rainpuff, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P),ENR"
+  },
+  {
+    "id": "WXDi-CP01-041",
+    "number": "041",
+    "name": "Finana Ryugu, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P),ENR"
+  },
+  {
+    "id": "WXDi-CP01-042",
+    "number": "042",
+    "name": "Hanabatake Chaika, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-043",
+    "number": "043",
+    "name": "Debidebi Debiru, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-044",
+    "number": "044",
+    "name": "Kitakoji Hisui, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-045",
+    "number": "045",
+    "name": "Amagase Muyu, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP01-046",
+    "number": "046",
+    "name": "Umise Yotsuha, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP01-047",
+    "number": "047",
+    "name": "Ponto Nei, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-CP01-048",
+    "number": "048",
+    "name": "Ruco, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-CP01-049",
+    "number": "049",
+    "name": "Petra Gurin, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P),ENR"
+  },
+  {
+    "id": "WXDi-CP01-050",
+    "number": "050",
+    "name": "Rosemi Lovelock, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P),ENR"
+  },
+  {
+    "id": "WXDi-CP01-051",
+    "number": "051",
+    "name": "Selen Tatsuki, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P),ENR"
+  },
+  {
+    "id": "WXDi-CP01-052",
+    "number": "052",
+    "name": "Super Helesta Saber",
+    "type": "PIECE",
+    "color": "WB",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-053",
+    "number": "053",
+    "name": "White Heaven",
+    "type": "PIECE",
+    "color": "W",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-054",
+    "number": "054",
+    "name": "DEATH DECK",
+    "type": "PIECE",
+    "color": "B",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-055",
+    "number": "055",
+    "name": "Zeno Cluster",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-056",
+    "number": "056",
+    "name": "Lize, Level 0",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-057",
+    "number": "057",
+    "name": "[Center] Lize, Level 1",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-058",
+    "number": "058",
+    "name": "[Center] Lize, Level 2",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-059",
+    "number": "059",
+    "name": "Ange, Level 0",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-060",
+    "number": "060",
+    "name": "[Center] Ange, Level 1",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-061",
+    "number": "061",
+    "name": "[Center] Ange, Level 2",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-062",
+    "number": "062",
+    "name": "Toko, Level 0",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-063",
+    "number": "063",
+    "name": "[Center] Toko, Level 1",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-064",
+    "number": "064",
+    "name": "[Center] Toko, Level 2",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-065",
+    "number": "065",
+    "name": "Ars Almal, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-066",
+    "number": "066",
+    "name": "Himawari Honma, Code 2434",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-067",
+    "number": "067",
+    "name": "Nui Sociere, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "Re"
+  },
+  {
+    "id": "WXDi-CP01-068",
+    "number": "068",
+    "name": "Furen Slash",
+    "type": "SPELL",
+    "color": "W",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-069",
+    "number": "069",
+    "name": "Ratna Petit, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-070",
+    "number": "070",
+    "name": "Fuyuki Hakase, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-071",
+    "number": "071",
+    "name": "Mirei Gundo, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-072",
+    "number": "072",
+    "name": "Rena Yorumi, Code 2434",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-073",
+    "number": "073",
+    "name": "Darkness Eater",
+    "type": "SPELL",
+    "color": "B",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-074",
+    "number": "074",
+    "name": "Sara Hoshikawa, Code 2434",
+    "type": "SIGNI",
+    "color": "WB",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-075",
+    "number": "075",
+    "name": "Mao Matsukai, Code 2434",
+    "type": "SIGNI",
+    "color": "WB",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-076",
+    "number": "076",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-077",
+    "number": "077",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-078",
+    "number": "078",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "Re,Re(P)"
+  },
+  {
+    "id": "WXDi-CP01-1st01",
+    "number": "1st01",
+    "name": "Ange",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "1st"
+  },
+  {
+    "id": "WXDi-CP01-1st02",
+    "number": "1st02",
+    "name": "Toko",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "1st"
+  },
+  {
+    "id": "WXDi-CP01-1st03",
+    "number": "1st03",
+    "name": "Mito",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "1st"
+  },
+  {
+    "id": "WXDi-CP01-SP01",
+    "number": "SP01",
+    "name": "Ange",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP01-SP02",
+    "number": "SP02",
+    "name": "Toko",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP01-SP03",
+    "number": "SP03",
+    "name": "Mito",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "SP"
+  },
+  {
+    "id": "WXDi-CP01-TK01",
+    "number": "TK01",
+    "name": "Collab Liver",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP01-TK02",
+    "number": "TK02",
+    "name": "Collab Liver",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP01-TK03",
+    "number": "TK03",
+    "name": "Collab Liver",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP01-TK04",
+    "number": "TK04",
+    "name": "Collab Liver",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP01-TK05",
+    "number": "TK05",
+    "name": "Collab Liver",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  },
+  {
+    "id": "WXDi-CP01-TK06",
+    "number": "TK06",
+    "name": "Collab Liver",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK,TK(P)"
+  }
+]

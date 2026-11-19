@@ -1,0 +1,762 @@
+[
+  {
+    "id": "WXDi-P05-001",
+    "number": "001",
+    "name": "RED ZONE",
+    "type": "PIECE",
+    "color": "R",
+    "rarity": "PI"
+  },
+  {
+    "id": "WXDi-P05-002",
+    "number": "002",
+    "name": "DANCE IN THE LANCE",
+    "type": "PIECE",
+    "color": "G",
+    "rarity": "PI"
+  },
+  {
+    "id": "WXDi-P05-003",
+    "number": "003",
+    "name": "Machina Guardian Dragon",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI"
+  },
+  {
+    "id": "WXDi-P05-004",
+    "number": "004",
+    "name": "Paradise Universe",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI"
+  },
+  {
+    "id": "WXDi-P05-005",
+    "number": "005",
+    "name": "Don't STOP!",
+    "type": "PIECE",
+    "color": "C",
+    "rarity": "PI"
+  },
+  {
+    "id": "WXDi-P05-006",
+    "number": "006",
+    "name": "Eternal♡Immortal Kyurukyurun☆",
+    "type": "PIECE",
+    "color": "UWB",
+    "rarity": "PI,DiR"
+  },
+  {
+    "id": "WXDi-P05-007",
+    "number": "007",
+    "name": "Hirana, a Step Towards the Glimmer",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-008",
+    "number": "008",
+    "name": "VJ WOLF - 3rd Verse - ALT",
+    "type": "LRIG",
+    "color": "G",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-009",
+    "number": "009",
+    "name": "Nova, Destiny Imperial",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-010",
+    "number": "010",
+    "name": "Muzica, Vogue 3 - EX",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-011",
+    "number": "011",
+    "name": "Mikomiko☆Zero",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "PR,L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-012",
+    "number": "012",
+    "name": "Mikomiko☆One",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "L,SCR"
+  },
+  {
+    "id": "WXDi-P05-013",
+    "number": "013",
+    "name": "Mikomiko☆Two",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "L,SCR"
+  },
+  {
+    "id": "WXDi-P05-014",
+    "number": "014",
+    "name": "Mikomiko☆Threee",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-015",
+    "number": "015",
+    "name": "Tawil =Tre=, Heralding One",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-016",
+    "number": "016",
+    "name": "Umr =Tre=, Key to Uproar",
+    "type": "LRIG",
+    "color": "U",
+    "rarity": "L,SCR,DiR"
+  },
+  {
+    "id": "WXDi-P05-017",
+    "number": "017",
+    "name": "Ex Trap",
+    "type": "ASSIST LRIG",
+    "color": "R",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-018",
+    "number": "018",
+    "name": "Deus Thunder",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-019",
+    "number": "019",
+    "name": "Machina Nebula",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-020",
+    "number": "020",
+    "name": "Yukayuka☆Zero",
+    "type": "LRIG",
+    "color": "W",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-021",
+    "number": "021",
+    "name": "Yukayuka☆Pon",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-022",
+    "number": "022",
+    "name": "Yukayuka☆Zubaan",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-023",
+    "number": "023",
+    "name": "Yukayuka☆BooBoo",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-024",
+    "number": "024",
+    "name": "Yukayuka☆Zubaba",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-025",
+    "number": "025",
+    "name": "Yukayuka☆Piihyara",
+    "type": "ASSIST LRIG",
+    "color": "W",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-026",
+    "number": "026",
+    "name": "Mahomaho☆Zero",
+    "type": "LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-027",
+    "number": "027",
+    "name": "Mahomaho☆Jajaan",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-028",
+    "number": "028",
+    "name": "Mahomaho☆Zugagaan",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-029",
+    "number": "029",
+    "name": "Mahomaho☆Dogaan",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-030",
+    "number": "030",
+    "name": "Mahomaho☆Zudodon",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-031",
+    "number": "031",
+    "name": "Mahomaho☆Been",
+    "type": "ASSIST LRIG",
+    "color": "B",
+    "rarity": "L,L(P)"
+  },
+  {
+    "id": "WXDi-P05-032",
+    "number": "032",
+    "name": "Gae Bolg, Full Armed",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-033",
+    "number": "033",
+    "name": "Tamamozen, Phantom Spirit Queen",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-034",
+    "number": "034",
+    "name": "Hyahha, Code: Accel",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-035",
+    "number": "035",
+    "name": "Draco, Natural Planet Queen",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-036",
+    "number": "036",
+    "name": "Diabride, Natural Engagement Crystal",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-037",
+    "number": "037",
+    "name": "Hameln, Master Trickster",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-038",
+    "number": "038",
+    "name": "H2O, Natural Element Queen",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-039",
+    "number": "039",
+    "name": "Honeyto Ice, Code: Order",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-040",
+    "number": "040",
+    "name": "Gaia, Jade Angel Queen",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-041",
+    "number": "041",
+    "name": "Tiger, Roaring Cannon",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-042",
+    "number": "042",
+    "name": "Eclipse, Natural Planet Queen",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-043",
+    "number": "043",
+    "name": "M - Odem, Code: Heart",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "SR"
+  },
+  {
+    "id": "WXDi-P05-044",
+    "number": "044",
+    "name": "Tokiyuki, Blessed General",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-045",
+    "number": "045",
+    "name": "Yaekori, Lightly Armed",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-046",
+    "number": "046",
+    "name": "S - Unbed, Code: Art",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-047",
+    "number": "047",
+    "name": "Crius, Blessed Angel",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-048",
+    "number": "048",
+    "name": "Lynx, Natural Planet",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-049",
+    "number": "049",
+    "name": "Luvdabi, Code: Maze",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-050",
+    "number": "050",
+    "name": "Bigfoot, Code: Anti",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-051",
+    "number": "051",
+    "name": "Mathdrill, Blessed Wisdom",
+    "type": "SIGNI",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-052",
+    "number": "052",
+    "name": "Get Bolg",
+    "type": "SPELL",
+    "color": "W",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-053",
+    "number": "053",
+    "name": "Hemera, Crimson Angel",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-054",
+    "number": "054",
+    "name": "Heihachiro, Crimson General",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-055",
+    "number": "055",
+    "name": "Buffa, Phantom Beast",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-056",
+    "number": "056",
+    "name": "Nabeno - Tsuna, Crimson General",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-057",
+    "number": "057",
+    "name": "Decarabia, Crimson Evil",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-058",
+    "number": "058",
+    "name": "Jasper, Natural Crystal",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-059",
+    "number": "059",
+    "name": "R - Unning, Code: Art",
+    "type": "SIGNI",
+    "color": "R",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-060",
+    "number": "060",
+    "name": "Apocalypse Drift",
+    "type": "SPELL",
+    "color": "R",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-061",
+    "number": "061",
+    "name": "Manomin, Azure Evil",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-062",
+    "number": "062",
+    "name": "Benitoite, Natural Crystal",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-063",
+    "number": "063",
+    "name": "CZ, Natural Element",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-064",
+    "number": "064",
+    "name": "Hauynite, Natural Crystal",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-065",
+    "number": "065",
+    "name": "Muscari, Natural Plant",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-066",
+    "number": "066",
+    "name": "Anahaze, Phantom Aquatic Beast",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-067",
+    "number": "067",
+    "name": "H2, Natural Element",
+    "type": "SIGNI",
+    "color": "U",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-068",
+    "number": "068",
+    "name": "HAMELN STEP",
+    "type": "SPELL",
+    "color": "U",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-069",
+    "number": "069",
+    "name": "Little John, Jade General",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-070",
+    "number": "070",
+    "name": "William Tell, Jade General",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-071",
+    "number": "071",
+    "name": "Tocho, Code: Maze",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-072",
+    "number": "072",
+    "name": "Orthrus, Jade Evil",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-073",
+    "number": "073",
+    "name": "Nettle Type: Zwei",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-074",
+    "number": "074",
+    "name": "Passionflower, Natural Plant",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-075",
+    "number": "075",
+    "name": "Polypterus, Water Phantom",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-076",
+    "number": "076",
+    "name": "Chameleon, Phantom Beast",
+    "type": "SIGNI",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-077",
+    "number": "077",
+    "name": "Edenify",
+    "type": "SPELL",
+    "color": "G",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-078",
+    "number": "078",
+    "name": "Walkure, Doomed Angel",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-079",
+    "number": "079",
+    "name": "Malphas, Doomed Evil",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-080",
+    "number": "080",
+    "name": "Timer Bomb, Natural Erupting Planet",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-081",
+    "number": "081",
+    "name": "Caesar, Wicked General",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-082",
+    "number": "082",
+    "name": "Typhon, Doomed Evil",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-083",
+    "number": "083",
+    "name": "Buckler, High Armed",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-084",
+    "number": "084",
+    "name": "BP, Natural Element",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-085",
+    "number": "085",
+    "name": "Tartarus, Doomed Angel",
+    "type": "SIGNI",
+    "color": "B",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-086",
+    "number": "086",
+    "name": "Moon Bites",
+    "type": "SPELL",
+    "color": "B",
+    "rarity": "R,R(P)"
+  },
+  {
+    "id": "WXDi-P05-087",
+    "number": "087",
+    "name": "Mastema, Blessed Doomed Angel",
+    "type": "SIGNI",
+    "color": "WB",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-088",
+    "number": "088",
+    "name": "Uriel, Blessed Doomed Angel",
+    "type": "SIGNI",
+    "color": "WB",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-089",
+    "number": "089",
+    "name": "Yorishige, Blessed Azure General",
+    "type": "SIGNI",
+    "color": "WU",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-090",
+    "number": "090",
+    "name": "Touta, Blessed Azure General",
+    "type": "SIGNI",
+    "color": "WU",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-091",
+    "number": "091",
+    "name": "Se, Natural Element",
+    "type": "SIGNI",
+    "color": "UB",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-092",
+    "number": "092",
+    "name": "I, Natural Element",
+    "type": "SIGNI",
+    "color": "UB",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-093",
+    "number": "093",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "color": "C",
+    "rarity": "C,C(P)"
+  },
+  {
+    "id": "WXDi-P05-094S",
+    "number": "094S",
+    "name": "Hirana, a Step Towards the Top",
+    "type": "LRIG",
+    "color": "R",
+    "rarity": "SCR"
+  },
+  {
+    "id": "WXDi-P05-TK01A",
+    "number": "TK01A",
+    "name": "【Hastalyk】",
+    "type": "TOKEN",
+    "color": "",
+    "rarity": "TK"
+  }
+]
