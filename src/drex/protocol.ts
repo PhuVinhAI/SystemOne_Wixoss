@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, type Operation } f
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, selectOperationPrompt } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, selectOperationPrompt } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -24,7 +24,7 @@ const actionText: Record<Intent, string> = {
   attack: "Declare an attack with one of your field cards.",
   guard: "Choose a card from hand to Guard.",
   burst: "Use the revealed card's Life Burst.",
-  choose: "Choose a card in a pending selection, such as paying cost or choosing a target.",
+  choose: "Submit a set of cards from the prepared candidates for the pending decision, such as discard, cost or targets.",
   decline: "Decline the pending optional decision.",
   mode1: "Choose the first printed mode.",
   mode2: "Choose the second printed mode.",
@@ -273,7 +273,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const options = await ask.each(Object.fromEntries(intents
         .filter((intent) => intent !== "choose" || state.offeredSelection)
         .map((intent) => [intent, {
-          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Only offer a printed mode in its mode decision window.${intent === "grow" ? ` Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.` : ""}`,
+          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Only offer a printed mode in its mode decision window.${intent === "grow" ? ` Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.` : ""}${intent === "choose" ? ` The proposed window would use these staged candidates: ${JSON.stringify(state.offeredSelection)}. Decide if the selected seat needs to submit this card selection next.` : ""}`,
           choices: {
             offer: "There is at least one rules-legal declaration of this type in this window, with any required inputs available.",
             omit: "This declaration type has no legal instance in this window.",
@@ -284,7 +284,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       args["intents"] = picked.join(",");
       break;
     }
-    case "turn": args["actor"] = await actor(); break;
+    case "turn": args["actor"] = await parameter("incoming active seat", list(seats.filter((seat) => seat !== state.active))); break;
     case "counter":
       args["actor"] = await actor();
       args["name"] = await parameter("counter name", list(counterNames));
@@ -377,6 +377,32 @@ export async function verifyOperation(
     : operations[operation];
   const facts = `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n\n${snapshot}`;
   const { state, deck } = work;
+  if (args["to"] && ["move", "take", "stack", "random", "moveSelected"].includes(operation) && state.phase !== "Setup") {
+    const transferred = operation === "move" ? [args["card"]!]
+      : operation === "moveSelected" ? (args["from"] === "declared" ? state.declaration?.cards ?? [] : state.selection) : [];
+    const locations = sources(state);
+    const known = cardOptions(state, deck, locations, "table");
+    const declaration = state.declaration;
+    const declaredCard = declaration?.card ? known[declaration.card] : undefined;
+    const none = "The current instruction does not require this transfer.";
+    const routes = await drex.decideBatch(
+      `CURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS UNDER REVIEW\n${transferred.map((id) => known[id] ?? id).join("\n")}\n\n${snapshot}`,
+      {
+        destination: {
+          question: `Source is ${args["from"]}. ${auditTransferPrompt}`,
+          choices: { none, ...list(areas) },
+        },
+        ...(transferred.length ? {} : { source: {
+          question: `To move cards into ${args["to"]} at this exact step, which source zone does the rule or printed effect require? Resolve the latest declaration before assuming an effect is active. If this is a declared movement of a named card, answer the named card's current zone. If no transfer is required, choose none.`,
+          choices: { none, ...list(locations.filter(({ ids }) => ids.length).map(({ label }) => label)) },
+        } }),
+      },
+    );
+    trace.push(...Object.values(routes));
+    const mismatch = routes["source"] && routes["source"].label !== args["from"] ? routes["source"]
+      : routes["destination"]?.label !== args["to"] ? routes["destination"] : undefined;
+    if (mismatch) throw new MatchHalt("Drex không xác nhận nguồn hoặc đích của thao tác chuyển bài.", mismatch.requestId);
+  }
   const top = state.frames.at(-1);
   const closesFrame = operation === "pop" || operation === "closeFrames";
   const sourceFrame = operation === "move" && args["from"]?.endsWith(".check")

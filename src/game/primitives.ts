@@ -22,7 +22,7 @@ export const operations = {
   resetCard: "Remove all nonprinted Power values and card-specific flags from a card, and set it Up and unfrozen. Its zone and visibility do not change.",
   control: "Give A or B a decision window. Specify whether it belongs to the top frame or to the match with no open frames. This consumes the current declaration.",
   phase: "Set the exact phase, without performing any other operation.",
-  turn: "Set the active player and advance the turn counter by one. Phase is independent.",
+  turn: "Hand off to a different active player and advance the turn counter by one. Phase is independent.",
   random: "Move N cards selected uniformly at random from one zone to another without examining their faces.",
   counter: "Set a named counter explicitly.",
   push: "Push a named resolution frame with a controller and optional source card. The new frame starts at step zero.",
@@ -249,7 +249,9 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
       break;
     }
     case "turn": {
-      draft.active = primitiveSchemas.turn.parse(raw).actor;
+      const { actor } = primitiveSchemas.turn.parse(raw);
+      if (actor === draft.active) throw new Error("Turn handoff requires a different active player.");
+      draft.active = actor;
       draft.turn += 1;
       break;
     }

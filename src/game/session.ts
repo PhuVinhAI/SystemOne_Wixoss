@@ -128,7 +128,8 @@ export class GameSession {
     } catch (error) {
       if (error instanceof MatchInputError) throw error;
       const reason = error instanceof Error ? error.message : "Lỗi xử lý trận đấu.";
-      const requestId = error instanceof MatchHalt || error instanceof DrexFailure ? error.requestId : trace.at(-1)?.requestId;
+      const requestId = (error instanceof MatchHalt || error instanceof DrexFailure ? error.requestId : undefined)
+        ?? trace.at(-1)?.requestId;
       this.commit({ ...this.#state, status: "halted", failure: requestId ? `${reason} (${requestId})` : reason },
         this.#state.control, "halt", trace);
       onEvent?.(this.present());

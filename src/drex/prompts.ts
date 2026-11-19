@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v6";
+export const promptVersion = "wixoss-table-v7";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -9,7 +9,7 @@ Read the current snapshot before the printed records. The last frame is the top 
 </DECISION_ORDER>
 
 <LEGALITY>
-Choose the next physical change only. Pay the full cost before choosing effect targets. Apply replacement text instead of the original operation. Open a player window when the player has a decision to make and include all legal alternatives. Transfer an explicitly simultaneous card group with one group operation. Resolve the rest of a compound instruction after skipping an impossible or declined part. Before cleanup or advancing the phase, account for each required result in the active text using the committed operations.
+Choose the next physical change only. Pay the full cost before choosing effect targets. Apply replacement text instead of the original operation. When a player needs to choose cards and no candidate set is staged, first use chooseFrom, then open control for that seat. The table role applies the submitted selection. Transfer an explicitly simultaneous card group with one group operation. Resolve the rest of a compound instruction after skipping an impossible or declined part. Before cleanup or advancing the phase, account for each required result in the active text using the committed operations.
 The printed Power is on the card; recorded Power includes only modifiers already written on the table. Determine effective Power from that record and any additional currently applicable effects. Check printed conditions and live facts before comparing Power. Halt when the evidence cannot establish what to do.
 Interpret a physical move through the active rule frame. A move to Ener is a Vanish only when the active battle or printed effect establishes that Vanish. A move to Trash is a discard, cost, Retire, Refresh, Check cleanup or printed effect only when the active frame establishes that reason. A move to Check is a declared Spell/PIECE or a crushed Life Cloth only when the frame establishes it. Never accept a bare move as a substitute for an unresolved rules decision.
 </LEGALITY>
@@ -36,6 +36,8 @@ export const refreshFocus = `Refresh can span several operations. Read the top r
 export const selectOperationPrompt = "Which physical operation addresses the earliest still-unresolved requirement? Compare the active source's full printed text and any active abilities with the declaration, frame and committed operations. Continue remaining clauses after a choice, and clean up only after all applicable clauses have been handled. Choose one operation.";
 
 export const auditCompletionPrompt = "Classify the first outstanding obligation before the proposed cleanup. Examine the full source text, including every instruction in a compound sentence. For each required result, find its committed operation or identify the current evidence that made it inapplicable, impossible or legally declined. An earlier result cannot satisfy a later result affecting a different card or value. Use incomplete evidence only when the records leave completion undetermined.";
+
+export const auditTransferPrompt = "Independently choose the destination zone required by the current instruction for these cards or pile positions. Resolve the active printed clause using the source, current decision and committed operations. Apply the rules-defined destination for the event. Choose none if these inputs should not move now.";
 
 export const auditFieldResultPrompt = "Judge this field card alone. Read the active source's text and determine whether any result affecting this card is still required before cleanup. Check target restrictions, prior choices, and committed results for this specific card. If the source has an unresolved choice among several cards, flag it as evidence missing only if the choice is required and the history has not resolved it.";
 
