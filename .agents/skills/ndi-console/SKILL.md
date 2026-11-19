@@ -5,6 +5,14 @@ description: Write, review, and run typed System One prompts with Nace Drex MAX 
 
 # NDI Console and Drex
 
+## Project-specific Wixoss mode
+
+In this repository Drex MAX 1.1 is the continuous decision hand for the Wixoss game. Do not model it as a one-shot classifier, a binary rules arbiter, or a card-specific handler. The host sends the current game snapshot, the Wixoss rules, the complete card catalog and the pending effect to `systemOne`, then calls Drex again after every generic primitive. Drex decides the next game operation, effect step, target, cost choice, trigger order, phase transition or AI action. The host only stores snapshots and applies generic operations such as moving a card between zones, changing a numeric value, drawing, creating a pending choice and ending a resolution window.
+
+Card additions are data additions. A new card must provide its printed metadata and card text in the catalog. Do not add `if cardId`, card-name switches, per-card handlers or prompts that restate an individual card's effect. The fixed game prompt tells Drex to read the supplied card text and Wixoss rules. The loop continues until Drex selects a completion or priority operation. If a Drex call fails, times out, returns an unknown primitive or cannot continue, stop the game. Never fall back to hand-written card logic.
+
+The API only exposes typed `noul`, `choice` and `score` answers. Use them as a vocabulary for the generic next-operation protocol. `choice` selects one primitive or one option from a dynamically supplied legal vocabulary. `noul` handles optional effects. `score` is for AI preference or priority only. This is an intentional multi-call protocol, not a request for Drex to emit an unsupported free-form state object.
+
 For Drex decisions in this project, use the official TypeScript `nace-sdk` and pin `drex-max-v1.1`. Read the [Drex guide](references/drex.md) when authoring or reviewing a question. Use the [document API guide](references/api.md) when the task needs Nace Perception.
 
 ## Public connection details

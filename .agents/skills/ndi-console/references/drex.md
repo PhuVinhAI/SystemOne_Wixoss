@@ -1,5 +1,13 @@
 # Drex decisions through the Console API
 
+## Wixoss continuous game loop
+
+For the Wixoss project, call `systemOne` repeatedly. Each request contains the current snapshot, the complete rules relevant to the snapshot, all card records needed by the current effect, the pending effect and a vocabulary of generic operations. Ask one `choice` question for the next operation. Apply the selected generic operation to the snapshot, record the request ID and call Drex again. Continue through costs, targets, effect parts, triggers, rule-based actions, combat, damage, Life Burst and phase changes until Drex selects a completion or priority operation.
+
+The vocabulary is generic and extensible. It can contain operations such as `place_card`, `pay_cost`, `choose_target`, `move_card`, `modify_power`, `draw_cards`, `vanish`, `retire`, `crush_life`, `deal_damage`, `create_trigger`, `resolve_trigger`, `finish_effect`, `pass_priority` and `halt_game`. The host must not interpret a card name to decide which operation applies. Drex reads the card text and chooses the operation. Add a new card by adding its printed metadata and text to the catalog.
+
+The host is a snapshot and transport layer. It may execute only generic primitive operations selected by Drex. It must not silently repair an answer, infer an omitted effect, choose a target on Drex's behalf or run a fallback engine. A failed or unusable Drex call stops the match.
+
 Drex and the document tools share `https://console.nace.ai`, the Console-issued bearer key in `NACE_API_KEY`, and account credit. Use the [official TypeScript SDK](https://console.nace.ai/docs/developer-tools/typescript/questions) for the project and the [public API contract](https://console.nace.ai/openapi.json) to verify the request.
 
 ## Request

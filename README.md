@@ -15,10 +15,12 @@ Nếu `.env` đã có, mở file hiện tại. Lấy key từ [Nace Console](htt
 
 ```text
 npm run check
-npm run test:drex
+npm run test:wixoss
 ```
 
-`check` kiểm tra kiểu TypeScript. `test:drex` dùng [SDK TypeScript chính thức của Nace](https://console.nace.ai/docs/developer-tools/typescript) để gửi một request thật lên `https://console.nace.ai/v1/systemone` với model `drex-max-v1.1`. Dữ liệu đầu vào là một tin nhắn tiếng Việt mẫu về lỗi tải biên lai. Lệnh in model thực tế, request ID, thời gian, token và câu trả lời trước khi kiểm tra kết quả mong đợi. Thiếu key hoặc thất bại thì lệnh thoát với mã lỗi. Nace tính phí input cho request thành công. [Pricing](https://console.nace.ai/docs/drex/reference/pricing)
+`check` kiểm tra kiểu TypeScript. `test` và `test:wixoss` chạy cùng live hand-loop Wixoss bằng [SDK TypeScript chính thức của Nace](https://console.nace.ai/docs/developer-tools/typescript) với model `drex-max-v1.1`. Mỗi vòng gửi state hiện tại, luật, card catalog và effect đang chờ đến `https://console.nace.ai/v1/systemone`, đọc `choice` primitive mà Drex quyết định, áp dụng primitive generic rồi gọi lại với state mới. Thiếu key, lỗi API hoặc primitive không hợp lệ đều làm trận dừng. Nace tính phí input cho mỗi request thành công. [Pricing](https://console.nace.ai/docs/drex/reference/pricing)
+
+`test:wixoss` chạy vòng gọi Drex liên tục trên một state Wixoss. Mỗi response chọn một primitive generic như đặt lá vào SIGNI Zone, xử lý Constant/Enter, chọn target, thay đổi Power, rút bài, kết thúc effect hoặc chuyển priority. Script áp dụng primitive được chọn lên snapshot hiện tại rồi gửi snapshot mới cho Drex ở vòng tiếp theo. Card catalog chứa card text, còn host không có nhánh riêng theo tên lá. Lần chạy kiểm chứng đã đặt `Zwei =Slow Loris=` vào right SIGNI Zone rồi gọi Drex lần nữa để kết thúc effect, với request ID riêng cho từng vòng. Nếu Drex lỗi hoặc trả primitive ngoài vocabulary, script dừng với mã lỗi.
 
 ## Các model trong API của Nace
 

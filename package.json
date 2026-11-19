@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "check": "tsc --noEmit",
-    "test": "tsx scripts/check-drex.ts",
-    "test:drex": "tsx scripts/check-drex.ts"
+    "test": "tsx scripts/test-wixoss-logic.ts",
+    "test:wixoss": "tsx scripts/test-wixoss-logic.ts"
   },
   "type": "module",
   "dependencies": {

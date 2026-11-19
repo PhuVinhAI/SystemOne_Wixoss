@@ -12,6 +12,10 @@ description: >
 Build an eval that answers one product question, run it, and inspect the results.
 Read `references/eval-patterns.md` for YAML, assertion, and CI examples.
 
+## Wixoss loop evaluation
+
+The project evaluates a continuous Drex game loop, not isolated card classification. A test should send a real snapshot and card catalog, call Drex for one generic next operation, apply that operation, then call Drex again with the updated snapshot. Assert the trace and resulting generic state transitions. Do not write fixtures that hard-code one handler per card or replace the loop with a precomputed expected answer. New cards are evaluated by supplying their printed text through the catalog.
+
 ## 1. Define the behavior
 
 Find an existing `promptfooconfig.yaml`, `promptfooconfig.yml`, or eval directory
