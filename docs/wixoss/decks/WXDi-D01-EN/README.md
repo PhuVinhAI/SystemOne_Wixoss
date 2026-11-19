@@ -2,7 +2,7 @@
 
 ## Nội dung hộp
 
-Đây là deck dựng sẵn 51 lá với ba LRIG trung tâm/Assist của Team **Ancient Surprise**. Cấu hình sản phẩm dùng **At** làm Center LRIG, **Umr** và **Tawil** làm Assist LRIG. Main Deck có 40 lá, LRIG Deck có 11 lá gồm 9 LRIG và 1 PIECE? **Lưu ý:** danh sách Card List chính thức có 10 lá LRIG/Assist, 1 PIECE và 40 lá Main Deck, tổng 51 lá. [Trang sản phẩm](https://www.takaratomy.co.jp/products/en.wixoss/product/d01/) · [Card List tiếng Anh](https://www.takaratomy.co.jp/products/en.wixoss/card/)
+Đây là deck dựng sẵn 51 lá với ba LRIG trung tâm/Assist của Team **Ancient Surprise**. Cấu hình sản phẩm dùng **At** làm Center LRIG, **Umr** và **Tawil** làm Assist LRIG. Main Deck có 40 lá, LRIG Deck có 11 lá gồm 10 LRIG/Assist LRIG và 1 PIECE. **Lưu ý:** danh sách Card List chính thức có 10 lá LRIG/Assist, 1 PIECE và 40 lá Main Deck, tổng 51 lá. [Trang sản phẩm](https://www.takaratomy.co.jp/products/en.wixoss/product/d01/) · [Card List tiếng Anh](https://www.takaratomy.co.jp/products/en.wixoss/card/)
 
 ## Danh sách theo deck
 
