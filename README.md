@@ -1,5 +1,7 @@
 # System One với Nace Drex MAX 1.1
 
+[Tài liệu game WIXOSS](docs/wixoss/README.md) mô tả luật, cấu trúc trận, hướng triển khai và các ca nghiệm thu.
+
 ## Chạy thử qua API thật
 
 Cần Node.js 22 trở lên. Từ thư mục dự án, chạy các lệnh sau trong CMD.
