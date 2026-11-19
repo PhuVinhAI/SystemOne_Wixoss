@@ -160,6 +160,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   else choices["moveSelected"] = `${operations.moveSelected} Available complete groups: ${groups.map(({ key, actor, text }) =>
     `${text} for ${actor} (${key}, ${selectedGroup(state, key).length} cards)`).join("; ")}.`;
   choices["select"] = `${operations.select} Use it to build a new working group only. A submitted or saved declaration already supplies its whole group.`;
+  if (state.offeredSelection) delete choices["select"];
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
@@ -450,7 +451,7 @@ export async function verifyOperation(
   }
   const question = operation === "control"
     ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${auditOperationPrompt}`
-    : `Proposed: ${meaning}. ${auditOperationPrompt}`;
+    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
   const answer = await drex.decide(
     facts,
     question,

@@ -7,7 +7,7 @@ import { canSeeCard } from "./view.js";
 export const operations = {
   move: "Move one identified card between zones and set or preserve its face orientation. Add to the bottom, or to the top of an LRIG stack.",
   take: "Move the top N cards from one pile to another, preserving order. Set or preserve face orientation. Top is index zero.",
-  select: "Add or remove a card from the working selection without moving it.",
+  select: "Add or remove a card from the table's working selection without moving it. A staged player selection belongs to that player.",
   moveSelected: "Transfer a complete working, submitted or frame-saved card group to one destination in one operation.",
   distribute: "Move all cards in the working selection from one zone into distinct empty slots simultaneously. Match destinations to the order of the selection.",
   chooseFrom: "Put the exact legal candidate set on the table for the next declaration. Use the working selection or a complete zone, and set minimum and maximum count.",
@@ -146,6 +146,7 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
     }
     case "select": {
       const { card, value } = primitiveSchemas.select.parse(raw);
+      if (draft.offeredSelection) throw new Error("A staged player selection must be submitted by its player or explicitly cleared.");
       requireCard(draft, card);
       draft.selection = draft.selection.filter((id) => id !== card);
       if (value) draft.selection.push(card);
