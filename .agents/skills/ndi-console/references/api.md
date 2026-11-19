@@ -4,7 +4,7 @@ These examples target the public Console API at `https://console.nace.ai`. Reque
 
 ## Authentication and a first request
 
-Read `DREX_API_KEY` from the environment in server-side code. Send it as a bearer header to the Console origin only. `GET /v1/models` checks the key without submitting a document job. Avoid logging headers or verbose HTTP traces.
+Read `NACE_API_KEY` from the environment in server-side code. Send it as a bearer header to the Console origin only. `GET /v1/models` checks the key without submitting a document job. Avoid logging headers or verbose HTTP traces.
 
 For all five operations, send JSON to `POST /v1/documents/{operation}`. Use a UUID as the `Idempotency-Key`, store it before submission, and keep it unchanged when retrying the same body. `?wait_seconds=60` can wait for a result in the initial request, but may still return a queued/running job.
 

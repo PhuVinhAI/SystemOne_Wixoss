@@ -1,11 +1,11 @@
 ---
 name: ndi-console
-description: Connect a project to the shared NDI Console and Drex API. Use for NDI document processing (Parse, Extract, Classify, Split, Ground), Drex yes/no probabilities, label selection and scoring, or workflows that combine document extraction with decisions using one Console API key.
+description: Write, review, and run typed System One prompts with Nace Drex MAX 1.1. Use for Drex state, criteria, probabilities, image inputs, or TypeScript integration with nace-sdk. Also covers Nace Perception document processing.
 ---
 
 # NDI Console and Drex
 
-Help the user connect to the Console's document processing and decision-model API. Use the project's existing language and framework. For an empty project, offer a small Python or TypeScript example according to the user's preference.
+For Drex decisions in this project, use the official TypeScript `nace-sdk` and pin `drex-max-v1.1`. Read the [Drex guide](references/drex.md) when authoring or reviewing a question. Use the [document API guide](references/api.md) when the task needs Nace Perception.
 
 ## Public connection details
 
@@ -13,18 +13,18 @@ Help the user connect to the Console's document processing and decision-model AP
 - Create a key: https://console.nace.ai/dashboard/api-keys
 - API base: `https://console.nace.ai`
 - Authentication: `Authorization: Bearer <user's Console API key>`
-- Environment variable: `DREX_API_KEY`. This is the public Console API's documented name, including for NDI document operations.
+- Environment variable: `NACE_API_KEY`. The SDK also accepts the legacy name `DREX_API_KEY`.
 - Document documentation: https://console.nace.ai/docs/perception/documents
 - Drex documentation: https://console.nace.ai/docs/drex/quickstart
 - Current API contract: https://console.nace.ai/openapi.json
 - Documentation index: https://console.nace.ai/llms.txt
 
-The Console labels the document tools **Perception**. **Drex** answers typed questions about text or JSON. Both use the same Console origin, bearer key and account credit. Use REST directly unless the user already has a working SDK. Check public package availability and the current documentation before adding SDK dependencies.
+The Console labels the document tools **Perception**. **Drex MAX 1.1** answers typed questions about text, JSON and images. Both use the same Console origin, bearer key and account credit. For SDK examples, use the [official TypeScript SDK guide](https://console.nace.ai/docs/developer-tools/typescript).
 
 ## Setup workflow
 
 1. **Identify the task.** Use the user's selected document or text/JSON state, desired output and existing project. For setup alone, configure the connection and check authentication. For a requested first run, make the one call needed; do not automatically run every operation or a batch.
-2. **Connect the account.** Guide the user to create a key in the Console. Have them set `DREX_API_KEY` locally through their terminal, environment file or secret manager. Check only whether it is present. Do not request a key in chat, echo its value, read unrelated credentials, or create an account or purchase credits for them.
+2. **Connect the account.** Have the user set `NACE_API_KEY` locally through their terminal, environment file or secret manager. Check only whether it is present.
 3. **Keep the key server-side.** Use the existing backend or server route. A local terminal script is also suitable. Keep `.env` and result files out of Git; an `.env.example` contains empty values only. Never put the key in browser code, a public environment variable, a URL, a screenshot or logs.
 4. **Check authentication without inference.** Send `GET /v1/models` with the bearer header. Report success or the HTTP status/request ID, not the token. For Drex, use the returned catalog to choose an available model, honor the user's version choice and record the version actually returned. A successful check confirms authentication, not a completed processing request.
 5. **Implement the requested operation.** Read [the document API guide](references/api.md) for uploads and document jobs, or [the Drex guide](references/drex.md) for typed questions and synchronous answers. Both types of processing consume account credit; keep calls within the user's scope.
@@ -48,7 +48,7 @@ For a first example, offer the synthetic [invoice](assets/hello-ndi.txt) or [Dre
 
 Reuse a completed Parse through `source: {"type":"parse_result","job_id":"..."}` for Extract, Split or Ground. **Classify needs the original URL or workspace file.** Ground locates text; it does not establish that a statement is true.
 
-For a combined workflow, Parse or Extract the document first, then send the relevant returned text or structured fields as Drex `state` with the user's questions. Keep source citations alongside the decision. Drex takes text/JSON, not raw PDFs, images, media parts or base64 files. Omit stages the user does not need; each processing call has its own usage.
+For a combined workflow, Parse or Extract the document first, then send the relevant returned text or structured fields as Drex `state` with the user's questions. Keep source citations alongside the decision. Send supported images in the separate `images` array. Omit stages the user does not need; each processing call has its own usage.
 
 ## Drex execution
 
@@ -56,6 +56,7 @@ For a combined workflow, Parse or Extract the document first, then send the rele
 - Read the synchronous `answers` response directly. The document job polling and idempotency rules below do not apply to this endpoint; do not promise deduplication or free retries after a lost response.
 - Use a client timeout of at least 60 seconds and bounded retries that honor `retry-after-ms` or `Retry-After`. Do not retry credential, credit or validation failures unchanged.
 - A `noul` result is a probability, not a Boolean. Choose thresholds for the user's use case. A score can fall between levels; retain it. Preserve returned confidence separately from per-label probabilities.
+- For prompt review, use one judgment per question and describe each label or level in terms of observable evidence. Evaluate on labeled examples before selecting thresholds for application behavior.
 
 ## Document job execution
 

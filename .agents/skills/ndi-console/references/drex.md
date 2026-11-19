@@ -1,17 +1,17 @@
 # Drex decisions through the Console API
 
-Drex and the document tools share `https://console.nace.ai`, the Console-issued bearer key in `DREX_API_KEY`, and account credit. This guide was checked against the [public API contract](https://console.nace.ai/openapi.json) and [Drex quickstart](https://console.nace.ai/docs/drex/quickstart) on 2026-10-08. Use the public docs when capabilities change.
+Drex and the document tools share `https://console.nace.ai`, the Console-issued bearer key in `NACE_API_KEY`, and account credit. Use the [official TypeScript SDK](https://console.nace.ai/docs/developer-tools/typescript/questions) for the project and the [public API contract](https://console.nace.ai/openapi.json) to verify the request.
 
 ## Request
 
-POST `/v1/systemone` with a text or JSON `state` and a `questions` object. Each question's key is its stable ID in the response. An optional `model` selects the model. Use `GET /v1/models` to discover available IDs; retain an explicit user choice, or use the documented `drex-latest` alias for an initial example. For controlled upgrades, choose an available pinned version and record the response's actual `model`. See [models](https://console.nace.ai/docs/drex/reference/models).
+POST `/v1/systemone` with a text or JSON `state` and a `questions` object. Each question's key is its stable ID in the response. Send `model: "drex-max-v1.1"` explicitly for reproducible runs. Use `client.models.list()` or `GET /v1/models` to check access and record the version returned in `model`. See [models](https://console.nace.ai/docs/drex/reference/models).
 
 The bundled [hello-drex.json](../assets/hello-drex.json) is a complete synthetic request with all three question types. From a clone of this repository, after setting the key locally:
 
 ```sh
 curl --fail-with-body --max-time 70 \
   https://console.nace.ai/v1/systemone \
-  -H "Authorization: Bearer $DREX_API_KEY" \
+  -H "Authorization: Bearer $NACE_API_KEY" \
   -H "Content-Type: application/json" \
   --data-binary @skills/ndi-console/assets/hello-drex.json
 ```
@@ -30,7 +30,7 @@ For example, the following is one request about a fictional record:
 
 ```json
 {
-  "model": "drex-latest",
+  "model": "drex-max-v1.1",
   "state": {"message": "Could you send me a copy of my receipt?"},
   "questions": {
     "requests_document": {
@@ -57,6 +57,17 @@ For example, the following is one request about a fictional record:
 
 Keep related questions about the same state in one request. The current contract accepts 1–512 questions, but start with what the user needs. Send `questions` as an object, not an array, and keep IDs nonempty. See [questions](https://console.nace.ai/docs/drex/guides/questions).
 
+### Author the prompt
+
+- Put the record and relevant evidence in `state`. Use `instructions` to name the field or evidence to judge, and `criteria` to define what qualifies.
+- In `choice`, give each label a distinct boundary. Add an explicit label for out-of-scope or insufficient evidence when either is possible. Use a separate `noul` if downstream logic needs its own evidence check.
+- In `score`, describe observable thresholds from low to high for one dimension. Use the distribution to test for a minimum level.
+- Keep comparisons on the same model and state format. Test common cases, missing evidence, and ambiguous label boundaries on independent labeled examples before tuning cutoffs.
+
+### Image requests
+
+Use the top-level `images` array for PNG, JPEG or WebP with the API or SDK. Refer to the images as “Image 1”, “Image 2”, and so on. Keep media bytes outside `state` and `questions`. The hosted MCP `decide` supports text and JSON. For large text states, Drex MAX 1.1 selects passages based on the questions. Send the relevant excerpts or keep the text state around 8,000 tokens or less if all of it matters. See [Drex Max](https://console.nace.ai/docs/drex/guides/drex-max).
+
 ## Read the answer
 
 This endpoint returns a synchronous JSON response with `answers`, `model`, `usage`, `evaluation_time_ms` and `request_id`. Read `answers` by the original question IDs. It does not return a document job to poll.
@@ -72,7 +83,7 @@ These fields are explained in [reading answers](https://console.nace.ai/docs/dre
 
 For “read this invoice and decide where it should go,” use the [document API guide](api.md) to Parse or Extract the selected file, wait for that job, then put the relevant text or structured fields in Drex `state`. Keep the document's citations and job ID alongside the Drex answer and request ID. The input state can include user-provided policy text or structured rules needed to answer the questions.
 
-Drex is text/JSON only. Do not send binary files, raw/base64 PDFs, images, audio/video or provider media-content parts to `/v1/systemone`. Parse suitable files first. If the user already has text or JSON, use it directly. A document Classify job labels files/pages; a Drex choice evaluates the supplied text or record. Select the route that matches the requested input and result.
+Parse PDFs before sending their relevant text or extracted fields to `/v1/systemone`. If the user already has text or JSON, use it directly. A document Classify job labels files/pages; a Drex choice evaluates the supplied text or record. Select the route that matches the requested input and result.
 
 Check the current [state and size limits](https://console.nace.ai/docs/drex/guides/state) before processing long content. Avoid silently truncating facts that could change a decision; tell the user when a necessary scope exceeds the chosen model's limits.
 

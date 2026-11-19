@@ -1,4 +1,4 @@
 interface:
-  display_name: "NDI Console + Drex"
-  short_description: "Set up NDI documents and Drex decisions with one API"
-  default_prompt: "Use $ndi-console to connect my project to NDI document processing and Drex decisions through the shared Console API."
+  display_name: "Nace Drex and Perception"
+  short_description: "Write and test typed Drex MAX 1.1 questions"
+  default_prompt: "Use $ndi-console to review this Drex MAX 1.1 prompt and run it with the official Nace TypeScript SDK."

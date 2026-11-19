@@ -1,5 +1,5 @@
 {
-  "model": "drex-latest",
+  "model": "drex-max-v1.1",
   "state": {
     "message": "I cannot download my receipt. The download button shows an error. Please help.",
     "channel": "email"
