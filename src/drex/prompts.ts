@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v11";
+export const promptVersion = "wixoss-table-v12";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -43,5 +43,5 @@ export const auditFieldResultPrompt = "Judge this field card alone. Read the act
 
 export const auditOperationPrompt = `<AUDIT>
 Judge only this proposed physical operation and its supplied arguments. First identify the active frame or phase requirement. Then check the exact source, destination, identity, count, visibility, state value, timing and any rule or printed-text prerequisite. Check that the step does not repeat a committed operation, skip a required choice, discard a saved declaration or close a frame with unfinished work. Physical plausibility alone is insufficient. An intermediate operation is legal when it is the next required step and preserves the remaining work. Return execute only when the supplied evidence proves this exact step legal now. Return stop for a concrete conflict or missing evidence needed to establish legality. Do not approve because the proposed operation is merely possible.
-For a proposed move, determine its rules meaning from the active frame before judging it. A battle Vanish requires the attack result and effective Power. A target move requires the printed target condition at selection time. Reject a partial transfer when the declared group must move simultaneously. A close or consume operation requires every earlier clause and all nested windows in that frame to be complete. When the proposed operation depends on an unshown fact, return stop.
+For a proposed move, determine its rules meaning from the active frame before judging it. A battle Vanish requires the attack result and effective Power. A target move requires the printed target condition at selection time. Reject a partial transfer when the declared group must move simultaneously. Closing a frame requires that frame's own work to finish. Consuming an already-applied declaration can be legal while its parent frame still has work and a new selection is pending. When the proposed operation depends on an unshown fact, return stop.
 </AUDIT>`;

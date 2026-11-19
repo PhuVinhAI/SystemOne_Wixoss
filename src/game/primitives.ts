@@ -10,7 +10,7 @@ export const operations = {
   select: "Add or remove a card from the table's working selection without moving it. A staged player selection belongs to that player.",
   moveSelected: "Transfer a complete working, submitted or frame-saved card group to one destination in one operation.",
   distribute: "Move all cards in the working selection from one zone into distinct empty slots simultaneously. Match destinations to the order of the selection.",
-  chooseFrom: "Put the exact legal candidate set on the table for the next declaration. Use the working selection or a complete zone, and set minimum and maximum count.",
+  chooseFrom: "Stage every legal candidate for the next declaration, across zones when necessary. Set minimum and maximum count.",
   clearSelection: "Remove working and staged candidate selections without moving any cards.",
   shuffle: "Shuffle a zone without revealing any cards.",
   stack: "Transfer the entire contents of one zone to another as one batch, with optional shuffling and face orientation before the transfer.",
@@ -58,7 +58,7 @@ export const primitiveSchemas = {
   distribute: z.strictObject({
     from: box, destinations: z.string().transform((value) => value.split(",")).pipe(z.array(box).min(1).max(6)), face: faceMode,
   }),
-  chooseFrom: z.strictObject({ source: z.union([z.literal("selection"), box]),
+  chooseFrom: z.strictObject({ source: z.union([z.enum(["selection", "visible"]), box]),
     eligible: z.string().transform((value) => value ? value.split(",") : []).pipe(z.array(id)).optional(),
     min: z.coerce.number().int().nonnegative(), max: z.coerce.number().int().nonnegative(),
   }),
@@ -137,6 +137,9 @@ function transfer(board: State, from: string, to: string, selected: string[], fa
 
 export function applyPrimitive(board: State, operation: Operation, raw: Record<string, string>) {
   if (!Object.hasOwn(operations, operation)) throw new Error("Unknown table operation.");
+  if (board.offeredSelection && !["control", "clearSelection", "consume", "push"].includes(operation)) {
+    throw new Error("Open the staged player choice or explicitly clear it before changing the table.");
+  }
   const draft = structuredClone(board);
   switch (operation) {
     case "move": {
@@ -146,7 +149,6 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
     }
     case "select": {
       const { card, value } = primitiveSchemas.select.parse(raw);
-      if (draft.offeredSelection) throw new Error("A staged player selection must be submitted by its player or explicitly cleared.");
       requireCard(draft, card);
       draft.selection = draft.selection.filter((id) => id !== card);
       if (value) draft.selection.push(card);
@@ -170,7 +172,8 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
     }
     case "chooseFrom": {
       const { source, eligible, min, max } = primitiveSchemas.chooseFrom.parse(raw);
-      const pool = source === "selection" ? draft.selection : pile(draft, source);
+      const pool = source === "selection" ? draft.selection : source === "visible"
+        ? Object.keys(draft.cards).filter((id) => canSeeCard(draft, "table", id)) : pile(draft, source);
       const candidates = eligible ?? pool;
       if (min > max || max > candidates.length || new Set(candidates).size !== candidates.length
         || candidates.some((candidate) => !pool.includes(candidate))) {

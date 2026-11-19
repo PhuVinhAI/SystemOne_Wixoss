@@ -156,11 +156,15 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     { key: "declared", actor: state.declaration?.actor, text: "Current declaration" },
     ...state.frames.map((frame, index) => ({ key: `frame${index}`, actor: frame.actor, text: `Saved declaration in ${frame.kind} frame` })),
   ].filter(({ key }) => selectedGroup(state, key).length);
-  if (!groups.length) delete choices["moveSelected"];
+  if (!groups.length || state.offeredSelection) delete choices["moveSelected"];
   else choices["moveSelected"] = `${operations.moveSelected} Available complete groups: ${groups.map(({ key, actor, text }) =>
     `${text} for ${actor} (${key}, ${selectedGroup(state, key).length} cards)`).join("; ")}.`;
   choices["select"] = `${operations.select} Use it to build a new working group only. A submitted or saved declaration already supplies its whole group.`;
-  if (state.offeredSelection) delete choices["select"];
+  if (state.offeredSelection) {
+    for (const option of Object.keys(choices)) {
+      if (!["control", "clearSelection", "consume", "push"].includes(option)) delete choices[option];
+    }
+  }
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
@@ -222,8 +226,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       args["source"] = await parameter("candidate source", {
         ...list(nonempty.map((entry) => entry.label)),
         ...(state.selection.length ? { selection: "Use the current working selection." } : {}),
-      });
-      const pool = args["source"] === "selection" ? state.selection : all.find((entry) => entry.label === args["source"])!.ids;
+        visible: "Consider cards across all zones, including separate field lanes. Judge each card for eligibility.",
+      }, "Offer the full eligible set. If the rule refers to a field or to multiple zones, choose visible so every qualifying lane and zone is considered.");
+      const pool = args["source"] === "selection" ? state.selection : args["source"] === "visible"
+        ? Object.keys(known) : all.find((entry) => entry.label === args["source"])!.ids;
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
       const sourceCard = state.frames.findLast((frame) => frame.source)?.source ?? state.declaration?.card;
       const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
@@ -381,6 +387,7 @@ export async function verifyOperation(
 ) {
   const { operation, args } = selected;
   const meaning = operation === "control" ? `Open the ${args["scope"]} decision window for seat ${args["actor"]} with these intents: ${args["intents"]}. Preserve any staged selection and declarations saved in frames.`
+    : operation === "consume" ? "Acknowledge the current declaration only. Keep every resolution frame and the staged candidates for the next decision."
     : operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
     : operation === "pop" || operation === "closeFrames" ? `Close ${operation === "pop" ? "one frame" : args["count"] + " frames"}; acknowledge current declaration: ${args["acknowledge"]}. Closing frames removes declarations those frames store.`
     : operation === "chooseFrom" ? `Offer exactly these cards from ${args["source"]}: ${args["eligible"] || "none"}. Can select from ${args["min"]} to ${args["max"]} cards. Confirm each eligible card and every legal selection size; 'up to' permits zero.`
@@ -451,6 +458,8 @@ export async function verifyOperation(
   }
   const question = operation === "control"
     ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${auditOperationPrompt}`
+    : operation === "consume"
+      ? "Can the CURRENT TABLE declaration be acknowledged now? Compare the exact current declaration (not a saved parent declaration) with committed operations. If its requested result was already applied, acknowledge it. This leaves all frames and staged candidates intact, so work remaining in a parent frame does not prevent acknowledging this declaration."
     : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
   const answer = await drex.decide(
     facts,
