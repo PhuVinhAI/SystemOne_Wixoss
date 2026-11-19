@@ -39,5 +39,9 @@ Artist: かにゃぴぃ. Ảnh LC được tải từ Card List tiếng Anh.
 
 — (không có FAQ riêng cho mã này trên trang FAQ tiếng Anh.)
 
+## Ảnh biến thể
+
+- LC(P): không có ảnh biến thể trên CDN; dùng ảnh gốc.
+
 ## Nguồn
 [Card List/FAQ chính thức](https://www.takaratomy.co.jp/products/en.wixoss/card/card.html?card_no=WXDi-EXD01-009%5BEN%5D ) · [Ảnh thẻ](https://www.takaratomy.co.jp/products/en.wixoss/card/thumb/WXDi-EXD01-009%5BEN%5D.jpg)

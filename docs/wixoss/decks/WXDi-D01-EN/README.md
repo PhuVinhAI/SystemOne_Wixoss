@@ -44,6 +44,8 @@ Mỗi file trong `cards/` là một hồ sơ độc lập. Ảnh ST chính thứ
 
 Card List chính thức trả tên `At =Tva=`, trong khi ảnh thẻ in `At =Två=`. Tài liệu dùng tên trên ảnh để hiển thị và mã `WXDi-D01-003[EN]` làm định danh. Card List/FAQ là nguồn cho text dữ liệu và ruling. FAQ riêng của Servant ♯ có câu hỏi dùng ngưỡng “more than 5”, khác giới hạn bốn bản cùng tên trong Glossary tổng quát. Cấu hình deck này dùng bốn bản đúng Card List. [Glossary v9.0.0](https://www.takaratomy.co.jp/products/en.wixoss/rules/rule_v9.pdf) · [FAQ v2.0.0](https://www.takaratomy.co.jp/products/en.wixoss/rules/faq_v2.pdf)
 
+FAQ của Zwei =Slow Loris= (014) có entry thứ hai bị lỗi nguồn: phần trả lời lặp lại câu hỏi. Hồ sơ giữ nguyên nguồn và ghi chú rõ.
+
 ## Kiểm tra số lượng
 
 - 11 lá LRIG Deck, mỗi lá một bản.

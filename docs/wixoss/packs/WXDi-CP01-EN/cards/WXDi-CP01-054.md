@@ -20,8 +20,7 @@
 | Power | 0 |
 | LRIG type / Class | — |
 | Team / Master | — |
-| Cost | 《B》×２
-《C》×１ |
+| Cost | 《B》×２ / 《C》×１ |
 | Grow cost | — |
 | Use timing | Main Phase |
 | Life Burst | Không |

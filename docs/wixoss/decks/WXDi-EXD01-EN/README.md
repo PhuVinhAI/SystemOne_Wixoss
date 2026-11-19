@@ -66,6 +66,8 @@ SUPER DIVA DECK Urith's MIASMA là deck dựng sẵn **52 lá**, phát hành ng�
 - 16 tên Main Deck, tổng 40 lá.
 - Tổng cộng 52 lá, khớp thông số 52 lá của sản phẩm.
 
+- CDN không trả ảnh biến thể LC(P) cho WXDi-EXD01-006, -007, -009, -010; hồ sơ dùng ảnh gốc.
+
 ## Nguồn
 
 - Trang sản phẩm EN: https://www.takaratomy.co.jp/products/en.wixoss/product/exd01/

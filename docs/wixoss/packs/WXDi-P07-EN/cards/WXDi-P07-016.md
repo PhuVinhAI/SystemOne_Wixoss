@@ -22,7 +22,7 @@
 | Team / Master | — |
 | Cost | — |
 | Grow cost | 《W》×０ |
-| Use timing | 3 |
+| Use timing | — |
 | Life Burst | Không |
 
 ## Card text chính thức
