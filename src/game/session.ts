@@ -1,6 +1,7 @@
 import { seats, submitSchema, zones, type Deck, type State, type Submission } from "../domain/types.js";
 import { DrexFailure, model, type Decision, type DrexClient } from "../drex/client.js";
 import { context } from "../drex/context.js";
+import { promptVersion } from "../drex/prompts.js";
 import { askWith, auditDeclaration, chooseDeclaration, chooseOperation, selectIntent, validateDeclaration, verifyOperation } from "../drex/protocol.js";
 import { assertBoard } from "./board.js";
 import { MatchHalt, MatchInputError } from "./options.js";
@@ -60,7 +61,7 @@ export class GameSession {
   }
 
   replay(from = 0) {
-    return { matchId: this.id, model, deckId: this.deck.id,
+    return { matchId: this.id, model, promptVersion, deckId: this.deck.id,
       initial: from === 0 ? structuredClone(this.#initial) : null,
       log: structuredClone(this.#log.slice(from)), state: structuredClone(this.#state) };
   }

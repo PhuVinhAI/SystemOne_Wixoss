@@ -13,7 +13,10 @@ let written = 0;
 async function save() {
   const replay = session.replay(written);
   const entries = replay.log;
-  const header = replay.initial ? JSON.stringify({ matchId: replay.matchId, deckId: replay.deckId, model: replay.model, initial: replay.initial }) + "\n" : "";
+  const header = replay.initial ? JSON.stringify({
+    matchId: replay.matchId, deckId: replay.deckId, model: replay.model,
+    promptVersion: replay.promptVersion, initial: replay.initial,
+  }) + "\n" : "";
   await appendFile(log, header + entries.map((entry) => JSON.stringify(entry) + "\n").join("")
     + JSON.stringify({ snapshot: replay.state }) + "\n", "utf8");
   written += entries.length;

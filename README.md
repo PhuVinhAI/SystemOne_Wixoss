@@ -16,10 +16,12 @@ Cần Node.js 22 trở lên. Chạy `npm ci` rồi khai báo `NACE_API_KEY` tron
 | --- | --- |
 | `src/catalog` | Đọc danh sách deck, thuộc tính in, card text, FAQ và các chương luật. Nội dung hiệu ứng được chuyển nguyên văn cho Drex. |
 | `src/game` | Giữ bản thể lá, chồng bài, quyền xem, lượt, giá trị và các frame đang xử lý. Thực hiện thao tác vật lý đã chọn, kiểm tra tham số và tính toàn vẹn của bàn. |
-| `src/drex` | Drex chọn thao tác, đối tượng và giá trị bằng các lần gọi `choice` nối tiếp. Drex kiểm tra cả tổ hợp lá người chơi chọn và thao tác bàn đề xuất trước khi ghi. Drex chơi B bằng góc nhìn riêng. |
+| `src/drex` | Drex đọc bàn, luật và text lá để chọn thao tác, đối tượng và giá trị bằng các lần gọi `choice` nối tiếp. Drex xét tổ hợp lá người chơi đã chọn và kiểm tra lại chính thao tác Drex chọn trước khi bàn áp dụng. Drex chơi B bằng góc nhìn riêng. |
 | `src/api` và `scripts` | Fastify và terminal dùng cùng phiên đấu. Sau quyết định của A, phiên đấu chạy tiếp đến cửa sổ nhập kế tiếp, kết quả thắng hoặc trạng thái dừng. |
 
 Khi Drex báo dừng, lỗi hoặc không xác nhận thao tác, phiên giữ nguyên bàn tại thao tác đã ghi cuối cùng và chuyển sang `halted`. Chi tiết quyết định và request ID nằm trong log cục bộ. Thêm lá bằng hồ sơ in trong catalog. Những cơ chế đòi hỏi thao tác vật lý mới cần được thêm vào giao thức dùng chung.
+
+Prompt vai vận hành bàn và vai chơi B nằm trong [`src/drex/prompts.ts`](src/drex/prompts.ts). Yêu cầu gửi sang Drex đặt snapshot và tiến độ xử lý trước text lá và các đoạn luật liên quan. Các câu hỏi độc lập về từng ứng viên dùng chung một lần gọi. Các lựa chọn phụ thuộc kết quả trước vẫn gọi nối tiếp. Log ghi phiên bản prompt để đối chiếu từng lần chạy. [Nace Questions](https://console.nace.ai/docs/drex/guides/questions) · [Nace State](https://console.nace.ai/docs/drex/guides/state) · [Drex Max](https://console.nace.ai/docs/drex/guides/drex-max)
 
 ### API cho UI
 
@@ -33,4 +35,6 @@ API lưu phiên trong bộ nhớ của tiến trình. Runner terminal lưu log J
 
 ### Phạm vi kiểm chứng
 
-Đã kiểm tra TypeScript, route health/catalog và việc che bài. Các ca riêng qua API thật đã xác nhận setup tới cửa sổ mulligan, Polygenesis trả đúng một lá, Tobiel mở lựa chọn mục tiêu trước battle, Life Burst của Sen no Rikyu, chuyển lá khi Guard, Refresh, kết quả damage tại 0 Life Cloth và lựa chọn SIGNI cho Harmonic Call. D01 chưa qua kiểm chứng tích hợp từ setup đến thắng/thua. Ca mulligan đổi 2 lá gặp lỗi đóng frame trước khi hoàn tất setup. [Ca nghiệm thu](docs/wixoss/07-acceptance-cases.md)
+Với `wixoss-table-v2`, ca qua API thật bắt đầu sau khi A chọn đổi hai lá và B chọn giữ tay. Drex thực hiện trao đổi, đặt Life Cloth, mở cả sáu LRIG và vào Up. Mỗi bên có 5 lá trên tay, 28 lá Main Deck và 7 Life Cloth úp. Hai phiên bản đều hoàn tất ca này trong 63 lần gọi. Token đầu vào giảm từ 342.388 xuống 266.331.
+
+Các ca riêng với prompt mới xác nhận Tobiel phải Down trước khi xử lý Auto và battle, damage đến người có 0 Life Cloth kết thúc trận, Harmonic Call đề nghị đủ ứng viên SIGNI hợp lệ và kiểm tra giới hạn một lá mỗi level trên tổ hợp đã chọn. Đã kiểm tra TypeScript và quyền xem tay bài của B. Vẫn cần kiểm chứng cả ván D01 từ setup đến thắng/thua. [Ca nghiệm thu](docs/wixoss/07-acceptance-cases.md)

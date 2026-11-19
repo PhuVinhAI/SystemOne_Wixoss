@@ -5,6 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, type Operation } f
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
+import { auditOperationPrompt, selectOperationPrompt } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -151,9 +152,9 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
-  const operation = await ask("Select the next single physical operation. Consider the pending declaration, stack, recent operations and rules.", choices) as Operation;
+  const operation = await ask(selectOperationPrompt, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
-    ask(`You already selected ${operation}. Select ${name}. ${detail}`, options);
+    ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
   const target = () => parameter("target", { ...list(nonempty.map((entry) => entry.label)), ...known });
   const subject = () => parameter("subject", { ...list(seats), ...known });
@@ -203,10 +204,14 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
       const sourceCard = state.frames.findLast((frame) => frame.source)?.source ?? state.declaration?.card;
       const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
+      const effect = resolving ? JSON.stringify({
+        name: resolving.name,
+        text: state.frames.at(-1)?.kind === "burst" ? resolving.burst : resolving.text,
+      }) : "Use the current frame, declaration and rules.";
       const matches = await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Pending resolution: ${resolving ? JSON.stringify({ name: resolving.name, text: resolving.text, burst: resolving.burst }) : "See the current frame, declaration and rules."} Candidate: ${description}. Can the chooser lawfully use this card by itself as one member of a complete selection? Assume all other members are still unchosen. A per-group quota limits the final chosen set, not the number of alternatives offered from that group. Decide only this candidate's eligibility.`,
-        choices: { eligible: `Include ${description} as an individually valid candidate, even when other candidates share its group.`,
-          excluded: `Exclude ${description} because an identified printed condition, limit, or restriction prevents including it in any legal choice.` },
+        question: `Pending requirement: ${effect} Candidate: ${description}. Can this card belong to any legal selection for the current step? A group quota limits the final selection, not the alternatives included in the candidate list.`,
+        choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
+          excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }])));
       const eligible = Object.keys(candidates).filter((id) => matches[id] === "eligible");
       args["eligible"] = eligible.join(",");
@@ -306,21 +311,28 @@ async function choosePower(ask: (name: string, choices: Choices, detail?: string
 
 export function askWith(drex: DrexClient, initial: string, trace: Decision[]): Ask {
   const steps: string[] = [];
-  const record = (answer: Decision) => {
+  const record = (answer: Decision, key: string) => {
     trace.push(answer);
     if (answer.label === "halt") throw new MatchHalt("Drex yêu cầu dừng khi đang xác định thao tác.", answer.requestId);
-    steps.push(`${answer.question} => ${answer.label}`);
+    steps.push(`${key} => ${answer.label}`);
     return answer.label;
   };
+  const snapshot = () => steps.length ? `${initial}\n\nCURRENT REQUEST: PREVIOUS ANSWERS\n${steps.join("\n")}` : initial;
   const ask = async (question: string, choices: Choices) => {
-    const answer = await drex.decide(initial + "\n" + steps.join("\n"), question, choices);
-    return record(answer);
+    const answer = await drex.decide(snapshot(), question, choices);
+    return record(answer, question);
   };
   return Object.assign(ask, {
     async each(questions: Parameters<Ask["each"]>[0]) {
       if (!Object.keys(questions).length) return {};
-      const answers = await drex.decideBatch(initial + "\n" + steps.join("\n"), questions);
-      return Object.fromEntries(Object.entries(answers).map(([id, answer]) => [id, record(answer)]));
+      const answers = await drex.decideBatch(snapshot(), questions);
+      trace.push(...Object.values(answers));
+      const stopped = Object.values(answers).find((answer) => answer.label === "halt");
+      if (stopped) throw new MatchHalt("Drex không xác định được ứng viên.", stopped.requestId);
+      return Object.fromEntries(Object.entries(answers).map(([id, answer]) => {
+        steps.push(`Candidate ${id} => ${answer.label}`);
+        return [id, answer.label];
+      }));
     },
   });
 }
@@ -336,10 +348,10 @@ export async function verifyOperation(drex: DrexClient, snapshot: string, select
     : operations[operation];
   const answer = await drex.decide(
     `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n\n${snapshot}`,
-    `Is the proposed ${operation} operation, with exactly the supplied arguments, a legal single step on this board? The question concerns only that operation. Accept required physical parts of a declaration before outstanding effects, and closure of a completed frame before a separate rules check. Stop for a concrete timing, target, count, visibility, or rules violation, including a skipped required step or a repeated effect. A selection window must preserve opt-out, eligibility, and all allowed counts. A frame-scoped window must address an outstanding decision belonging to that frame. Normal phase actions require closing completed frames first.`,
+    `Proposed: ${meaning}. ${auditOperationPrompt}`,
     {
-      stop: `Do not apply ${operation}: the board, rules, or printed text show that this individual step or at least one argument is wrong, or omit a prerequisite needed to judge it.`,
-      execute: `Apply only ${operation}: ${meaning}. Its supplied arguments and timing satisfy the rules for this individual step. Check what must already have happened first.`,
+      stop: "There is a concrete conflict in legality, timing, arguments or preservation of pending work.",
+      execute: "This exact step is legal now and preserves any work that still needs to be resolved.",
     },
   );
   trace.push(answer);
