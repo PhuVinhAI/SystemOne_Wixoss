@@ -20,7 +20,7 @@ const actionText: Record<Intent, string> = {
   play: "Place a SIGNI from your hand in an indicated field zone.",
   cast: "Declare use of a Spell or PIECE.",
   ability: "Declare an Action ability of a card on the board.",
-  retire: "Declare a simultaneous Retire and name the full set of SIGNI to retire.",
+  retire: "In the player's own Main Phase, declare their once-per-turn simultaneous Retire of one to three SIGNI currently on their field.",
   attack: "Declare an attack with one of your field cards.",
   guard: "Choose a card from hand to Guard.",
   burst: "Use the revealed card's Life Burst.",
@@ -275,10 +275,17 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           const { name, level, timing, growCost, group } = deck.cards[state.cards[id]!.definition]!;
           return `${id} ${name} | Level ${level} | type ${group} | timing ${timing || "—"} | Grow cost ${growCost || "—"}`;
         }).join("; ");
+      const signiEvidence = Object.entries(cardOptions(state, deck, all.filter(({ seat, zone }) =>
+        seat === args["actor"] && slots.has(zone)), "table")).map(([, card]) => card).join("; ") || "none";
+      const evidence: Partial<Record<Intent, string>> = {
+        grow: `Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
+        retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
+        choose: `Staged candidates: ${JSON.stringify(state.offeredSelection)}. Decide whether the selected seat needs to submit this card selection next.`,
+      };
       const options = await ask.each(Object.fromEntries(intents
         .filter((intent) => intent !== "choose" || state.offeredSelection)
         .map((intent) => [intent, {
-          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Only offer a printed mode in its mode decision window.${intent === "grow" ? ` Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.` : ""}${intent === "choose" ? ` The proposed window would use these staged candidates: ${JSON.stringify(state.offeredSelection)}. Decide if the selected seat needs to submit this card selection next.` : ""}`,
+          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Only offer a printed mode in its mode decision window. ${evidence[intent] ?? ""}`,
           choices: {
             offer: "There is at least one rules-legal declaration of this type in this window, with any required inputs available.",
             omit: "This declaration type has no legal instance in this window.",
