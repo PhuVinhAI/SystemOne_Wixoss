@@ -7,9 +7,13 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   const definitions = new Set<string>();
   const summary = (id: string) => {
     const instance = state.cards[id]!;
+    const card = deck.cards[instance.definition]!;
     definitions.add(instance.definition);
-    const total = displayedPower(deck.cards[instance.definition]!, instance);
-    return `${id}=${instance.definition} power=${total}${instance.down ? " down" : ""}${instance.frozen ? " frozen" : ""}${instance.faceUp ? " face-up" : ""}`;
+    const total = displayedPower(card, instance);
+    const className = card.group === "—" ? "none" : card.group;
+    const adjustments = instance.adjustments.length
+      ? instance.adjustments.map(({ amount, expires }) => `${amount}@${expires}`).join(",") : "none";
+    return `${id}=${instance.definition} type=${card.type} level=${card.level || "—"} class=${className} printedPower=${card.power || "—"} powerDelta=${instance.powerDelta} temporaryPower=${adjustments} currentPower=${total}${instance.down ? " down" : " up"}${instance.frozen ? " frozen" : ""}${instance.faceUp ? " face-up" : " face-down"}`;
   };
   const board = seats.flatMap((seat) => zones.map((zone) => {
     const ids = state.players[seat][zone];
@@ -67,10 +71,10 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,
-    "CURRENT TABLE\n" + JSON.stringify(info) + "\n" + board.join("\n"),
+    "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
     recent.length ? "COMMITTED OPERATIONS (oldest first)\n" + recent.join("\n") : "",
     sources.length ? "PRINTED CARDS\n" + sources.join("\n") : "",
-    "RULES\n" + rules,
+    "<RULES>\n" + rules + "\n</RULES>",
   ].filter(Boolean).join("\n\n");
 }
 
