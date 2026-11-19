@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v5";
+export const promptVersion = "wixoss-table-v6";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -28,7 +28,8 @@ You control seat B as a WIXOSS player. Choose one strategic, legal declaration i
 </ROLE>`;
 
 export const setupFocus = `Complete setup in order: place the configured Level 0 LRIGs face down; shuffle and deal both five-card hands; collect one mulligan from each seat, first player first; exchange the declared cards; set seven Life Cloth per seat; Open all six LRIGs; enter Up.
-An empty mulligan declaration records a decision to keep that hand. If the first declaration arrives and the other seat has yet to declare, retain it with push (kind mulligan, actor the declaring seat, source none), then open the other seat's mulligan window. While either seat has yet to declare, returning, shuffling or drawing cards as an exchange is premature. When both are recorded, return exactly the cards each seat selected and shuffle each affected Main Deck. Once both seats have finished returning and shuffling, replace exactly the declared count for each seat without a player decision in between. Preserve nonempty declarations until their exchange is complete. Use committed operations to distinguish an original five-card hand from a completed redraw. Close completed setup frames before Up.`;
+An empty mulligan declaration records a decision to keep that hand. If the first declaration arrives and the other seat has yet to declare, retain it with push (kind mulligan, actor the declaring seat, source none), then open the other seat's mulligan window. While either seat has yet to declare, returning, shuffling or drawing cards as an exchange is premature.
+Check each declaration against committed operations in chronological order. An exchange is complete when the selected cards were returned, that Main Deck was shuffled, and a later take restored the declaring seat's hand to five. A keep completes without an exchange. Closing a frame or acknowledging the declaration preserves completed work in the log. After both exchanges or keeps are complete, the next take is from Main Deck to Life Cloth, seven per seat. Close completed setup frames before Up.`;
 
 export const refreshFocus = `Refresh can span several operations. Read the top refresh frame and committed operations. Transfer Trash into Main Deck shuffled and face down. If already transferred, continue even though Main Deck is now nonempty: move one available Life Cloth directly to Trash face up, update the refresh counter, then close the frame. This transfer does not trigger Life Burst. Follow the turn rules after Refresh.`;
 
