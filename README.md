@@ -23,6 +23,8 @@ Khi Drex báo dừng, lỗi hoặc không xác nhận thao tác, phiên giữ ng
 
 Prompt vai vận hành bàn và vai chơi B nằm trong [`src/drex/prompts.ts`](src/drex/prompts.ts). Yêu cầu gửi sang Drex đặt snapshot và tiến độ xử lý trước text lá và các đoạn luật liên quan. Các câu hỏi độc lập về từng ứng viên dùng chung một lần gọi. Các lựa chọn phụ thuộc kết quả trước vẫn gọi nối tiếp. Log ghi phiên bản prompt để đối chiếu từng lần chạy. [Nace Questions](https://console.nace.ai/docs/drex/guides/questions) · [Nace State](https://console.nace.ai/docs/drex/guides/state) · [Drex Max](https://console.nace.ai/docs/drex/guides/drex-max)
 
+Khi sửa prompt, dùng [hướng dẫn viết prompt](.agents/skills/prompt-authoring/SKILL.md) để xác định dữ kiện, tiêu chí và ca kiểm chứng. Với `wixoss-table-v4`, Drex xác định Power hiệu lực từ dữ liệu bàn và text đang áp dụng. Khi dọn lá nguồn khỏi Check hoặc đóng frame, Drex kiểm tra riêng công việc còn lại trước khi xét thao tác vật lý.
+
 ### API cho UI
 
 - `GET /health` trả trạng thái tiến trình và model được cấu hình.
@@ -37,4 +39,6 @@ API lưu phiên trong bộ nhớ của tiến trình. Runner terminal lưu log J
 
 Với `wixoss-table-v2`, ca qua API thật bắt đầu sau khi A chọn đổi hai lá và B chọn giữ tay. Drex thực hiện trao đổi, đặt Life Cloth, mở cả sáu LRIG và vào Up. Mỗi bên có 5 lá trên tay, 28 lá Main Deck và 7 Life Cloth úp. Hai phiên bản đều hoàn tất ca này trong 63 lần gọi. Token đầu vào giảm từ 342.388 xuống 266.331.
 
-Các ca riêng với prompt mới xác nhận Tobiel phải Down trước khi xử lý Auto và battle, damage đến người có 0 Life Cloth kết thúc trận, Harmonic Call đề nghị đủ ứng viên SIGNI hợp lệ và kiểm tra giới hạn một lá mỗi level trên tổ hợp đã chọn. Đã kiểm tra TypeScript và quyền xem tay bài của B. Vẫn cần kiểm chứng cả ván D01 từ setup đến thắng/thua. [Ca nghiệm thu](docs/wixoss/07-acceptance-cases.md)
+Các ca riêng với `wixoss-table-v2` xác nhận Tobiel phải Down trước khi xử lý Auto và battle, damage đến người có 0 Life Cloth kết thúc trận, và Harmonic Call đề nghị đủ ứng viên SIGNI hợp lệ rồi xét giới hạn một lá mỗi level.
+
+Các ca với `wixoss-table-v4` đã kiểm tra mở bàn tới mulligan, Retire hai SIGNI trong một thao tác, và battle trước Camelopar với hai hoặc ba Class trong Ener. Ca Harmonic Call bắt đầu sau bước xem bài trên sân đầy đã trả bài xuống đáy, cấp đủ ba khả năng, đưa PIECE ra khỏi trận và đóng frame. Phép thử đối chứng chặn dọn Harmonic Call khi còn một kết quả chưa áp dụng và cho dọn Polygenesis đã xử lý xong. Các ca này chưa bao phủ toàn bộ cách dùng D01 hay một ván từ setup đến thắng/thua. [Ca nghiệm thu](docs/wixoss/07-acceptance-cases.md)

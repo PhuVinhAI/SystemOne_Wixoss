@@ -8,10 +8,10 @@ export const operations = {
   move: "Move one identified card between zones and set or preserve its face orientation. Add to the bottom, or to the top of an LRIG stack.",
   take: "Move the top N cards from one pile to another, preserving order. Set or preserve face orientation. Top is index zero.",
   select: "Add or remove a card from the working selection without moving it.",
-  moveSelected: "Move the working selection from one zone to another simultaneously and clear that selection.",
+  moveSelected: "Transfer a complete selected group to one destination in one operation. Use the working selection or the whole current declaration's card list.",
   distribute: "Move all cards in the working selection from one zone into distinct empty slots simultaneously. Match destinations to the order of the selection.",
   chooseFrom: "Put the exact legal candidate set on the table for the next declaration. Use the working selection or a complete zone, and set minimum and maximum count.",
-  clearSelection: "Reset the working selection without moving its cards.",
+  clearSelection: "Remove working and staged candidate selections without moving any cards.",
   shuffle: "Shuffle a zone without revealing any cards.",
   stack: "Transfer the entire contents of one zone to another as one batch, with optional shuffling and face orientation before the transfer.",
   orient: "Set Down or Up on one card or every card in a zone.",
@@ -52,7 +52,7 @@ const faceMode = z.enum(["keep", "up", "down"]);
 export const primitiveSchemas = {
   move: z.strictObject({ from: box, to: box, card: id, face: faceMode.default("keep") }),
   select: z.strictObject({ card: id, value: bool }),
-  moveSelected: z.strictObject({ from: box, to: box, face: faceMode.default("keep") }),
+  moveSelected: z.strictObject({ from: z.union([box, z.enum(["selected", "declared"])]), to: box, face: faceMode.default("keep") }),
   distribute: z.strictObject({
     from: box, destinations: z.string().transform((value) => value.split(",")).pipe(z.array(box).min(1).max(6)), face: faceMode,
   }),
@@ -109,12 +109,19 @@ function requireCard(board: State, id: string) {
 }
 
 function transfer(board: State, from: string, to: string, selected: string[], face: z.infer<typeof faceMode> = "keep") {
-  const source = pile(board, from);
+  const sources = selected.map((id) => {
+    const area = from === "selected" ? areas.find((candidate) => pile(board, candidate).includes(id)) : from;
+    if (!area || area === to || !pile(board, area).includes(id)) throw new Error("Invalid transfer.");
+    return pile(board, area);
+  });
   const destination = pile(board, to);
   const [, zone] = to.split(".") as [Seat, Zone];
-  if (from === to || selected.length === 0 || selected.some((id) => !source.includes(id))) throw new Error("Invalid transfer.");
+  if (!selected.length || new Set(selected).size !== selected.length) throw new Error("Invalid transfer selection.");
   if (slots.has(zone) && destination.length + selected.length > 1) throw new Error("Destination slot is occupied.");
-  for (const id of selected) source.splice(source.indexOf(id), 1);
+  for (const [index, id] of selected.entries()) {
+    const source = sources[index]!;
+    source.splice(source.indexOf(id), 1);
+  }
   if (lrigSlots.has(zone)) destination.unshift(...selected);
   else destination.push(...selected);
   if (face !== "keep") for (const id of selected) requireCard(board, id).faceUp = face === "up";
@@ -138,8 +145,9 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
     }
     case "moveSelected": {
       const { from, to, face } = primitiveSchemas.moveSelected.parse(raw);
-      transfer(draft, from, to, draft.selection, face);
-      draft.selection = [];
+      const selected = from === "declared" ? draft.declaration?.cards ?? [] : draft.selection;
+      transfer(draft, from === "declared" ? "selected" : from, to, selected, face);
+      if (from !== "declared") draft.selection = [];
       break;
     }
     case "distribute": {
@@ -167,6 +175,7 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
     case "clearSelection": {
       primitiveSchemas.clearSelection.parse(raw);
       draft.selection = [];
+      draft.offeredSelection = null;
       break;
     }
     case "take":
@@ -224,7 +233,7 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
       const { actor, scope, intents: offered } = primitiveSchemas.control.parse(raw);
       if ((scope === "frame") !== Boolean(draft.frames.length)) throw new Error("Decision window does not match the current stack.");
       if (!declarationIsSaved(draft)) throw new Error("Save or consume the current declaration before opening a window.");
-      if (offered.includes("choose") && !draft.offeredSelection?.candidates.length) {
+      if (offered.includes("choose") && !draft.offeredSelection) {
         throw new Error("Prepare a candidate set before opening a card-selection window.");
       }
       if (draft.offeredSelection?.candidates.some((id) => !canSeeCard(draft, actor, id))) {

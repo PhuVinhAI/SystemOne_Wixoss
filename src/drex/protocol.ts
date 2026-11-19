@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, type Operation } f
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditOperationPrompt, selectOperationPrompt } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, selectOperationPrompt } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -144,11 +144,12 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   if (!state.declaration) delete choices["consume"];
   const selectionSources = nonempty.filter(({ ids }) => state.selection.length && state.selection.every((id) => ids.includes(id)));
   const emptySlots = all.filter((entry) => slots.has(entry.zone) && !entry.ids.length);
-  if (!state.selection.length) {
+  if (!state.selection.length && !state.offeredSelection) {
     delete choices["clearSelection"];
   }
   if (!declarationIsSaved(state)) delete choices["control"];
-  if (!selectionSources.length) delete choices["moveSelected"];
+  const declared = state.declaration?.cards ?? [];
+  if (!state.selection.length && !declared.length) delete choices["moveSelected"];
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
@@ -163,18 +164,31 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   switch (operation) {
     case "move":
     case "take":
-    case "moveSelected":
     case "random": {
-      args["from"] = await parameter("source zone", list((operation === "moveSelected" ? selectionSources : nonempty).filter((entry) =>
+      args["from"] = await parameter("source zone", list(nonempty.filter((entry) =>
         operation !== "move" || entry.ids.some((id) => Object.hasOwn(known, id))).map((entry) => entry.label)));
       const source = all.find((entry) => entry.label === args["from"])!;
       args["to"] = await parameter("destination zone", list(all.filter((entry) =>
-        entry.label !== source.label && (!slots.has(entry.zone) || (!entry.ids.length && (operation !== "moveSelected" || state.selection.length === 1)))).map((entry) => entry.label)), `From ${source.label}.`);
+        entry.label !== source.label && (!slots.has(entry.zone) || !entry.ids.length)).map((entry) => entry.label)), `From ${source.label}.`);
       const destination = all.find((entry) => entry.label === args["to"])!;
       if (operation === "move") args["card"] = await parameter("card", cardOptions(state, deck, [source], "table"), `From ${source.label} to ${destination.label}.`);
-      else if (operation !== "moveSelected") args["count"] = await parameter("exact number of cards", list(range(1, slots.has(destination.zone) ? 1 : source.ids.length)),
+      else args["count"] = await parameter("exact number of cards", list(range(1, slots.has(destination.zone) ? 1 : source.ids.length)),
         `From ${source.label} to ${destination.label}. Select the rules-correct count for this step.`);
       args["face"] = await parameter("face orientation on arrival", faceOptions, `From ${source.label} to ${destination.label}.`);
+      break;
+    }
+    case "moveSelected": {
+      const groups = {
+        ...(state.selection.length ? { selected: `Working selection: ${state.selection.join(", ")}.` } : {}),
+        ...(declared.length ? { declared: `Complete submitted selection: ${declared.join(", ")}.` } : {}),
+      };
+      args["from"] = Object.keys(groups).length > 1
+        ? await parameter("group to move simultaneously", groups) : Object.keys(groups)[0]!;
+      const group = args["from"] === "declared" ? declared : state.selection;
+      args["to"] = await parameter("common destination for this group", list(all.filter(({ ids, zone }) =>
+        !group.some((id) => ids.includes(id)) && (!slots.has(zone) || (!ids.length && group.length === 1)))
+        .map(({ label }) => label)));
+      args["face"] = await parameter("face orientation on arrival", faceOptions, `Move all selected cards to ${args["to"]} together.`);
       break;
     }
     case "distribute": {
@@ -337,7 +351,10 @@ export function askWith(drex: DrexClient, initial: string, trace: Decision[]): A
   });
 }
 
-export async function verifyOperation(drex: DrexClient, snapshot: string, selected: Awaited<ReturnType<typeof chooseOperation>>, trace: Decision[]) {
+export async function verifyOperation(
+  drex: DrexClient, snapshot: string, selected: Awaited<ReturnType<typeof chooseOperation>>, trace: Decision[],
+  work: { state: State; deck: Deck },
+) {
   const { operation, args } = selected;
   const meaning = operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
     : operation === "pop" || operation === "closeFrames" ? `Close ${operation === "pop" ? "one frame" : args["count"] + " frames"}; acknowledge current declaration: ${args["acknowledge"]}. Closing frames removes declarations those frames store.`
@@ -346,8 +363,43 @@ export async function verifyOperation(drex: DrexClient, snapshot: string, select
     : operation === "face" ? (args["value"] === "true" ? "Face up" : "Face down")
     : operation === "freeze" ? (args["value"] === "true" ? "Set Frozen" : "Clear Frozen")
     : operations[operation];
+  const facts = `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n\n${snapshot}`;
+  const { state, deck } = work;
+  const top = state.frames.at(-1);
+  const closesFrame = operation === "pop" || operation === "closeFrames";
+  const sourceFrame = operation === "move" && args["from"]?.endsWith(".check")
+    ? state.frames.findLast(({ source }) => source === args["card"]) : undefined;
+  if (sourceFrame || (top && closesFrame)) {
+    const affected = sourceFrame ? [sourceFrame] : state.frames.slice(-(operation === "closeFrames" ? Number(args["count"]) : 1));
+    const records = affected.map(({ kind, source, step }) => {
+      const printed = source && deck.cards[state.cards[source]!.definition];
+      return { kind, step, source, ...(printed ? { name: printed.name, text: kind === "burst" ? printed.burst : printed.text } : {}) };
+    });
+    const cleanupState = `FRAMES TO CHECK\n${JSON.stringify(records)}\n\nPROPOSED CLEANUP\n${meaning}\n\n${snapshot}`;
+    const questions: Parameters<DrexClient["decideBatch"]>[1] = {
+      progress: { question: auditCompletionPrompt, choices: {
+        decision: "A required player decision has yet to be recorded or applied.",
+        result: "A required physical outcome of the instruction has yet to be applied.",
+        followup: "An outstanding rule check, trigger or cleanup must occur before this operation.",
+        complete: "Each obligation preceding this operation is accounted for by its own committed result or by evidence that it does not apply.",
+      } },
+    };
+    if (sourceFrame) {
+      const field = sources(state).filter(({ zone }) => slots.has(zone));
+      for (const [id, description] of Object.entries(cardOptions(state, deck, field, "table"))) {
+        questions[id] = { question: `${auditFieldResultPrompt} Field card: ${description}.`, choices: {
+          pending: "The source requires a still-unapplied result involving this card.",
+          complete: "No outstanding result involving this card is required before cleanup.",
+        } };
+      }
+    }
+    const progress = Object.values(await drex.decideBatch(cleanupState, questions));
+    trace.push(...progress);
+    const incomplete = progress.find(({ label }) => label !== "complete");
+    if (incomplete) throw new MatchHalt("Drex chưa xác nhận hiệu ứng đã hoàn tất.", incomplete.requestId);
+  }
   const answer = await drex.decide(
-    `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n\n${snapshot}`,
+    facts,
     `Proposed: ${meaning}. ${auditOperationPrompt}`,
     {
       stop: "There is a concrete conflict in legality, timing, arguments or preservation of pending work.",

@@ -9,11 +9,9 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     const instance = state.cards[id]!;
     const card = deck.cards[instance.definition]!;
     definitions.add(instance.definition);
-    const total = displayedPower(card, instance);
-    const className = card.group === "—" ? "none" : card.group;
-    const adjustments = instance.adjustments.length
-      ? instance.adjustments.map(({ amount, expires }) => `${amount}@${expires}`).join(",") : "none";
-    return `${id}=${instance.definition} type=${card.type} level=${card.level || "—"} class=${className} printedPower=${card.power || "—"} powerDelta=${instance.powerDelta} temporaryPower=${adjustments} currentPower=${total}${instance.down ? " down" : " up"}${instance.frozen ? " frozen" : ""}${instance.faceUp ? " face-up" : " face-down"}`;
+    const power = card.type === "SIGNI" ? ` printedPower=${card.power} recordedPower=${displayedPower(card, instance)}` : "";
+    const adjustments = instance.adjustments.map(({ amount, expires }) => `${amount}@${expires}`).join(",");
+    return `${id}=${instance.definition} type=${card.type} level=${card.level} group=${card.group}${power}${adjustments ? " timedPower=" + adjustments : ""}${instance.down ? " down" : " up"}${instance.frozen ? " frozen" : ""}${instance.faceUp ? " face-up" : " face-down"}`;
   };
   const board = seats.flatMap((seat) => zones.map((zone) => {
     const ids = state.players[seat][zone];
@@ -37,13 +35,14 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   }
   const visibleMarks = state.marks.filter((mark) => viewer === "table" || seats.some((seat) => seat === mark.subject)
     || canSee(mark.subject));
+  const sourceDefinitions = new Set(sourceCards.flatMap((id) => id && state.cards[id] ? [state.cards[id].definition] : []));
   const sources = [...definitions].sort().map((id) => {
     const card = deck.cards[id]!;
-    const isSource = sourceCards.some((source) => source && state.cards[source]?.definition === id);
+    const isSource = sourceDefinitions.has(id);
     const faq = isSource ? card.faq : "";
     const { count: _count, faq: _faq, id: _id, ...printed } = card;
     const fields = Object.entries(printed).filter(([, value]) => value !== "" && value !== "—");
-    return `${id} ${JSON.stringify(Object.fromEntries(faq ? [...fields, ["faq", faq]] : fields))}`;
+    return { isSource, text: `${id} ${JSON.stringify(Object.fromEntries(faq ? [...fields, ["faq", faq]] : fields))}` };
   });
   const rules = pertinentRules(state, deck);
   const info = {
@@ -72,8 +71,9 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     viewer === "table" ? tableRole : playerRole,
     focus,
     "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
+    viewer === "table" && sourceDefinitions.size ? "ACTIVE SOURCE RECORDS\n" + sources.filter(({ isSource }) => isSource).map(({ text }) => text).join("\n") : "",
     recent.length ? "COMMITTED OPERATIONS (oldest first)\n" + recent.join("\n") : "",
-    sources.length ? "PRINTED CARDS\n" + sources.join("\n") : "",
+    sources.length ? "PRINTED CARDS\n" + sources.filter(({ isSource }) => viewer !== "table" || !isSource).map(({ text }) => text).join("\n") : "",
     "<RULES>\n" + rules + "\n</RULES>",
   ].filter(Boolean).join("\n\n");
 }

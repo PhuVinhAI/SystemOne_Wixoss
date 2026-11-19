@@ -120,7 +120,7 @@ export class GameSession {
           if (operation !== "shuffle" && JSON.stringify(draft) === JSON.stringify(state)) {
             throw new MatchHalt("Drex chọn thao tác không làm thay đổi bàn đấu.", trace.at(-1)?.requestId);
           }
-          await verifyOperation(this.drex, snapshot, selected, trace);
+          await verifyOperation(this.drex, snapshot, selected, trace, { state, deck: this.deck });
           this.commit(draft, role, JSON.stringify({ operation, ...args }), trace);
         }
         onEvent?.(this.present());
@@ -171,9 +171,11 @@ export class GameSession {
       }
     }
     const safe = JSON.parse(action, (_key, value: unknown) => {
-      if (typeof value !== "string" || !/^[AB]\d+$/.test(value)) return value;
-      const name = known.get(value);
-      return name ? `${name} (${value})` : "(lá ẩn)";
+      if (typeof value !== "string" || !/^[AB]\d+(?:,[AB]\d+)*$/.test(value)) return value;
+      return value.split(",").map((id) => {
+        const name = known.get(id);
+        return name ? `${name} (${id})` : "(lá ẩn)";
+      }).join(",");
     }) as unknown;
     return `${role}: ${JSON.stringify(safe)}`;
   }

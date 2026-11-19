@@ -16,6 +16,8 @@ Cards are data. Add a card's printed metadata and text to the catalog. Never add
 
 The current Nace API provides typed `noul`, `choice` and `score` answers. Use repeated `choice` calls as the next-operation protocol. Use `noul` for optional choices and `score` only for AI preference or priority. Do not pretend the API returns an unsupported arbitrary state object. The state snapshot is carried in the next request and the loop is the source of continuity.
 
+When writing or reviewing prompts, read the [prompt authoring skill](.agents/skills/prompt-authoring/SKILL.md). Keep its provider-independent design guidance separate from Wixoss rules and individual card data.
+
 ## Wixoss source of truth
 
 Read `docs/wixoss/01-match-and-decks.md` through `07-acceptance-cases.md`, `docs/wixoss/06-engine-spec.md`, and the relevant files under `docs/wixoss/decks/` before changing the loop. Preserve timing, zones, hidden information, cost order, targets, triggers, rule-based actions, combat, damage, Crush, Life Burst and Refresh as described there.
