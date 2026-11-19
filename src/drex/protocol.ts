@@ -356,7 +356,8 @@ export async function verifyOperation(
   work: { state: State; deck: Deck },
 ) {
   const { operation, args } = selected;
-  const meaning = operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
+  const meaning = operation === "control" ? `Open the ${args["scope"]} decision window for seat ${args["actor"]} with exactly these intents: ${args["intents"]}. The current declaration has already been consumed. Preserve any offered card-selection window for that seat.`
+    : operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
     : operation === "pop" || operation === "closeFrames" ? `Close ${operation === "pop" ? "one frame" : args["count"] + " frames"}; acknowledge current declaration: ${args["acknowledge"]}. Closing frames removes declarations those frames store.`
     : operation === "chooseFrom" ? `Offer exactly these cards from ${args["source"]}: ${args["eligible"] || "none"}. Can select from ${args["min"]} to ${args["max"]} cards. Confirm each eligible card and every legal selection size; 'up to' permits zero.`
     : operation === "orient" ? `${args["value"] === "true" ? "Down" : "Up"} ${args["target"]}`
@@ -398,9 +399,12 @@ export async function verifyOperation(
     const incomplete = progress.find(({ label }) => label !== "complete");
     if (incomplete) throw new MatchHalt("Drex chưa xác nhận hiệu ứng đã hoàn tất.", incomplete.requestId);
   }
+  const question = operation === "control"
+    ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${auditOperationPrompt}`
+    : `Proposed: ${meaning}. ${auditOperationPrompt}`;
   const answer = await drex.decide(
     facts,
-    `Proposed: ${meaning}. ${auditOperationPrompt}`,
+    question,
     {
       stop: "There is a concrete conflict in legality, timing, arguments or preservation of pending work.",
       execute: "This exact step is legal now and preserves any work that still needs to be resolved.",
