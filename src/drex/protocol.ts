@@ -150,6 +150,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   if (!declarationIsSaved(state)) delete choices["control"];
   const declared = state.declaration?.cards ?? [];
   if (!state.selection.length && !declared.length) delete choices["moveSelected"];
+  if (state.declaration?.intent === "mulligan") delete choices["chooseFrom"];
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
