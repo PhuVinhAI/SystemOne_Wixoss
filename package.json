@@ -4,12 +4,18 @@
   "description": "",
   "scripts": {
     "check": "tsc --noEmit",
-    "test": "tsx scripts/test-wixoss-logic.ts",
-    "test:wixoss": "tsx scripts/test-wixoss-logic.ts"
+    "test": "tsx scripts/play-human-vs-drex.ts",
+    "test:wixoss": "tsx scripts/play-human-vs-drex.ts",
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "play": "tsx scripts/play-human-vs-drex.ts"
   },
   "type": "module",
   "dependencies": {
-    "nace-sdk": "0.9.0"
+    "@fastify/cors": "^11.4.3",
+    "fastify": "^5.12.8",
+    "nace-sdk": "0.9.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/node": "22.20.5",

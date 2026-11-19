@@ -6,9 +6,11 @@ This project uses Drex MAX 1.1 as the continuous game decision hand. Drex reads 
 
 The host is deliberately thin. It stores snapshots, sends context to Drex, records request IDs, applies generic primitives selected by Drex and exposes the resulting snapshot to the client. If Drex fails, times out, returns an unknown primitive or cannot continue, the game stops.
 
+Treat the host as a physical table. The host enumerates mechanically available objects and values, validates its operation protocol, enforces card identity and visibility, and applies explicit mutations. Drex decides what the rules and card text require, including resolution order, phase changes, player windows, and victory. Keep the table's decision context separate from Player B's hidden-information view. Player A submits their own decisions.
+
 ## Card extensibility
 
-Cards are data. Add a card's printed metadata and text to the catalog. Never add card-name branches, per-card handlers, card-specific resolver functions or prompts that manually restate a card's effect. The fixed game instruction tells Drex to read the supplied card text and apply the generic operation vocabulary.
+Cards are data. Add a card's printed metadata and text to the catalog. Never add card-name branches, per-card handlers, card-specific resolver functions, effect-text pattern matching, or prompts that manually restate a card's effect. The fixed game instruction tells Drex to read the supplied card text and apply the generic operation vocabulary.
 
 ## API protocol
 
@@ -25,7 +27,7 @@ npm run check
 npm run test:wixoss
 ```
 
-`npm run test:wixoss` is the live Drex hand-loop test in `scripts/test-wixoss-logic.ts`. Do not restore the deleted receipt smoke test or create a second test that presents a different architecture.
+`npm run play` and `npm run test:wixoss` use the same live runner in `scripts/play-human-vs-drex.ts`. It waits for the human-controlled seat. Keep one canonical match runner.
 
 ## Change boundaries
 

@@ -2,9 +2,9 @@
 
 ## Wixoss continuous game loop
 
-For the Wixoss project, call `systemOne` repeatedly. Each request contains the current snapshot, the complete rules relevant to the snapshot, all card records needed by the current effect, the pending effect and a vocabulary of generic operations. Ask one `choice` question for the next operation. Apply the selected generic operation to the snapshot, record the request ID and call Drex again. Continue through costs, targets, effect parts, triggers, rule-based actions, combat, damage, Life Burst and phase changes until Drex selects a completion or priority operation.
+For WIXOSS, send the current snapshot, relevant rules and unchanged card records. Use repeated `choice` calls to select an operation and its arguments, then audit the whole operation in a separate Drex call. Commit only an affirmed operation. Feed the updated board, frames and recent operations into the next call. Log each request ID, choice, probabilities and usage.
 
-The vocabulary is generic and extensible. It can contain operations such as `place_card`, `pay_cost`, `choose_target`, `move_card`, `modify_power`, `draw_cards`, `vanish`, `retire`, `crush_life`, `deal_damage`, `create_trigger`, `resolve_trigger`, `finish_effect`, `pass_priority` and `halt_game`. The host must not interpret a card name to decide which operation applies. Drex reads the card text and chooses the operation. Add a new card by adding its printed metadata and text to the catalog.
+The host exposes physical verbs in `src/game/primitives.ts`. For example, `move` transfers an identified card, `take` transfers cards by position, and `orient` changes whether a card is Down. Game concepts such as Vanish, Guard, Life Burst and Refresh are decisions made by Drex using those verbs. A card's printed text stays data. Player B's strategy calls receive a separate view that excludes the other hand, hidden Life Cloth and Main Deck order.
 
 The host is a snapshot and transport layer. It may execute only generic primitive operations selected by Drex. It must not silently repair an answer, infer an omitted effect, choose a target on Drex's behalf or run a fallback engine. A failed or unusable Drex call stops the match.
 

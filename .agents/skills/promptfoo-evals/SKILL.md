@@ -14,7 +14,7 @@ Read `references/eval-patterns.md` for YAML, assertion, and CI examples.
 
 ## Wixoss loop evaluation
 
-The project evaluates a continuous Drex game loop, not isolated card classification. A test should send a real snapshot and card catalog, call Drex for one generic next operation, apply that operation, then call Drex again with the updated snapshot. Assert the trace and resulting generic state transitions. Do not write fixtures that hard-code one handler per card or replace the loop with a precomputed expected answer. New cards are evaluated by supplying their printed text through the catalog.
+Exercise the production protocol with a real board snapshot and unchanged card records. Call Drex to select the operation and its arguments, audit it through Drex, then apply it to the board before the next call. Assert actual board changes, ordering, visibility, and failure cases with independent expectations from the rules. Report partial and integrated runs separately. Keep verification fixtures out of the production decision path.
 
 ## 1. Define the behavior
 

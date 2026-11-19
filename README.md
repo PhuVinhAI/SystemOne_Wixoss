@@ -1,52 +1,36 @@
-# System One với Nace Drex MAX 1.1
+# SystemOne WIXOSS
 
-[Tài liệu game WIXOSS](docs/wixoss/README.md) mô tả luật, cấu trúc trận, hướng triển khai và các ca nghiệm thu.
+Bàn chơi WIXOSS bằng TypeScript dùng Drex MAX 1.1 để điều khiển thao tác của bàn và chơi phía B. Người chơi điều khiển phía A. D01 Ancient Surprise lấy số lượng, thuộc tính, text và FAQ từ catalog có sẵn. [Luật và dữ liệu WIXOSS](docs/wixoss/README.md)
 
-## Chạy thử qua API thật
+## Chạy dự án
 
-Cần Node.js 22 trở lên. Từ thư mục dự án, chạy các lệnh sau trong CMD.
+Cần Node.js 22 trở lên. Chạy `npm ci` rồi khai báo `NACE_API_KEY` trong biến môi trường hoặc trong file `.env`. API tính phí theo input của mỗi lần gọi thành công. [Nace Console](https://console.nace.ai/dashboard/api-keys) · [Giá](https://console.nace.ai/docs/drex/reference/pricing)
 
-```text
-npm ci
-if not exist .env copy .env.example .env
-```
+- `npm run check` kiểm tra TypeScript.
+- `npm run start` chạy Fastify tại `127.0.0.1:3000`. Có thể đặt `PORT` và `WIXOSS_UI_ORIGIN` nếu frontend chạy ở origin riêng.
+- `npm run play` mở bàn D01, sau đó chờ người chơi nhập từng quyết định của A. Ví dụ: `mulligan A12 A19`, `play A12 signiLeft`, `choose A9 A23`, `pass`. Dùng các ID và lựa chọn từ bàn hiện tại. `npm run test:wixoss` gọi cùng runner live.
 
-Nếu `.env` đã có, mở file hiện tại. Lấy key từ [Nace Console](https://console.nace.ai/dashboard/api-keys), rồi điền vào dòng `NACE_API_KEY=` trong `.env`. Git bỏ qua file này.
+### Ranh giới vận hành
 
-```text
-npm run check
-npm run test:wixoss
-```
+| Phần | Trách nhiệm |
+| --- | --- |
+| `src/catalog` | Đọc danh sách deck, thuộc tính in, card text, FAQ và các chương luật. Nội dung hiệu ứng được chuyển nguyên văn cho Drex. |
+| `src/game` | Giữ bản thể lá, chồng bài, quyền xem, lượt, giá trị và các frame đang xử lý. Thực hiện thao tác vật lý đã chọn, kiểm tra tham số và tính toàn vẹn của bàn. |
+| `src/drex` | Drex chọn thao tác, đối tượng và giá trị bằng các lần gọi `choice` nối tiếp. Drex kiểm tra cả tổ hợp lá người chơi chọn và thao tác bàn đề xuất trước khi ghi. Drex chơi B bằng góc nhìn riêng. |
+| `src/api` và `scripts` | Fastify và terminal dùng cùng phiên đấu. Sau quyết định của A, phiên đấu chạy tiếp đến cửa sổ nhập kế tiếp, kết quả thắng hoặc trạng thái dừng. |
 
-`check` kiểm tra kiểu TypeScript. `test` và `test:wixoss` chạy cùng live hand-loop Wixoss bằng [SDK TypeScript chính thức của Nace](https://console.nace.ai/docs/developer-tools/typescript) với model `drex-max-v1.1`. Mỗi vòng gửi state hiện tại, luật, card catalog và effect đang chờ đến `https://console.nace.ai/v1/systemone`, đọc `choice` primitive mà Drex quyết định, áp dụng primitive generic rồi gọi lại với state mới. Thiếu key, lỗi API hoặc primitive không hợp lệ đều làm trận dừng. Nace tính phí input cho mỗi request thành công. [Pricing](https://console.nace.ai/docs/drex/reference/pricing)
+Khi Drex báo dừng, lỗi hoặc không xác nhận thao tác, phiên giữ nguyên bàn tại thao tác đã ghi cuối cùng và chuyển sang `halted`. Chi tiết quyết định và request ID nằm trong log cục bộ. Thêm lá bằng hồ sơ in trong catalog. Những cơ chế đòi hỏi thao tác vật lý mới cần được thêm vào giao thức dùng chung.
 
-`test:wixoss` chạy vòng gọi Drex liên tục trên một state Wixoss. Mỗi response chọn một primitive generic như đặt lá vào SIGNI Zone, xử lý Constant/Enter, chọn target, thay đổi Power, rút bài, kết thúc effect hoặc chuyển priority. Script áp dụng primitive được chọn lên snapshot hiện tại rồi gửi snapshot mới cho Drex ở vòng tiếp theo. Card catalog chứa card text, còn host không có nhánh riêng theo tên lá. Lần chạy kiểm chứng đã đặt `Zwei =Slow Loris=` vào right SIGNI Zone rồi gọi Drex lần nữa để kết thúc effect, với request ID riêng cho từng vòng. Nếu Drex lỗi hoặc trả primitive ngoài vocabulary, script dừng với mã lỗi.
+### API cho UI
 
-## Các model trong API của Nace
+- `GET /health` trả trạng thái tiến trình và model được cấu hình.
+- `GET /catalog/d01` trả định nghĩa lá.
+- `POST /matches` mở phiên và chạy Drex đến cửa sổ nhập của A hoặc điểm dừng.
+- `GET /matches/:id` trả bàn theo góc nhìn A, lựa chọn hiện tại và thông báo công khai gần nhất.
+- `POST /matches/:id/actions` nhận `revision`, `intent` và tùy thao tác có `card`, `cards` hoặc `zone`. Dùng revision sau cùng từ API. Gửi thao tác quá hạn hoặc đồng thời trả `409`.
 
-| Model | API ID | Khi nào dùng |
-| --- | --- | --- |
-| Drex MAX 1.1 | `drex-max-v1.1` | Model chính của dự án. Nhận văn bản, JSON và ảnh. Ngân sách 262.144 token cho cả request. |
-| Drex 2.0 | `drex-v2.0` | Lựa chọn cho dữ liệu chỉ có văn bản hoặc JSON. Giới hạn 131.072 token cho state và 262.144 token cho state cộng câu hỏi dài nhất. |
-| Drex Max Finance | `drex-max-finance` | Biến thể văn bản và ảnh chuyên tài chính. |
+API lưu phiên trong bộ nhớ của tiến trình. Runner terminal lưu log JSONL trong `logs/`, gồm dữ liệu ẩn để chẩn đoán cục bộ. Chỉ snapshot đã che bài được trả qua HTTP.
 
-`drex-latest` hiện trỏ tới `drex-max-v1.1`. Ví dụ và bài test dùng ID cố định để giữ nguyên phiên bản khi so sánh prompt. Danh sách khả dụng theo tài khoản xem qua `client.models.list()`. [Danh mục model của Nace](https://console.nace.ai/docs/drex/reference/models)
+### Phạm vi kiểm chứng
 
-## Viết prompt System One
-
-Gửi dữ liệu cần xem trong `state`. Đặt từng phán đoán vào một phần tử của `questions`, rồi định nghĩa tiêu chí bằng `instructions` và `criteria`. Dùng khóa có ý nghĩa vì kết quả trả về theo đúng khóa câu hỏi.
-
-| Kiểu | Cách viết | Cách đọc |
-| --- | --- | --- |
-| `noul` | Một câu hỏi có/không với điều kiện quan sát được. | `noul` là xác suất câu trả lời có. |
-| `choice` | Các nhãn có ranh giới rõ. Thêm nhãn thiếu dữ liệu nếu phù hợp. | Đọc nhãn được chọn và phân bố xác suất. Hai nhãn gần nhau có thể cần xem lại. |
-| `score` | Mô tả các mức của một tiêu chí, theo thứ tự từ thấp đến cao. | `score` là điểm kỳ vọng. Cộng xác suất các mức phù hợp nếu cần đo xác suất vượt ngưỡng. |
-
-Giữ nguyên cấu trúc `state` và model khi so sánh các bản prompt. Dùng bộ ví dụ có nhãn đúng, gồm ca thông thường, thiếu bằng chứng và sát ranh giới. Với MAX 1.1, gửi ảnh ở trường `images` và gọi theo thứ tự “Image 1”, “Image 2”. Khi cần model xem toàn bộ văn bản, tài liệu khuyến nghị state khoảng 8.000 token trở xuống vì state dài sẽ được chọn đoạn theo câu hỏi. [Questions](https://console.nace.ai/docs/drex/guides/questions) · [Reading answers](https://console.nace.ai/docs/drex/guides/reading-answers) · [Drex Max](https://console.nace.ai/docs/drex/guides/drex-max)
-
-## Skill đã cài cho Codex
-
-- `$ndi-console` dùng để thiết kế, đọc và gọi Drex. Bản dự án cập nhật ID model, API key, ảnh và cách viết câu hỏi. [Skill gốc của Nace](https://github.com/nace-ai/ndi-agent-skill/tree/89e0d76c9b4ff7c39d647606f1fb5d586fa61ab9/skills/ndi-console)
-- `$promptfoo-evals` dùng để xây bộ kiểm thử prompt theo kỳ vọng đã gắn nhãn. Bản dự án bổ sung cách cấu hình Drex làm bộ chấm văn bản theo tài liệu Nace. [Skill gốc của Promptfoo](https://github.com/promptfoo/promptfoo/tree/0d4978bace531463ebf200800f396fab9db4c21a/plugins/promptfoo/skills/promptfoo-evals) · [Tích hợp Nace](https://console.nace.ai/docs/integrations/promptfoo)
-
-Mở phiên Codex mới trong thư mục dự án để gọi các skill đã cài. Ví dụ gọi `$ndi-console` để rà câu hỏi và tiêu chí cho Drex MAX 1.1, rồi gọi `$promptfoo-evals` khi cần bộ ca đánh giá lặp lại.
+Đã kiểm tra TypeScript, route health/catalog và việc che bài. Các ca riêng qua API thật đã xác nhận setup tới cửa sổ mulligan, Polygenesis trả đúng một lá, Tobiel mở lựa chọn mục tiêu trước battle, Life Burst của Sen no Rikyu, chuyển lá khi Guard, Refresh, kết quả damage tại 0 Life Cloth và lựa chọn SIGNI cho Harmonic Call. D01 chưa qua kiểm chứng tích hợp từ setup đến thắng/thua. Ca mulligan đổi 2 lá gặp lỗi đóng frame trước khi hoàn tất setup. [Ca nghiệm thu](docs/wixoss/07-acceptance-cases.md)
