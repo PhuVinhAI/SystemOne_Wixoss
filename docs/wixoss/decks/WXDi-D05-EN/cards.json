@@ -1,0 +1,128 @@
+[
+  {
+    "id": "WXDi-D05-001",
+    "name": "Newborn Dr. Tamago",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-002",
+    "name": "Let's Go! Dr. Tamago",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-003",
+    "name": "You Can Do It! Dr. Tamago",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-004",
+    "name": "Never Give Up! Dr. Tamago",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-005",
+    "name": "Newborn Nova",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-006",
+    "name": "Nova =Dirty=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-007",
+    "name": "Nova =Chopper=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-008",
+    "name": "Newborn Bang",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-009",
+    "name": "Bang =Crescendo=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-010",
+    "name": "Bang =Repeat=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-011",
+    "name": "Hanpanai ★ Destruction",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D05-012",
+    "name": "Sharkspeare, Azure Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-013",
+    "name": "Curson, Blessed Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-014",
+    "name": "Carmilla Screw, Azure Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-015",
+    "name": "Captain Hook, Azure Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-016",
+    "name": "Shimpachi, Azure General",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-017",
+    "name": "Giacobinids, Natural Planet",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-018",
+    "name": "Procyon A, Natural Planet",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-019",
+    "name": "Sirius, Natural Planet",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-020",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D05-021",
+    "name": "RANDOM DRAIN",
+    "type": "SPELL",
+    "count": 4
+  }
+]

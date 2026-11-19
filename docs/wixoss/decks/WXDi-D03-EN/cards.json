@@ -1,0 +1,128 @@
+[
+  {
+    "id": "WXDi-D03-001",
+    "name": "Hirana, a Spark of Hope",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-002",
+    "name": "Hirana, a Dream of a Miracle",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-003",
+    "name": "Hirana, a Glimpse of the Truth",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-004",
+    "name": "Hirana, a Step Towards the Top",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-005",
+    "name": "Akino, Bound for the Future",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-006",
+    "name": "Akino*Rock",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-007",
+    "name": "Akino*Paper",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-008",
+    "name": "Rei, On the Wings of Tomorrow",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-009",
+    "name": "Rei*Flash Blade",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-010",
+    "name": "Rei*Empty Blade",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-011",
+    "name": "Glory Grow",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D03-012",
+    "name": "Romail, Lightly Armed",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-013",
+    "name": "Lancelot, Crimson General",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-014",
+    "name": "Volcanic, Natural Crystal",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-015",
+    "name": "Kagutsuchi, Crimson Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-016",
+    "name": "Letti, Heavy Armed",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-017",
+    "name": "Adamanthia, Natural Crystal",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-018",
+    "name": "Bronze, Natural Crystal",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-019",
+    "name": "Silvana, Natural Crystal",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-020",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D03-021",
+    "name": "Deafening Inferno",
+    "type": "SPELL",
+    "count": 4
+  }
+]

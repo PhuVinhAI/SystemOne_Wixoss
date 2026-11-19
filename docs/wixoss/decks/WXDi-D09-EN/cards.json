@@ -1,0 +1,401 @@
+[
+  {
+    "id": "WXDi-D09-CO-01",
+    "name": "Coin Card WXDi-D09-CO-01",
+    "type": "TOKEN",
+    "count": 2,
+    "deck": "Coin"
+  },
+  {
+    "id": "WXDi-D09-H01",
+    "name": "Hirana, a Spark of Hope",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H02",
+    "name": "Hirana, a Dream of a Miracle",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H03",
+    "name": "Hirana, a Glimpse of the Truth",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H04",
+    "name": "Hirana, a Step Towards the Top",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H05",
+    "name": "Tamayorihime, New Moon Miko",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H06",
+    "name": "Tama Loud Voice",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H07",
+    "name": "Tama Aura",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H08",
+    "name": "Machina Zero",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H09",
+    "name": "Machina Wing Slash",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H10",
+    "name": "Machina Smash",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H11",
+    "name": "Entwined Supremacy",
+    "type": "PIECE",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H12",
+    "name": "Go to the Top!",
+    "type": "PIECE",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H13",
+    "name": "Nobunaga, Crimson General Queen",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H14",
+    "name": "Diabride, Natural Engagement Crystal",
+    "type": "SIGNI",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H15",
+    "name": "Hanayo//Memoria, Natural Pyroxene",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H16",
+    "name": "Halberd, Full Armed",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H17",
+    "name": "Flathro Commander, Roaring Flame",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H18",
+    "name": "Ereshkigal, Doomed Evil Queen",
+    "type": "SIGNI",
+    "count": 1,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H19",
+    "name": "Hera, Crimson Evil",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H20",
+    "name": "Fornax, Natural Planet",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H21",
+    "name": "Yuzuki//Memoria, Phantom Dragon",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H22",
+    "name": "Decarabia, Crimson Evil",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H23",
+    "name": "Tristan, Crimson General",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H24",
+    "name": "Samidare, Lightly Armed",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H25",
+    "name": "Eckesachs, Lightly Armed",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H26",
+    "name": "Romail, Lightly Armed",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H27",
+    "name": "Lancelot, Crimson General",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H28",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-H29",
+    "name": "Vulcanic Scythe",
+    "type": "SPELL",
+    "count": 2,
+    "deck": "Hirana"
+  },
+  {
+    "id": "WXDi-D09-P01",
+    "name": "Code Piruluk",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P02",
+    "name": "Code Piruluk K",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P03",
+    "name": "Code Piruluk M",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P04",
+    "name": "Code Piruluk xi",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P05",
+    "name": "Dona START",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P06",
+    "name": "Dona \"Cheer Me On!\"",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P07",
+    "name": "Dona \"Go, Go!\"",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P08",
+    "name": "Madoka START",
+    "type": "LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P09",
+    "name": "Madoka//Float",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P10",
+    "name": "Madoka//Clap",
+    "type": "ASSIST LRIG",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P11",
+    "name": "Summer Live Blues",
+    "type": "PIECE",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P12",
+    "name": "Burning Curiosity",
+    "type": "PIECE",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P13",
+    "name": "Exia, Blessed Angel Queen",
+    "type": "SIGNI",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P14",
+    "name": "Yukime//Memoria, Blessed Warlord",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P15",
+    "name": "Orochimaru, Blessed Evil Queen",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P16",
+    "name": "Firefly Squid, Aquatic Phantom Deity",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P17",
+    "name": "Brynhildr, Azure Angel Queen",
+    "type": "SIGNI",
+    "count": 1,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P18",
+    "name": "Mikomiko//Memoria, Bacteria Queen",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P19",
+    "name": "Audomula, Azure Angel",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P20",
+    "name": "Bruno, Azure General",
+    "type": "SIGNI",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P21",
+    "name": "Heqet, Azure Angel",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P22",
+    "name": "Focalor, Azure Evil",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P23",
+    "name": "Manomin, Azure Evil",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P24",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P25",
+    "name": "Call Out",
+    "type": "SPELL",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P26",
+    "name": "RECOVERY",
+    "type": "SPELL",
+    "count": 2,
+    "deck": "Piruluk"
+  },
+  {
+    "id": "WXDi-D09-P27",
+    "name": "RANDOM DRAIN",
+    "type": "SPELL",
+    "count": 4,
+    "deck": "Piruluk"
+  }
+]

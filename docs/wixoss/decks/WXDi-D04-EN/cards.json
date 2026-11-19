@@ -1,0 +1,128 @@
+[
+  {
+    "id": "WXDi-D04-001",
+    "name": "MC LION - Standby",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-002",
+    "name": "MC LION - 1st Verse",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-003",
+    "name": "MC LION - 2nd Verse",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-004",
+    "name": "MC LION - 3rd Verse",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-005",
+    "name": "DJ LOVIT - Standby",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-006",
+    "name": "DJ LOVIT - SCRATCH",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-007",
+    "name": "DJ LOVIT - MIX",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-008",
+    "name": "VJ WOLF - Standby",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-009",
+    "name": "VJ WOLF - CUE",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-010",
+    "name": "VJ WOLF - SYNC",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-011",
+    "name": "Endless Punchline",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D04-012",
+    "name": "F - Lite, Code: Art",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-013",
+    "name": "Michael, Blessed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-014",
+    "name": "Amazoness, Jade General",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-015",
+    "name": "Athena, Blessed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-016",
+    "name": "Chandelier, Code: Art",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-017",
+    "name": "Flopsy, Phantom Terra Beast",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-018",
+    "name": "Triomphe, Code: Maze",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-019",
+    "name": "Babel, Code: Maze",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-020",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D04-021",
+    "name": "Good Dig",
+    "type": "SPELL",
+    "count": 4
+  }
+]

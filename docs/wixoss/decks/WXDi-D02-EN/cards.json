@@ -1,0 +1,128 @@
+[
+  {
+    "id": "WXDi-D02-001",
+    "name": "Lize, Level 0",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-002",
+    "name": "[Center] Lize, Level 1",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-003",
+    "name": "[Center] Lize, Level 2",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-004",
+    "name": "[Center] Lize, Level 3",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-005",
+    "name": "Ange, Level 0",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-006",
+    "name": "[Assist] Ange, Level 1",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-007",
+    "name": "[Assist] Ange, Level 2",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-008",
+    "name": "Toko, Level 0",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-009",
+    "name": "[Assist] Toko, Level 1",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-010",
+    "name": "[Assist] Toko, Level 2",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-011",
+    "name": "Samba Carnival",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D02-012",
+    "name": "Chihiro Yuki, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-013",
+    "name": "Ichigo Ushimi, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-014",
+    "name": "Kazaki Morinaka, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-015",
+    "name": "Era Otogibara, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-016",
+    "name": "Kaede Higuchi, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-017",
+    "name": "Rin Shizuka, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-018",
+    "name": "Sara Hoshikawa, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-019",
+    "name": "Mao Matsukai, Code 2434",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-020",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D02-021",
+    "name": "In Wonderland",
+    "type": "SPELL",
+    "count": 4
+  }
+]

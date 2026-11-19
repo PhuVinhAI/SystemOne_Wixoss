@@ -1,0 +1,170 @@
+[
+  {
+    "id": "WXDi-EXD01-001",
+    "name": "Urith, Enma",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-002",
+    "name": "Urith, Burning Enma",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-003",
+    "name": "Urith, Fatal Enma",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-004",
+    "name": "Urith, Maniacal Enma",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-005",
+    "name": "Akino, Bound for the Future",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-006",
+    "name": "Akino*Rock",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-007",
+    "name": "Akino*Bye - Bye!",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-008",
+    "name": "Newborn Dr. Tamago",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-009",
+    "name": "Tamago =Beating=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-010",
+    "name": "Tamago =Cymbal Roll=",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-011",
+    "name": "Miasma Labyrinth",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-012",
+    "name": "Never Surrender",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-EXD01-013",
+    "name": "Ronove, Azure Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-EXD01-014",
+    "name": "Karasawa, Doomed General",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-015",
+    "name": "Baphomet, Doomed Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-EXD01-016",
+    "name": "Mastema, Blessed Doomed Angel",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-017",
+    "name": "Curson, Blessed Evil",
+    "type": "SIGNI",
+    "count": 3
+  },
+  {
+    "id": "WXDi-EXD01-018",
+    "name": "Brutus, Doomed General",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-019",
+    "name": "Caesar, Wicked General",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-020",
+    "name": "Typhon, Doomed Evil",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-021",
+    "name": "Buckler, High Armed",
+    "type": "SIGNI",
+    "count": 3
+  },
+  {
+    "id": "WXDi-EXD01-022",
+    "name": "Izo, Doomed General",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-023",
+    "name": "Anna Mirage, Doomed Evil",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-024",
+    "name": "Dark Energie, Full Armed",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-025",
+    "name": "Dragon Maid, Phantom Dragon Queen",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-026",
+    "name": "Phalaris, Code: Ancients",
+    "type": "SIGNI",
+    "count": 2
+  },
+  {
+    "id": "WXDi-EXD01-027",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-EXD01-028",
+    "name": "Reticle Digger",
+    "type": "SPELL",
+    "count": 2
+  }
+]

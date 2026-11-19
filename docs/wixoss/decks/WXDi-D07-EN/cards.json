@@ -1,0 +1,134 @@
+[
+  {
+    "id": "WXDi-D07-001",
+    "name": "Ex Zero",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-002",
+    "name": "Ex One",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-003",
+    "name": "Ex Two",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-004",
+    "name": "Ex Three",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-005",
+    "name": "Deus Zero",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-006",
+    "name": "Deus Drive",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-007",
+    "name": "Deus Shield",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-008",
+    "name": "Machina Zero",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-009",
+    "name": "Machina Wing Slash",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-010",
+    "name": "Machina Smash",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-011",
+    "name": "TRIGGER OF VICTORY",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-012",
+    "name": "Chime of the Blessed Key",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D07-013",
+    "name": "Cargo, Code: Ride",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-014",
+    "name": "Baphomet, Doomed Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-015",
+    "name": "Lancelot, Crimson General",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-016",
+    "name": "Musca, Natural Planet",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-017",
+    "name": "Gull - Wing, Code: Accel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-018",
+    "name": "Devil Stinger, Phantom Aquatic Beast",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-019",
+    "name": "Obelisk, Code: Anti",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-020",
+    "name": "Eckesachs, Lightly Armed",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-021",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D07-022",
+    "name": "Burning Calamity",
+    "type": "SPELL",
+    "count": 4
+  }
+]

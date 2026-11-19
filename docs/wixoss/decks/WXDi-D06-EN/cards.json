@@ -1,0 +1,128 @@
+[
+  {
+    "id": "WXDi-D06-001",
+    "name": "Muzica START",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-002",
+    "name": "Muzica, Vogue 1",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-003",
+    "name": "Muzica, Vogue 2",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-004",
+    "name": "Muzica, Vogue 3",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-005",
+    "name": "Madoka START",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-006",
+    "name": "Madoka//Float",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-007",
+    "name": "Madoka//Dub",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-008",
+    "name": "Sanga START",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-009",
+    "name": "Sanga//Aerial",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-010",
+    "name": "Sanga//Shake",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-011",
+    "name": "Salvage the Future",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D06-012",
+    "name": "Noboribetsu, Code: Maze",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-013",
+    "name": "He, Natural Element",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-014",
+    "name": "Gaap, Doomed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-015",
+    "name": "Ge, Natural Element",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-016",
+    "name": "Aconis Type: Drei",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-017",
+    "name": "Anna Mirage, Doomed Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-018",
+    "name": "Green Gas Type: Eins",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-019",
+    "name": "Tick - Tock, Azure Doomed Evil",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-020",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D06-021",
+    "name": "Enervating Melody",
+    "type": "SPELL",
+    "count": 4
+  }
+]

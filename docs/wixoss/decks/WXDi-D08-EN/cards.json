@@ -1,0 +1,140 @@
+[
+  {
+    "id": "WXDi-D08-001",
+    "name": "Tamayorihime, New Moon Miko",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-002",
+    "name": "Tamayorihime, Crescent Moon Miko",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-003",
+    "name": "Tamayorihime, Half Moon Miko",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-004",
+    "name": "Tamayorihime, Musical Moon Miko",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-005",
+    "name": "Hanayo, Zero",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-006",
+    "name": "Hanayo, Camellia",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-007",
+    "name": "Hanayo, Orchid",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-008",
+    "name": "Midoriko, Battle Girl",
+    "type": "LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-009",
+    "name": "Midoriko, Gemmation",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-010",
+    "name": "Midoriko, Reinforcement",
+    "type": "ASSIST LRIG",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-011",
+    "name": "Go to the Top!",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-012",
+    "name": "Burning Curiosity",
+    "type": "PIECE",
+    "count": 1
+  },
+  {
+    "id": "WXDi-D08-013",
+    "name": "Aglaea, Blessed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-014",
+    "name": "Haniel, Blessed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-015",
+    "name": "Romail, Lightly Armed",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-016",
+    "name": "Michael, Blessed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-017",
+    "name": "Bow, High Armed",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-018",
+    "name": "Athena, Blessed Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-019",
+    "name": "Arc Athena, Holy Angel",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-020",
+    "name": "Letti, Heavy Armed",
+    "type": "SIGNI",
+    "count": 3
+  },
+  {
+    "id": "WXDi-D08-021",
+    "name": "Servant ♯",
+    "type": "SIGNI",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-022",
+    "name": "Get Big Bible",
+    "type": "SPELL",
+    "count": 4
+  },
+  {
+    "id": "WXDi-D08-023",
+    "name": "Arcgwyn, Blessed Angel Queen",
+    "type": "SIGNI",
+    "count": 1
+  }
+]
