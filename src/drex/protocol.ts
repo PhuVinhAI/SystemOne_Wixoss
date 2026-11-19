@@ -147,10 +147,12 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   if (!state.selection.length && !state.offeredSelection) {
     delete choices["clearSelection"];
   }
+  const hasExpiringState = state.marks.some(({ ends }) => ends !== null && ends <= state.turn)
+    || Object.values(state.cards).some(({ adjustments }) => adjustments.some(({ expires }) => expires <= state.turn));
+  if (!hasExpiringState) delete choices["clearTurn"];
   if (!declarationIsSaved(state)) delete choices["control"];
   const declared = state.declaration?.cards ?? [];
   if (!state.selection.length && !declared.length) delete choices["moveSelected"];
-  if (state.declaration?.intent === "mulligan") delete choices["chooseFrom"];
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
@@ -261,16 +263,24 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     case "control": {
       args["actor"] = await actor();
       args["scope"] = state.frames.length ? "frame" : "match";
-      const picked: Intent[] = [];
-      for (let i = 0; i < intents.length; i += 1) {
-        const available = Object.fromEntries(intents.filter((intent) => !picked.includes(intent))
-          .map((intent) => [intent, actionText[intent]]));
-        if (picked.length) available["done"] = "Offer exactly the selected intents and no others.";
-        const next = await parameter("one additional legally required or allowed intent, or done", available,
-          `Seat ${args["actor"]}, scope ${args["scope"]}. In frame scope only offer decisions for the unresolved top frame. Never offer normal phase actions as part of a resolution frame. Already selected: ${picked.join(", ") || "none"}. If the selected set is complete, answer done immediately. A generic choose is for a mandatory choice of a card; already-offered more specific intents take precedence. Choose a mode only when printed as an explicit choice of mutually exclusive modes.`);
-        if (next === "done") break;
-        picked.push(next as Intent);
-      }
+      const window = `Seat ${args["actor"]}, phase ${state.phase}, scope ${args["scope"]}. A frame window covers only the unresolved decision of the top frame. A match window covers actions available in the current phase. Judge this action type independently of all other choices and of strategy.`;
+      const side = state.players[args["actor"] as Seat];
+      const lrigEvidence = [...side.centerLrig.slice(0, 1), ...side.leftLrig.slice(0, 1), ...side.rightLrig.slice(0, 1), ...side.lrigDeck]
+        .map((id) => {
+          const { name, level, timing, growCost, group } = deck.cards[state.cards[id]!.definition]!;
+          return `${id} ${name} | Level ${level} | type ${group} | timing ${timing || "—"} | Grow cost ${growCost || "—"}`;
+        }).join("; ");
+      const options = await ask.each(Object.fromEntries(intents
+        .filter((intent) => intent !== "choose" || state.offeredSelection)
+        .map((intent) => [intent, {
+          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Only offer a printed mode in its mode decision window.${intent === "grow" ? ` Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.` : ""}`,
+          choices: {
+            offer: "There is at least one rules-legal declaration of this type in this window, with any required inputs available.",
+            omit: "This declaration type has no legal instance in this window.",
+          },
+        }])));
+      const picked = intents.filter((intent) => options[intent] === "offer");
+      if (!picked.length) throw new MatchHalt("Drex không tìm được lựa chọn hợp lệ cho cửa sổ.");
       args["intents"] = picked.join(",");
       break;
     }
@@ -345,7 +355,7 @@ export function askWith(drex: DrexClient, initial: string, trace: Decision[]): A
       const stopped = Object.values(answers).find((answer) => answer.label === "halt");
       if (stopped) throw new MatchHalt("Drex không xác định được ứng viên.", stopped.requestId);
       return Object.fromEntries(Object.entries(answers).map(([id, answer]) => {
-        steps.push(`Candidate ${id} => ${answer.label}`);
+        steps.push(`${id} => ${answer.label}`);
         return [id, answer.label];
       }));
     },
@@ -357,7 +367,7 @@ export async function verifyOperation(
   work: { state: State; deck: Deck },
 ) {
   const { operation, args } = selected;
-  const meaning = operation === "control" ? `Open the ${args["scope"]} decision window for seat ${args["actor"]} with exactly these intents: ${args["intents"]}. The current declaration has already been consumed. Preserve any offered card-selection window for that seat.`
+  const meaning = operation === "control" ? `Open the ${args["scope"]} decision window for seat ${args["actor"]} with these intents: ${args["intents"]}. Preserve any staged selection and declarations saved in frames.`
     : operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
     : operation === "pop" || operation === "closeFrames" ? `Close ${operation === "pop" ? "one frame" : args["count"] + " frames"}; acknowledge current declaration: ${args["acknowledge"]}. Closing frames removes declarations those frames store.`
     : operation === "chooseFrom" ? `Offer exactly these cards from ${args["source"]}: ${args["eligible"] || "none"}. Can select from ${args["min"]} to ${args["max"]} cards. Confirm each eligible card and every legal selection size; 'up to' permits zero.`

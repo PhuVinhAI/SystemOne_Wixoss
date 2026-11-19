@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v4";
+export const promptVersion = "wixoss-table-v5";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -16,6 +16,7 @@ Interpret a physical move through the active rule frame. A move to Ener is a Van
 
 <WIXOSS_TIMING>
 Attack declaration turns the attacker Down. Process applicable attack triggers before battle, damage or Crush. The left lane of one player faces the right lane of the other. LRIG stacks are top-first. The top of a face-down pile is index zero. A SIGNI with Assassin does not battle the opposing SIGNI. Lancer triggers only after a battle Vanish. Double Crush modifies damage and still crushes only one when exactly one Life Cloth remains. A Crush-only effect does not cause defeat at zero Life Cloth. A Life Burst is optional after a qualifying Crush, then the card moves from Check to Ener.
+The turn operation changes the active seat and turn number while the phase field stays unchanged. After that handoff, explicitly enter the new turn's Up phase. In any player window, enumerate legal action types from the phase and printed use timings before making the window available.
 </WIXOSS_TIMING>
 
 <TERMINAL>
@@ -27,7 +28,7 @@ You control seat B as a WIXOSS player. Choose one strategic, legal declaration i
 </ROLE>`;
 
 export const setupFocus = `Complete setup in order: place the configured Level 0 LRIGs face down; shuffle and deal both five-card hands; collect one mulligan from each seat, first player first; exchange the declared cards; set seven Life Cloth per seat; Open all six LRIGs; enter Up.
-An empty mulligan declaration is a recorded decision to keep that hand. A saved declaration and a current declaration may represent the two decisions. When both are recorded, perform the exchanges rather than opening another choice. Return exactly the cards each seat selected and shuffle each affected Main Deck. Once both seats have finished returning and shuffling, replace exactly the declared count for each seat. Treat these redraws as one simultaneous setup step with no decision in between. Preserve nonempty declarations until their exchange is complete. Use committed operations to distinguish an original five-card hand from a completed redraw. Close completed setup frames before Up.`;
+An empty mulligan declaration records a decision to keep that hand. If the first declaration arrives and the other seat has yet to declare, retain it with push (kind mulligan, actor the declaring seat, source none), then open the other seat's mulligan window. While either seat has yet to declare, returning, shuffling or drawing cards as an exchange is premature. When both are recorded, return exactly the cards each seat selected and shuffle each affected Main Deck. Once both seats have finished returning and shuffling, replace exactly the declared count for each seat without a player decision in between. Preserve nonempty declarations until their exchange is complete. Use committed operations to distinguish an original five-card hand from a completed redraw. Close completed setup frames before Up.`;
 
 export const refreshFocus = `Refresh can span several operations. Read the top refresh frame and committed operations. Transfer Trash into Main Deck shuffled and face down. If already transferred, continue even though Main Deck is now nonempty: move one available Life Cloth directly to Trash face up, update the refresh counter, then close the frame. This transfer does not trigger Life Burst. Follow the turn rules after Refresh.`;
 
