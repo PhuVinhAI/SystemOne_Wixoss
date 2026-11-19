@@ -1,7 +1,7 @@
 import { flags, frames, intents, phases, seats, zones, type Declaration, type Intent, type Seat, type State, type Zone } from "../domain/types.js";
 import { boxName, displayedPower, slots } from "../game/board.js";
 import { MatchHalt, type Choices } from "../game/options.js";
-import { areas, counterNames, declarationIsSaved, operations, type Operation } from "../game/primitives.js";
+import { areas, counterNames, declarationIsSaved, operations, selectedGroup, type Operation } from "../game/primitives.js";
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
@@ -151,8 +151,15 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     || Object.values(state.cards).some(({ adjustments }) => adjustments.some(({ expires }) => expires <= state.turn));
   if (!hasExpiringState) delete choices["clearTurn"];
   if (!declarationIsSaved(state)) delete choices["control"];
-  const declared = state.declaration?.cards ?? [];
-  if (!state.selection.length && !declared.length) delete choices["moveSelected"];
+  const groups = [
+    { key: "selected", actor: "table", text: "Working selection" },
+    { key: "declared", actor: state.declaration?.actor, text: "Current declaration" },
+    ...state.frames.map((frame, index) => ({ key: `frame${index}`, actor: frame.actor, text: `Saved declaration in ${frame.kind} frame` })),
+  ].filter(({ key }) => selectedGroup(state, key).length);
+  if (!groups.length) delete choices["moveSelected"];
+  else choices["moveSelected"] = `${operations.moveSelected} Available complete groups: ${groups.map(({ key, actor, text }) =>
+    `${text} for ${actor} (${key}, ${selectedGroup(state, key).length} cards)`).join("; ")}.`;
+  choices["select"] = `${operations.select} Use it to build a new working group only. A submitted or saved declaration already supplies its whole group.`;
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
@@ -181,13 +188,11 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       break;
     }
     case "moveSelected": {
-      const groups = {
-        ...(state.selection.length ? { selected: `Working selection: ${state.selection.join(", ")}.` } : {}),
-        ...(declared.length ? { declared: `Complete submitted selection: ${declared.join(", ")}.` } : {}),
-      };
-      args["from"] = Object.keys(groups).length > 1
-        ? await parameter("group to move simultaneously", groups) : Object.keys(groups)[0]!;
-      const group = args["from"] === "declared" ? declared : state.selection;
+      args["from"] = groups.length > 1
+        ? await parameter("group to move simultaneously", Object.fromEntries(groups.map(({ key, actor, text }) =>
+          [key, `${text} for ${actor}: ${selectedGroup(state, key).join(", ")}.`])))
+        : groups[0]!.key;
+      const group = selectedGroup(state, args["from"]);
       args["to"] = await parameter("common destination for this group", list(all.filter(({ ids, zone }) =>
         !group.some((id) => ids.includes(id)) && (!slots.has(zone) || (!ids.length && group.length === 1)))
         .map(({ label }) => label)));
@@ -379,7 +384,7 @@ export async function verifyOperation(
   const { state, deck } = work;
   if (args["to"] && ["move", "take", "stack", "random", "moveSelected"].includes(operation) && state.phase !== "Setup") {
     const transferred = operation === "move" ? [args["card"]!]
-      : operation === "moveSelected" ? (args["from"] === "declared" ? state.declaration?.cards ?? [] : state.selection) : [];
+      : operation === "moveSelected" ? selectedGroup(state, args["from"]!) : [];
     const locations = sources(state);
     const known = cardOptions(state, deck, locations, "table");
     const declaration = state.declaration;

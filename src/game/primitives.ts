@@ -8,7 +8,7 @@ export const operations = {
   move: "Move one identified card between zones and set or preserve its face orientation. Add to the bottom, or to the top of an LRIG stack.",
   take: "Move the top N cards from one pile to another, preserving order. Set or preserve face orientation. Top is index zero.",
   select: "Add or remove a card from the working selection without moving it.",
-  moveSelected: "Transfer a complete selected group to one destination in one operation. Use the working selection or the whole current declaration's card list.",
+  moveSelected: "Transfer a complete working, submitted or frame-saved card group to one destination in one operation.",
   distribute: "Move all cards in the working selection from one zone into distinct empty slots simultaneously. Match destinations to the order of the selection.",
   chooseFrom: "Put the exact legal candidate set on the table for the next declaration. Use the working selection or a complete zone, and set minimum and maximum count.",
   clearSelection: "Remove working and staged candidate selections without moving any cards.",
@@ -52,7 +52,9 @@ const faceMode = z.enum(["keep", "up", "down"]);
 export const primitiveSchemas = {
   move: z.strictObject({ from: box, to: box, card: id, face: faceMode.default("keep") }),
   select: z.strictObject({ card: id, value: bool }),
-  moveSelected: z.strictObject({ from: z.union([box, z.enum(["selected", "declared"])]), to: box, face: faceMode.default("keep") }),
+  moveSelected: z.strictObject({
+    from: z.union([box, z.enum(["selected", "declared"]), z.string().regex(/^frame\d+$/)]), to: box, face: faceMode.default("keep"),
+  }),
   distribute: z.strictObject({
     from: box, destinations: z.string().transform((value) => value.split(",")).pipe(z.array(box).min(1).max(6)), face: faceMode,
   }),
@@ -102,6 +104,12 @@ function pile(board: State, area: string) {
   return board.players[seat][zone];
 }
 
+export function selectedGroup(board: State, source: string) {
+  if (source === "declared") return board.declaration?.cards ?? [];
+  if (source.startsWith("frame")) return board.frames[Number(source.slice(5))]?.declaration?.cards ?? [];
+  return board.selection;
+}
+
 function requireCard(board: State, id: string) {
   const result = board.cards[id];
   if (!result) throw new Error(`Unknown card ${id}`);
@@ -145,9 +153,8 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
     }
     case "moveSelected": {
       const { from, to, face } = primitiveSchemas.moveSelected.parse(raw);
-      const selected = from === "declared" ? draft.declaration?.cards ?? [] : draft.selection;
-      transfer(draft, from === "declared" ? "selected" : from, to, selected, face);
-      if (from !== "declared") draft.selection = [];
+      transfer(draft, areas.includes(from) ? from : "selected", to, selectedGroup(draft, from), face);
+      if (from === "selected" || areas.includes(from)) draft.selection = [];
       break;
     }
     case "distribute": {
