@@ -2,7 +2,11 @@
   "name": "systemone-wixoss",
   "version": "1.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "tsx scripts/check-drex.ts",
+    "test:drex": "tsx scripts/check-drex.ts"
+  },
   "type": "module",
   "dependencies": {
     "nace-sdk": "0.9.0"
