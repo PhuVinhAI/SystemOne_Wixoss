@@ -325,7 +325,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
         filtered: "At least one card in this pool is individually excluded by a rule or the outstanding clause, or the whole pool needs inspection.",
       }, `Source text: ${effect}. Staging from ${args["source"]}. ${targetFocus} When the instruction asks the player to discard a card without further restrictions, each card in that player's hand is individually eligible.`);
       const matches = restrictions === "filtered" ? await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Source text: ${effect}. Selected candidate pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} Can this card belong to any legal selection for the first outstanding choice? A group quota limits the final selection, not the alternatives included in the candidate list.`,
+        question: `Source text: ${effect}. Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} Judge individual eligibility for this exact clause. Apply any group quota to the submitted set.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }]))) : {};
