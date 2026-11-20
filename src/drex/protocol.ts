@@ -344,6 +344,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           },
         }])));
       const picked = intents.filter((intent) => options[intent] === "offer");
+      if (state.frames.at(-1)?.kind === "attack") {
+        const index = picked.indexOf("decline");
+        if (index >= 0) picked.splice(index, 1);
+      }
       if (options.pass === "omit" && !picked.includes("mulligan") && !picked.includes("decline") && !mulliganWindow) {
         const ending = await parameter("permission to end this player window", {
           mayPass: "The player is allowed to close this exact window without submitting another action or card.",
