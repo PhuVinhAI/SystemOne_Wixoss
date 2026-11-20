@@ -301,6 +301,8 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
         }).join("; ");
       const signiEvidence = Object.entries(cardOptions(state, deck, all.filter(({ seat, zone }) =>
         seat === args["actor"] && slots.has(zone)), "table")).map(([, card]) => card).join("; ") || "none";
+      const handEvidence = cardOptions(state, deck, all.filter(({ seat, zone }) =>
+        seat === args["actor"] && zone === "hand"), "table");
       const mulliganWindow = state.phase === "Setup" && state.offeredSelection !== null
         && state.offeredSelection.candidates.length > 0
         && state.offeredSelection.candidates.every((id) => state.players[args["actor"] as Seat].hand.includes(id));
@@ -309,6 +311,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
         pass: "Check whether the player can end this window without taking the optional action. A staged candidate set does not remove a legal pass when the action itself is optional. An unresolved mandatory card choice is different.",
         grow: `Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
         retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
+        play: `This seat's hand: ${Object.values(handEvidence).join("; ") || "none"}. In Main phase, offer play when at least one hand card is a SIGNI and an empty SIGNI slot exists within the active LRIG's Limit. The host will ask for the card and destination after play is offered.`,
         attack: `An attack declaration names one attacker, even when a list is staged. Current SIGNI: ${signiEvidence}. A match-scoped SigniAttack window should offer attack if it has at least one eligible upped SIGNI. A match-scoped LrigAttack window uses the active Center LRIG. Staged candidates restrict which card can be named.`,
         choose: `Staged candidates: ${JSON.stringify(state.offeredSelection)}. Omit generic choose when this staged list supplies parameters for a named action available in the phase, such as attack. Offer choose for a pending card-selection decision where no named action expresses the declaration.`,
       };
