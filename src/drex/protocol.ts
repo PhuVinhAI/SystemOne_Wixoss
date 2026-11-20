@@ -97,6 +97,8 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
     const menu = Object.fromEntries(Object.entries(cardOptions(state, deck, sourcesForAction, actor))
       .filter(([id]) => Object.hasOwn(available, id)));
     candidateMenus[action] = menu;
+    const preparedCharge = action === "charge" && selection && state.phase === "Ener";
+    if (preparedCharge) continue;
     for (const [id, description] of Object.entries(menu)) {
       const card = deck.cards[state.cards[id]!.definition]!;
       if (action === "grow" && card.type === "ASSIST LRIG" && center) {
@@ -124,7 +126,8 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
   const eligibility = await ask.each(questions);
   const menu = selectIntent(state);
   for (const [action, cards] of Object.entries(candidateMenus)) {
-    const legal = Object.fromEntries(Object.entries(cards).filter(([id]) => eligibility[`${action}_${id}`] === "legal"));
+    const preparedCharge = action === "charge" && selection && state.phase === "Ener";
+    const legal = preparedCharge ? cards : Object.fromEntries(Object.entries(cards).filter(([id]) => eligibility[`${action}_${id}`] === "legal"));
     candidateMenus[action as Intent] = legal;
     if (Object.keys(legal).length) menu[action] += ` Candidates: ${Object.values(legal).join("; ")}.`;
     else delete menu[action];
