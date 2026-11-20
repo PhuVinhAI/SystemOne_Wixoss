@@ -146,10 +146,13 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
     const min = selection?.min ?? 0;
     const max = Math.min(selection?.max ?? 51, Object.keys(available).length);
     if (max < min) throw new MatchHalt("Không đủ lá có thể xem trong cửa sổ chọn bài.");
+    const frame = state.frames.at(-1);
+    const source = frame?.source && canSeeCard(state, actor, frame.source) ? deck.cards[state.cards[frame.source]!.definition] : undefined;
+    const instruction = source ? `Visible source: ${source.name}. ${frame?.kind === "burst" ? source.burst : source.text}` : "";
     while (cards.length < max) {
       const remaining = Object.fromEntries(Object.entries(available).filter(([id]) => !cards.includes(id)));
       if (cards.length >= min) remaining["done"] = "Submit the complete set of selected cards now.";
-      const selected = await ask(`Seat ${actor}: make the player's selection. The table has opened ${intent} and supplied the candidates below. Choose the card you prefer to submit among these candidates. A set requires ${min}–${max} cards. Already picked: ${cards.join(", ") || "none"}. Select done only if offered and you want to stop adding cards.`,
+      const selected = await ask(`Seat ${actor}, ${state.phase}, ${frame?.kind ?? "phase"} window. The table has asked you to ${intent}. ${instruction} Choose one card label among the prepared candidates for the outstanding choice. ${selection ? "The table has already checked individual eligibility. Select by strategy and check any constraints on the combined set." : "Check that the choice is legal in this window."} Choose a set of ${min}–${max} cards. Already picked: ${cards.join(", ") || "none"}. Choose done only when offered and you want to submit the set.`,
         remaining);
       if (selected === "done") break;
       cards.push(selected);
