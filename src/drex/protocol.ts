@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, battleVanishFocus, checkCleanupFocus, chooserFocus, combatWindowFocus, directDamageFocus, eligibilityFocus, frameFocus, growEligibility, growFocus, modeFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, battleVanishFocus, checkCleanupFocus, chooserFocus, combatWindowFocus, directDamageFocus, eligibilityFocus, enerChargeFocus, frameFocus, growEligibility, growFocus, modeFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -615,18 +615,20 @@ export async function verifyOperation(
         const defenderCard = defender && deck.cards[defender.definition];
         return `${battleVanishFocus} Attack declaration ${declaration.card} effective Power ${attackerCard ? displayedPower(attackerCard, attacker) : "unknown"}; defender ${args["card"]} effective Power ${defenderCard ? displayedPower(defenderCard, defender) : "unknown"}. Expected battle destination is ${args["to"]}. `;
       })() : "";
+    const enerCharge = operation === "take" && args["from"]?.endsWith(".deck") && args["to"]?.endsWith(".ener")
+      && /Ener Charge/i.test(frameEvidence ?? "") ? `${enerChargeFocus} ` : "";
     const checkCleanup = operation === "move" && args["from"]?.endsWith(".check")
       ? `${checkCleanupFocus} Current Check card: ${known[args["card"]!] ?? args["card"]}. ` : "";
     const routes = await drex.decideBatch(
       (purpose ? `DREX CLASSIFIED IMMEDIATE TRANSFER PURPOSE: ${purpose.label}\n` : "") + transferEvidence,
       {
         destination: {
-          question: `Source is ${args["from"]}. ${directDamage}${battleAttack}${checkCleanup}${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
-          choices: battleAttack || directDamage ? { [args["to"]!]: battleAttack ? `Committed battle Vanish destination for ${args["card"]}.` : `Committed direct damage destination for this attack.` } : { none, ...list(areas) },
+          question: `Source is ${args["from"]}. ${enerCharge}${directDamage}${battleAttack}${checkCleanup}${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
+          choices: enerCharge ? { [args["to"]!]: "Committed Ener Charge destination." } : battleAttack || directDamage ? { [args["to"]!]: battleAttack ? `Committed battle Vanish destination for ${args["card"]}.` : `Committed direct damage destination for this attack.` } : { none, ...list(areas) },
         },
         ...(transferred.length ? {} : { source: {
           question: `To move cards into ${args["to"]} at this exact step, which source zone does the rule or printed effect require? Resolve the latest declaration before assuming an effect is active. If this is a declared movement of a named card, answer the named card's current zone. If no transfer is required, choose none.`,
-          choices: battleAttack || directDamage ? { [args["from"]!]: battleAttack ? `Committed defender source for the battle Vanish.` : `Committed defending Life Cloth source for direct damage.` } : { none, ...list(locations.filter(({ ids }) => ids.length).map(({ label }) => label)) },
+          choices: enerCharge ? { [args["from"]!]: "Committed Ener Charge source." } : battleAttack || directDamage ? { [args["from"]!]: battleAttack ? `Committed defender source for the battle Vanish.` : `Committed defending Life Cloth source for direct damage.` } : { none, ...list(locations.filter(({ ids }) => ids.length).map(({ label }) => label)) },
         } }),
       },
     );

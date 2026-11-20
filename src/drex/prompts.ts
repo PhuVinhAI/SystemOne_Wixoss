@@ -83,6 +83,8 @@ export const directDamageFocus = "For an ordinary SIGNI attack whose opposing la
 
 export const battleVanishFocus = "For an ordinary SIGNI attack into an occupied opposing lane, compare the attacker's effective Power with the opposing SIGNI's effective Power. When the attacker meets or exceeds the defender, the defender is Vanished by battle and moves from its field to its owner's Ener. This exact battle result supplies the move's meaning. Do not classify the move as optional or choose none after the committed attack result.";
 
+export const enerChargeFocus = "For an Ener Charge effect, take the exact number of top cards from the controller's Main Deck into that controller's Ener Zone face up. The effect source and its printed Ener Charge count establish this purpose. Do not redirect the cards to hand, Check, Trash or another seat.";
+
 export const auditFieldResultPrompt = "Judge this field card alone. Read the active source's text and determine whether any result affecting this card is still required before cleanup. Check target restrictions, prior choices, and committed results for this specific card. If the source has an unresolved choice among several cards, flag it as evidence missing only if the choice is required and the history has not resolved it.";
 
 export const auditOperationPrompt = `<AUDIT>
