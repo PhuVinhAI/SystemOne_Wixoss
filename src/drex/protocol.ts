@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, checkCleanupFocus, chooserFocus, combatWindowFocus, eligibilityFocus, frameFocus, growEligibility, growFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, checkCleanupFocus, chooserFocus, combatWindowFocus, directDamageFocus, eligibilityFocus, frameFocus, growEligibility, growFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -599,13 +599,15 @@ export async function verifyOperation(
         throw new MatchHalt("Drex chưa xác định mục đích chuyển nhóm bài.", purpose.requestId);
       }
     }
+    const directDamage = operation === "take" && args["from"]?.endsWith(".life") && args["to"]?.endsWith(".check")
+      ? `${directDamageFocus} ` : "";
     const checkCleanup = operation === "move" && args["from"]?.endsWith(".check")
       ? `${checkCleanupFocus} Current Check card: ${known[args["card"]!] ?? args["card"]}. ` : "";
     const routes = await drex.decideBatch(
       (purpose ? `DREX CLASSIFIED IMMEDIATE TRANSFER PURPOSE: ${purpose.label}\n` : "") + transferEvidence,
       {
         destination: {
-          question: `Source is ${args["from"]}. ${checkCleanup}${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
+          question: `Source is ${args["from"]}. ${directDamage}${checkCleanup}${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
           choices: { none, ...list(areas) },
         },
         ...(transferred.length ? {} : { source: {
