@@ -105,8 +105,14 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
           choices: { above: "Incoming Assist Level is greater than current Center Level.", within: "Incoming Assist Level is equal to or lower than current Center Level." },
         };
       }
+      const eligibilityFocus: Partial<Record<Intent, string>> = {
+        charge: `In the open Ener Phase window of the turn player, one card from that player's hand or one SIGNI from that player's field can be charged, with no payment. Turn player: ${state.active}. Candidate location and type: ${description}. Check this exact card for the named charge option.`,
+        cast: "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow. Check printed timing and the full payable cost.",
+        attack: "In SigniAttack choose an upped SIGNI of the turn player. In LrigAttack choose their upped Center LRIG. Check any printed restriction.",
+        guard: "Check that this hand card has Guard and the open window resolves an opposing Center LRIG attack.",
+      };
       questions[`${action}_${id}`] = {
-        question: `Can seat ${actor} legally declare ${action} with ${description} at this exact window in ${state.phase}? ${action === "grow" ? `A Center LRIG can only Grow in the Grow phase. This window is ${state.phase}. ${growEvidence(state, deck, actor, id)}` : action === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} A legal action has at least one legal destination where needed. Check the card type, printed timing, payable costs including Multi Ener, controller, and all prerequisites. Judge legality only. Hidden cards never contribute to this decision.`,
+        question: `Can seat ${actor} legally declare ${action} with ${description} in this ${state.phase} window? ${action === "grow" ? `A Center LRIG can only Grow in the Grow phase. ${growEvidence(state, deck, actor, id)}` : eligibilityFocus[action] ?? "Check timing, controller, card type, costs and any other prerequisite. A legal placement needs at least one legal destination."} Judge legality only using visible evidence.`,
         choices: { legal: "At least one legal declaration of this action names this card.", illegal: "No legal declaration of this action can name this card now." },
       };
     }
