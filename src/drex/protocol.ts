@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, checkCleanupFocus, chooserFocus, combatWindowFocus, directDamageFocus, eligibilityFocus, frameFocus, growEligibility, growFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, checkCleanupFocus, chooserFocus, combatWindowFocus, directDamageFocus, eligibilityFocus, frameFocus, growEligibility, growFocus, modeFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -262,7 +262,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
     ? ` Current combat step: ${state.phase}. Turn player: ${state.active}. ${combatWindowFocus}` : "";
   const signiAttack = state.phase === "SigniAttack" ? ` Turn player's SIGNI: ${Object.values(cardOptions(state, deck,
     all.filter(({ seat, zone }) => seat === state.active && slots.has(zone)), "table")).join("; ") || "none"}. Each eligible upped SIGNI can attack. Power, color and the presence of an opposing SIGNI affect the result of the attack, not its basic eligibility. Continue the SIGNI window after one attack while another legal attacker remains and the player has not passed.` : "";
-  const operation = await ask(selectOperationPrompt + setup + pending + combatWindow + signiAttack
+  const frame = state.frames.at(-1);
+  const sourceCard = frame?.source ? deck.cards[state.cards[frame.source]!.definition] : undefined;
+  const frameInstruction = sourceCard ? ` Active ${frame!.kind} source, controller ${frame!.actor}: ${frame!.kind === "burst" ? sourceCard.burst : sourceCard.text}. ${modeFocus}` : "";
+  const operation = await ask(selectOperationPrompt + setup + frameInstruction + pending + combatWindow + signiAttack
     + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work. " + frameFocus, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
@@ -405,7 +408,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       args["actor"] = await parameter("seat that makes the next decision", list(seats),
         `Turn player: ${state.active}. Phase: ${state.phase}. Top frame: ${frame?.kind ?? "none"}. Frame actor: ${frame?.actor ?? "none"}. Source: ${source?.name ?? "none"}. Printed instruction: ${(frame?.kind === "burst" ? source?.burst : source?.text) ?? "none"}. ${chooserFocus}`);
       args["scope"] = state.frames.length ? "frame" : "match";
-      const window = `Seat ${args["actor"]}, phase ${state.phase}, scope ${args["scope"]}. Top frame: ${frame?.kind ?? "none"}, actor ${frame?.actor ?? "none"}. Staged selection: ${JSON.stringify(state.offeredSelection)}. ${windowFocus} Judge this action type independently of strategy.`;
+      const window = `Seat ${args["actor"]}, phase ${state.phase}, scope ${args["scope"]}. Top frame: ${frame?.kind ?? "none"}, actor ${frame?.actor ?? "none"}. Staged selection: ${JSON.stringify(state.offeredSelection)}. ${windowFocus}${frameInstruction} Judge this action type independently of strategy.`;
       const side = state.players[args["actor"] as Seat];
       const checkEvidence = side.check.map((id) => {
         const card = deck.cards[state.cards[id]!.definition]!;
@@ -666,6 +669,8 @@ export async function verifyOperation(
   const selectionCard = selectionOrigin ? deck.cards[state.cards[selectionOrigin]!.definition] : undefined;
   const selectionEvidence = selectionCard ? JSON.stringify({ name: selectionCard.name, cost: selectionCard.cost,
     growCost: selectionCard.growCost, text: top?.kind === "burst" ? selectionCard.burst : selectionCard.text }) : "Use the current rule and declaration.";
+  const windowSource = top?.source ? deck.cards[state.cards[top.source]!.definition] : undefined;
+  const windowText = windowSource ? (top?.kind === "burst" ? windowSource.burst : windowSource.text) : "";
   const phaseTransition = operation === "phase" && state.phase === "SigniAttack" && args["value"] === "LrigAttack"
     ? `Turn player's SIGNI: ${Object.values(cardOptions(state, deck, sources(state).filter(({ seat, zone }) => seat === state.active && slots.has(zone)), "table")).join("; ") || "none"}. Moving to LRIG Attack is legal after a closing pass or when no legal SIGNI attacker remains, once the current attack and its consequences are complete.` : "";
   const question = growing
@@ -681,7 +686,7 @@ export async function verifyOperation(
       ? `Audit Guard for seat ${args["actor"]}. Offered actions: ${args["intents"]}. ${guardEvidence} Confirm the attacker is Down and the defender has not answered for this exact attack. An earlier pass in a different phase does not answer Guard. A pass or decline is sufficient when the defender has no card with Guard. Offer guard when the defender can legally use one.`
       : state.phase === "Main" && args["scope"] === "match"
         ? `Is seat ${args["actor"]} entitled to receive the next Main Phase decision? Turn player: ${state.active}. Offered intent types: ${args["intents"]}. COMMITTED IN THIS PHASE is included in the evidence below. Search it for a match-scoped Main pass by ${state.active}. If no such pass is recorded, Main remains open after a completed Cast, Grow, Enter or other action and this handoff is execute. A pass by this turn player in a match-scoped Main window closes Main, even after consume. Stop any later match-scoped Main handoff this turn only when that exact pass exists. A pass belonging to a nested effect only ends that effect's choice. If Main is still open, the menu must include pass.`
-        : `Audit the proposed ${args["scope"]}-scoped window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${state.phase === "Setup" ? `${mulliganOrder} If neither seat has submitted, collect from the first player. Check declarations rather than previous windows to determine who has submitted. ` : ""}${chooserFocus} ${windowFocus} Confirm the chooser, timing and options for this exact decision. If this is a phase window, inspect COMMITTED IN THIS PHASE for a closing pass or completed once-only phase action. An unanswered Life Burst activation requires burst and decline. An accepted Burst with a pending mandatory target selection requires choose. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
+        : `Audit the proposed ${args["scope"]}-scoped window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Active frame: ${top?.kind ?? "none"}, controller ${top?.actor ?? "none"}. Current declaration: ${JSON.stringify(state.declaration)}. Active printed text: ${windowText || "none"}. ${state.phase === "Setup" ? `${mulliganOrder} If neither seat has submitted, collect from the first player. Check declarations rather than previous windows to determine who has submitted. ` : ""}${chooserFocus} ${windowFocus} ${modeFocus} Confirm the chooser, timing and options for this exact decision. If only one mode is legal now, a one-option menu is valid. If this is a phase window, inspect COMMITTED IN THIS PHASE for a closing pass or completed once-only phase action. An unanswered Life Burst activation requires burst and decline. For an accepted Burst, offer the outstanding printed modes, then stage the selected mode's targets if required. ${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed phase transition after the pass proves that declaration is complete, even when the incoming phase belongs to another seat. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${state.phase === "Setup" && closesFrame
