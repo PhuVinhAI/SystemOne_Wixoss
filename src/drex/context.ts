@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
 import { displayedPower, lrigSlots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackFocus, burstFocus, castFocus, growFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
+import { attackFocus, burstFocus, castFocus, growFocus, lrigAttackFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -43,7 +43,9 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     ["A.signiCenter", "B.signiCenter", state.players.A.signiCenter, state.players.B.signiCenter],
     ["A.signiRight", "B.signiLeft", state.players.A.signiRight, state.players.B.signiLeft],
   ] as const;
-  const combat = viewer === "table" && attack?.card ? [
+  const combat = viewer === "table" && attack?.card ? state.players[attack.actor].centerLrig[0] === attack.card
+    ? `${lrigAttackFocus}\nDeclared Center LRIG attacker: ${attack.card} of seat ${attack.actor}.`
+    : [
     attackFocus,
     `Declared attacker: ${attack.card} of seat ${attack.actor}. Opposing lane pairs (empty arrays are empty lanes):\n`
       + lanes.map(([a, b, left, right]) => `${a} [${left.join(",")}] faces ${b} [${right.join(",")}]`).join("\n"),
