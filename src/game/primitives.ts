@@ -22,7 +22,7 @@ export const operations = {
   resetCard: "Remove all nonprinted Power values and card-specific flags from a card, and set it Up and unfrozen. Its zone and visibility do not change.",
   control: "Give A or B a decision window. Specify whether it belongs to the top frame or to the match with no open frames. This consumes the current declaration.",
   phase: "Set the exact phase, without performing any other operation.",
-  turn: "Hand off to a different active player and advance the turn counter by one. Phase is independent.",
+  turn: "Hand off to a different active player, advance the turn number, and set the explicitly chosen starting phase in one operation.",
   random: "Move N cards selected uniformly at random from one zone to another without examining their faces.",
   counter: "Set a named counter explicitly.",
   push: "Push a named resolution frame with a controller and optional source card. The new frame starts at step zero.",
@@ -78,7 +78,7 @@ export const primitiveSchemas = {
     intents: z.string().transform((value) => value.split(",")).pipe(z.array(z.enum(intents)).min(1)),
   }),
   phase: z.strictObject({ value: z.enum(phases) }),
-  turn: z.strictObject({ actor: z.enum(seats) }),
+  turn: z.strictObject({ actor: z.enum(seats), phase: z.enum(phases) }),
   counter: z.strictObject({ actor: z.enum(seats), name: z.enum(counterNames), value: z.coerce.number().int().min(0).max(51) }),
   push: z.strictObject({ frame: z.enum(frames), actor: z.enum(seats), source: z.union([id, z.literal("none").transform(() => null)]) }),
   step: z.strictObject({ value: z.coerce.number().int().min(0).max(64) }),
@@ -260,10 +260,11 @@ export function applyPrimitive(board: State, operation: Operation, raw: Record<s
       break;
     }
     case "turn": {
-      const { actor } = primitiveSchemas.turn.parse(raw);
+      const { actor, phase } = primitiveSchemas.turn.parse(raw);
       if (actor === draft.active) throw new Error("Turn handoff requires a different active player.");
       draft.active = actor;
       draft.turn += 1;
+      draft.phase = phase;
       break;
     }
     case "counter": {

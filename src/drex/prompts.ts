@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v29";
+export const promptVersion = "wixoss-table-v30";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -16,7 +16,7 @@ Interpret a physical move through the active rule frame. A move to Ener is a Van
 
 <WIXOSS_TIMING>
 Attack declaration turns the attacker Down. Process applicable attack triggers before battle, damage or Crush. The left lane of one player faces the right lane of the other. LRIG stacks are top-first. The top of a face-down pile is index zero. A SIGNI with Assassin does not battle the opposing SIGNI. Lancer triggers only after a battle Vanish. Double Crush modifies damage and still crushes only one when exactly one Life Cloth remains. A Crush-only effect does not cause defeat at zero Life Cloth. A Life Burst is optional after a qualifying Crush, then the card moves from Check to Ener. For a declared SIGNI attack into an empty opposing lane, resolve damage with take from the defending player's life zone to that player's check zone, one card at a time, before any burst choice. Do not use move from hand or another zone for this damage. A SIGNI battle with an opposing SIGNI resolves Vanish or no Vanish instead of direct damage.
-The turn operation changes the active seat and turn number while the phase field stays unchanged. After that handoff, explicitly enter the new turn's Up phase. Voluntary phase actions require a player declaration. Give the acting seat control for that window, including the option to pass where the rules allow it. Use chooseFrom for a pending decision that uses a staged card set. Leave that staged set for its player to submit through control.
+Finish all End work for the outgoing player, then choose turn with the incoming seat and the new turn's Up phase. The handoff and its starting phase are committed together. Voluntary phase actions require a player declaration. Give the acting seat control for that window, including the option to pass where the rules allow it. Use chooseFrom for a pending decision that uses a staged card set. Leave that staged set for its player to submit through control.
 </WIXOSS_TIMING>
 
 <TERMINAL>

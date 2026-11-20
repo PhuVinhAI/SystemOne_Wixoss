@@ -238,7 +238,8 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
     : "";
   const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
     ? ` ${combatWindowFocus}` : "";
-  const operation = await ask(selectOperationPrompt + pending + setup + combatWindow, choices) as Operation;
+  const operation = await ask(selectOperationPrompt + pending + setup + combatWindow
+    + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work.", choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
@@ -427,7 +428,11 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       args["intents"] = picked.join(",");
       break;
     }
-    case "turn": args["actor"] = await parameter("incoming active seat", list(seats.filter((seat) => seat !== state.active))); break;
+    case "turn":
+      args["actor"] = await parameter("incoming active seat", list(seats.filter((seat) => seat !== state.active)));
+      args["phase"] = await parameter("first phase of the incoming seat's new turn", list(phases),
+        `Outgoing seat ${state.active} is in ${state.phase}. Choose the phase that starts the new turn for ${args["actor"]}.`);
+      break;
     case "counter":
       args["actor"] = await actor();
       args["name"] = await parameter("counter name", list(counterNames));
@@ -519,6 +524,7 @@ export async function verifyOperation(
   const { operation, args } = selected;
   const meaning = operation === "control" ? `Open the ${args["scope"]} decision window for seat ${args["actor"]} with these intents: ${args["intents"]}. Preserve any staged selection and declarations saved in frames.`
     : operation === "consume" ? "Acknowledge the current declaration only. Keep every resolution frame and the staged candidates for the next decision."
+    : operation === "turn" ? `Finish the outgoing turn for ${work.state.active} and start seat ${args["actor"]}'s turn in ${args["phase"]}`
     : operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
     : operation === "pop" || operation === "closeFrames" ? `Close ${operation === "pop" ? "one frame" : args["count"] + " frames"}; acknowledge current declaration: ${args["acknowledge"]}. Closing frames removes declarations those frames store.`
     : operation === "chooseFrom" ? `Offer exactly these cards from ${args["source"]}: ${args["eligible"] || "none"}. Can select from ${args["min"]} to ${args["max"]} cards. Confirm each eligible card and every legal selection size; 'up to' permits zero.`
@@ -611,10 +617,11 @@ export async function verifyOperation(
     && [...lrigSlots].some((zone) => args["to"]?.endsWith(`.${zone}`)) && state.phase !== "Setup";
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
+    : operation === "turn" ? `Can ${meaning} now? Confirm the outgoing End obligations are complete, the incoming seat is correct, and the supplied phase is the first phase of the incoming turn.`
     : operation === "phase"
       ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
-    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${chooserFocus} Confirm the chooser, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
+    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${chooserFocus} Confirm the chooser, timing and presence of required options. If this is a phase window, inspect COMMITTED IN THIS PHASE for a closing pass or completed once-only phase action in this exact window. A closing pass remains in effect after consume. If the phase window already closed, stop. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${state.phase === "Setup" && closesFrame
