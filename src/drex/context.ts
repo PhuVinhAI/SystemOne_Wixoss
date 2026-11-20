@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
 import { displayedPower, lrigSlots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackFocus, castFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
+import { attackFocus, burstFocus, castFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -27,7 +27,8 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     ...(source && (viewer === "table" || canSee(source)) ? { source } : {}),
     ...(viewer === "table" && declaration ? { savedDeclaration: declaration } : {}),
   }));
-  const sourceCards = [viewer === "table" ? state.declaration?.card : null, ...shownFrames.map((frame) => frame.source)];
+  const checkCards = seats.flatMap((seat) => state.players[seat].check.filter((id) => visible(state, viewer, seat, "check", id)));
+  const sourceCards = [viewer === "table" ? state.declaration?.card : null, ...shownFrames.map((frame) => frame.source), ...checkCards];
   if (viewer === "table") {
     for (const { source } of state.frames) {
       if (source) definitions.add(state.cards[source]!.definition);
@@ -87,7 +88,12 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     focus,
     combat,
     cast,
+    viewer === "table" && checkCards.length ? burstFocus : "",
     "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
+    checkCards.length ? "CHECK ZONE RECORDS\n" + checkCards.map((id) => {
+      const card = deck.cards[state.cards[id]!.definition]!;
+      return `${id} ${card.name}. Printed Life Burst: ${card.burst || "none"}.`;
+    }).join("\n") : "",
     viewer === "table" && sourceDefinitions.size ? "ACTIVE SOURCE RECORDS\n" + sources.filter(({ isSource }) => isSource).map(({ text }) => text).join("\n") : "",
     recent.length ? "COMMITTED OPERATIONS (oldest first)\n" + recent.join("\n") : "",
     sources.length ? "PRINTED CARDS\n" + sources.filter(({ isSource }) => viewer !== "table" || !isSource).map(({ text }) => text).join("\n") : "",

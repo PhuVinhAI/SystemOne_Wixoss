@@ -304,6 +304,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       args["scope"] = state.frames.length ? "frame" : "match";
       const window = `Seat ${args["actor"]}, phase ${state.phase}, scope ${args["scope"]}. A frame window covers only the unresolved decision of the top frame. A match window covers actions available in the current phase. Judge this action type independently of all other choices and of strategy.`;
       const side = state.players[args["actor"] as Seat];
+      const checkEvidence = side.check.map((id) => {
+        const card = deck.cards[state.cards[id]!.definition]!;
+        return `${id} ${card.name}, printed Life Burst: ${card.burst || "none"}`;
+      }).join("\n") || "empty";
       const lrigEvidence = [...side.centerLrig.slice(0, 1), ...side.leftLrig.slice(0, 1), ...side.rightLrig.slice(0, 1), ...side.lrigDeck]
         .map((id) => {
           const { name, level, timing, growCost, group } = deck.cards[state.cards[id]!.definition]!;
@@ -322,6 +326,8 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const evidence: Partial<Record<Intent, string>> = {
         ...(mulliganWindow ? { mulligan: `Setup has staged this seat's opening hand. Mulligan is the required declaration for this hand window, including an empty selection to keep. Do not omit mulligan or replace it with pass.` } : {}),
         pass: "Check whether the player can end this window without taking the optional action. A staged candidate set does not remove a legal pass when the action itself is optional. An unresolved mandatory card choice is different.",
+        burst: `This seat's Check Zone: ${checkEvidence}. A crushed Life Cloth with a printed Burst and no recorded response requires a burst option. This decision can interrupt a combat phase controlled by the other seat. Judge the offer independently of whether the effect has a legal target or is strategically worth using.`,
+        decline: `This seat's Check Zone: ${checkEvidence}. Offer decline for a pending optional resolution, including the decision to use a printed Life Burst after Crush. A card without Life Burst does not open a Burst decision.`,
         grow: `${state.phase === "Grow" ? "Center Grow is available to the active Center LRIG when its next LRIG and cost are legal." : "Center Grow is illegal outside the Grow Phase. In this window offer grow only for a legal Assist Grow whose printed timing includes the current phase."} Check Assist Grow separately by comparing printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
         retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
         play: `This seat's hand: ${Object.values(handEvidence).join("; ") || "none"}. Center is ${activeLrig?.name ?? "none"}, Level ${activeLrig?.level ?? 0}, printed Limit ${activeLrig?.limit ?? 0}. Field: ${signiEvidence}. Empty slots: ${openSigniSlots.join(", ") || "none"}. Offer play in Main if an empty slot and at least one hand SIGNI meet both the Center Level restriction and effective Limit after placement.`,
@@ -338,7 +344,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           },
         }])));
       const picked = intents.filter((intent) => options[intent] === "offer");
-      if (options.pass === "omit" && !picked.includes("mulligan") && !mulliganWindow) {
+      if (options.pass === "omit" && !picked.includes("mulligan") && !picked.includes("decline") && !mulliganWindow) {
         const ending = await parameter("permission to end this player window", {
           mayPass: "The player is allowed to close this exact window without submitting another action or card.",
           mustDecide: "The player must supply a decision in this window before it can close.",
@@ -510,7 +516,7 @@ export async function verifyOperation(
     if (incomplete) throw new MatchHalt("Drex chưa xác nhận hiệu ứng đã hoàn tất.", incomplete.requestId);
   }
   const question = operation === "control"
-    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Check the window against this phase and any pending resolution. Earlier phases and turns cannot close this window. Prior offered actions describe an old menu and do not establish that a player submitted a choice. Check only proposed actions. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}`
+    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
