@@ -59,6 +59,7 @@ const range = (min: number, max: number) => Array.from({ length: Math.max(0, max
 const boolean = list(["true", "false"]);
 const faceOptions = { keep: "Preserve face orientation.", up: "Face up.", down: "Face down." };
 const groupIntents: Intent[] = ["mulligan", "retire", "choose"];
+const emptySelectionQuestion = "what to do when zero candidates qualify";
 function cardRequired(intent: Intent) {
   return ["charge", "grow", "play", "cast", "ability", "attack", "guard"].includes(intent);
 }
@@ -165,11 +166,12 @@ export async function auditDeclaration(drex: DrexClient, snapshot: string, state
   return answer.label === "legal";
 }
 
-export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
+export async function chooseOperation(state: State, deck: Deck, ask: Ask, excluded?: Operation) {
   const all = sources(state);
   const nonempty = all.filter(({ ids }) => ids.length > 0);
   const known = cardOptions(state, deck, all, "table");
   const choices: Choices = { ...operations };
+  if (excluded) delete choices[excluded];
   if (!state.frames.length) {
     delete choices["step"];
     delete choices["pop"];
@@ -290,6 +292,15 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }])));
       const eligible = Object.keys(candidates).filter((id) => matches[id] === "eligible");
+      if (eligible.length === 0) {
+        const disposition = await parameter(emptySelectionQuestion, {
+          skip: "The required target does not exist. Skip just that clause and continue the effect or clean up the source.",
+          empty: "This clause explicitly requires the player to submit the empty set as a valid decision.",
+          reconsider: "The clause's valid targets may be in another zone. Select an operation using the correct source.",
+        }, `Source text: ${effect}. Candidate source ${args["source"]} had zero eligible cards. A mandatory target with no eligible card is skipped under the resolution rules.`);
+        if (disposition === "skip") return chooseOperation(state, deck, ask, "chooseFrom");
+        if (disposition === "reconsider") throw new MatchHalt("Drex chưa xác định đúng nguồn ứng viên.");
+      }
       args["eligible"] = eligible.join(",");
       args["min"] = await parameter("smallest legally permitted selection size", list(range(0, eligible.length)),
         "This is the lower bound of the offered choice, independent of preferred strategy. An 'up to' or 'any number' instruction allows zero unless a separate clause explicitly requires a minimum.");
@@ -486,7 +497,9 @@ export async function verifyOperation(
     : operation === "face" ? (args["value"] === "true" ? "Face up" : "Face down")
     : operation === "freeze" ? (args["value"] === "true" ? "Set Frozen" : "Clear Frozen")
     : operations[operation];
-  const facts = `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n\n${snapshot}`;
+  const evidence = trace.filter(({ question }) => question.startsWith(`For chooseFrom only, choose ${emptySelectionQuestion}`))
+    .map(({ question, label }) => `${question}\nDrex classification: ${label}`).join("\n");
+  const facts = `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n${evidence}\n\n${snapshot}`;
   const { state, deck } = work;
   if (args["to"] && ["move", "take", "stack", "random", "moveSelected"].includes(operation) && state.phase !== "Setup") {
     const transferred = operation === "move" ? [args["card"]!]
@@ -497,7 +510,7 @@ export async function verifyOperation(
     const declaredCard = declaration?.card ? known[declaration.card] : undefined;
     const none = "The current instruction does not require this transfer.";
     const routes = await drex.decideBatch(
-      `CURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS OR PILE POSITIONS UNDER REVIEW\n${transferred.length ? transferred.map((id) => known[id] ?? id).join("\n") : `${operation} from ${args["from"]}, count ${args["count"] ?? "all"}`}\n\n${snapshot}`,
+      `CURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS OR PILE POSITIONS UNDER REVIEW\n${transferred.length ? transferred.map((id) => known[id] ?? id).join("\n") : `${operation} from ${args["from"]}, count ${args["count"] ?? "all"}`}\n${evidence}\n\n${snapshot}`,
       {
         destination: {
           question: `Source is ${args["from"]}. ${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
@@ -524,7 +537,7 @@ export async function verifyOperation(
       const printed = source && deck.cards[state.cards[source]!.definition];
       return { kind, actor, step, source, declaration, ...(printed ? { name: printed.name, text: kind === "burst" ? printed.burst : printed.text } : {}) };
     });
-    const cleanupState = `FRAMES TO CHECK\n${JSON.stringify(records)}\n\nPROPOSED CLEANUP\n${meaning}\n\n${snapshot}`;
+    const cleanupState = `FRAMES TO CHECK\n${JSON.stringify(records)}\n\nPROPOSED CLEANUP\n${meaning}\n${evidence}\n\n${snapshot}`;
     const questions: Parameters<DrexClient["decideBatch"]>[1] = {
       progress: { question: auditCompletionPrompt, choices: {
         decision: "A required player decision has yet to be recorded or applied.",
@@ -551,12 +564,8 @@ export async function verifyOperation(
     && [...lrigSlots].some((zone) => args["to"]?.endsWith(`.${zone}`)) && state.phase !== "Setup";
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
-    : operation === "phase" && state.phase === "SigniAttack" && args["value"] === "LrigAttack"
-      ? "The active seat has completed or passed SigniAttack. Set phase to LrigAttack before opening the active seat's LRIG Attack window. This transition is required even when no SIGNI attack resolved."
-    : operation === "phase" && state.phase === "Defense" && args["value"] === "SigniAttack"
-      ? "The defending seat's Defense window has completed. Set phase to SigniAttack before opening the active seat's SIGNI Attack window."
-    : operation === "phase" && state.phase === "PreAttack" && args["value"] === "Defense"
-      ? "The active seat's PreAttack window has completed. Set phase to Defense before opening the opposing seat's Defense window."
+    : operation === "phase"
+      ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
     ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
