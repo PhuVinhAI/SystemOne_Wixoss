@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v24";
+export const promptVersion = "wixoss-table-v25";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -42,6 +42,8 @@ export const combatWindowFocus = "Check the current combat phase and its seat be
 export const attackFocus = "For this attack, locate the declared attacker and its opposing slot using the lane pairs. Use committed operations after this exact declaration to distinguish the attacker turning Down, triggers, battle, damage, and cleanup. After declaration and triggers, an ordinary SIGNI facing an occupied lane resolves a battle. If its Power meets or exceeds the defender's, move that defender to its owner's Ener as Vanish. Otherwise both stay. Only a valid rule or effect such as Assassin permits direct damage through an occupied lane, and a battle Vanish by itself never deals direct damage. When damage applies and Life Cloth remain, take from the defending seat's life pile into that seat's check zone face up. Use the latest committed result to avoid resolving the same attack twice.";
 
 export const castFocus = "A Spell or PIECE cast has distinct steps. Move the declared source face up to its owner's Check zone when used. Read committed costs for that declaration and pay only the unpaid cost before selecting targets. Resolve each applicable printed clause from Check. An impossible target may leave no effect, but the used source still moves from Check to its owner's Trash (Spell) or LRIG Trash (PIECE). Close the cast frame only after that cleanup. Moving a payment card into Trash does not move or finish the cast source.";
+
+export const growFocus = "Read the named LRIG's printed Grow cost. Before placing it on its stack, check payment transfers committed since this exact Grow declaration. Pay any remaining cost from the proper resources first. Enter abilities trigger only after placement. Each printed Enter is a distinct ability. A free Enter is mandatory, and an Enter with its own cost is a separate optional payment and effect. Offer mode choices only when the printed instruction actually presents modes. When a selected card already has the required state, record or acknowledge the satisfied result without attempting a no-op mutation.";
 
 export const targetFocus = "Use the actual zone, owner and other conditions named by the first unresolved clause. Account for earlier clauses already resolved or skipped because they had no targets. For example, a choice of cards to discard uses the hand specified by that clause. A field target must come from the field specified by its clause.";
 

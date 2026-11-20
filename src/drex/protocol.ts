@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, selectOperationPrompt, targetFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, growFocus, selectOperationPrompt, targetFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -546,7 +546,11 @@ export async function verifyOperation(
     const incomplete = progress.find(({ label }) => label !== "complete");
     if (incomplete) throw new MatchHalt("Drex chưa xác nhận hiệu ứng đã hoàn tất.", incomplete.requestId);
   }
-  const question = operation === "control"
+  const growing = operation === "move" && args["from"]?.endsWith(".lrigDeck")
+    && [...lrigSlots].some((zone) => args["to"]?.endsWith(`.${zone}`)) && state.phase !== "Setup";
+  const question = growing
+    ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
+    : operation === "control"
     ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."

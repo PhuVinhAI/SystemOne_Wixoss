@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
 import { displayedPower, lrigSlots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackFocus, burstFocus, castFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
+import { attackFocus, burstFocus, castFocus, growFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -83,11 +83,14 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     : viewer === "table" ? phaseWindows : "";
   const cast = viewer === "table" && (state.declaration?.intent === "cast" || state.frames.some(({ kind }) => kind === "cast"))
     ? castFocus : "";
+  const grow = viewer === "table" && (state.declaration?.intent === "grow"
+    || state.frames.some(({ declaration }) => declaration?.intent === "grow")) ? growFocus : "";
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,
     combat,
     cast,
+    grow,
     viewer === "table" && checkCards.length ? burstFocus : "",
     "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
     checkCards.length ? "CHECK ZONE RECORDS\n" + checkCards.map((id) => {
