@@ -368,8 +368,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     case "closeFrames":
       if (operation === "closeFrames") args["count"] = await parameter("number of completed frames", list(range(2, state.frames.length)));
       args["acknowledge"] = state.declaration
-        ? await parameter("whether this also acknowledges the current declaration", boolean,
-          "True only if the current player's request has been physically completed or was intentionally declined. A declaration for a different seat than the closing frame usually still needs resolution. False preserves the current declaration.")
+        ? await parameter("whether to clear the current declaration as part of closing these frames", {
+          false: "Preserve the current declaration so it can be resolved or acknowledged separately.",
+          true: "Clear the current declaration now. Its own work is completed and no subsequent step needs it.",
+        }, `Current declaration: ${JSON.stringify(state.declaration)}. Top frame's saved declaration: ${JSON.stringify(state.frames.at(-1)?.declaration ?? null)}. Prefer false when the declarations differ and the current one can be acknowledged separately.`)
         : "false";
       break;
     case "consume":
