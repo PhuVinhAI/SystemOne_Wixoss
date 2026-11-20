@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
 import { displayedPower, lrigSlots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackWindows, playerRole, refreshFocus, setupFocus, tableRole } from "./prompts.js";
+import { attackFocus, attackWindows, playerRole, refreshFocus, setupFocus, tableRole } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -35,6 +35,18 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   }
   const visibleMarks = state.marks.filter((mark) => viewer === "table" || seats.some((seat) => seat === mark.subject)
     || canSee(mark.subject));
+  const attack = [state.declaration, ...state.frames.map(({ declaration }) => declaration).reverse()]
+    .find((declaration) => declaration?.intent === "attack");
+  const lanes = [
+    ["A.signiLeft", "B.signiRight", state.players.A.signiLeft, state.players.B.signiRight],
+    ["A.signiCenter", "B.signiCenter", state.players.A.signiCenter, state.players.B.signiCenter],
+    ["A.signiRight", "B.signiLeft", state.players.A.signiRight, state.players.B.signiLeft],
+  ] as const;
+  const combat = viewer === "table" && attack?.card ? [
+    attackFocus,
+    `Declared attacker: ${attack.card} of seat ${attack.actor}. Opposing lane pairs (empty arrays are empty lanes):\n`
+      + lanes.map(([a, b, left, right]) => `${a} [${left.join(",")}] faces ${b} [${right.join(",")}]`).join("\n"),
+  ].join("\n") : "";
   const sourceDefinitions = new Set(sourceCards.flatMap((id) => id && state.cards[id] ? [state.cards[id].definition] : []));
   const sources = [...definitions].sort().map((id) => {
     const card = deck.cards[id]!;
@@ -71,6 +83,7 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,
+    combat,
     "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
     viewer === "table" && sourceDefinitions.size ? "ACTIVE SOURCE RECORDS\n" + sources.filter(({ isSource }) => isSource).map(({ text }) => text).join("\n") : "",
     recent.length ? "COMMITTED OPERATIONS (oldest first)\n" + recent.join("\n") : "",

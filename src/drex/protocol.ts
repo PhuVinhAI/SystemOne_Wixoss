@@ -314,7 +314,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
         pass: "Check whether the player can end this window without taking the optional action. A staged candidate set does not remove a legal pass when the action itself is optional. An unresolved mandatory card choice is different.",
         grow: `${state.phase === "Grow" ? "Center Grow is available to the active Center LRIG when its next LRIG and cost are legal." : "Center Grow is illegal outside the Grow Phase. In this window offer grow only for a legal Assist Grow whose printed timing includes the current phase."} Check Assist Grow separately by comparing printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
         retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
-        play: `This seat's hand: ${Object.values(handEvidence).join("; ") || "none"}. Active Center LRIG is ${activeLrig?.name ?? "none"}, Limit ${activeLrig?.limit ?? 0}. Empty SIGNI slots: ${openSigniSlots.join(", ") || "none"}. In Main phase, offer play when at least one hand card is a SIGNI and the total Levels after playing it fit within this Limit. The host will ask for the card and destination after play is offered.`,
+        play: `This seat's hand: ${Object.values(handEvidence).join("; ") || "none"}. Center is ${activeLrig?.name ?? "none"}, Level ${activeLrig?.level ?? 0}, printed Limit ${activeLrig?.limit ?? 0}. Field: ${signiEvidence}. Empty slots: ${openSigniSlots.join(", ") || "none"}. Offer play in Main if an empty slot and at least one hand SIGNI meet both the Center Level restriction and effective Limit after placement.`,
         attack: `An attack declaration names one attacker, even when a list is staged. Current SIGNI: ${signiEvidence}. A match-scoped SigniAttack window should offer attack if it has at least one eligible upped SIGNI. A match-scoped LrigAttack window uses the active Center LRIG. Staged candidates restrict which card can be named.`,
         choose: `Staged candidates: ${JSON.stringify(state.offeredSelection)}. Omit generic choose when this staged list supplies parameters for a named action available in the phase, such as attack. Offer choose for a pending card-selection decision where no named action expresses the declaration.`,
       };
@@ -447,10 +447,10 @@ export async function verifyOperation(
     const declaredCard = declaration?.card ? known[declaration.card] : undefined;
     const none = "The current instruction does not require this transfer.";
     const routes = await drex.decideBatch(
-      `CURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS UNDER REVIEW\n${transferred.map((id) => known[id] ?? id).join("\n")}\n\n${snapshot}`,
+      `CURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS OR PILE POSITIONS UNDER REVIEW\n${transferred.length ? transferred.map((id) => known[id] ?? id).join("\n") : `${operation} from ${args["from"]}, count ${args["count"] ?? "all"}`}\n\n${snapshot}`,
       {
         destination: {
-          question: `Source is ${args["from"]}. ${auditTransferPrompt}`,
+          question: `Source is ${args["from"]}. ${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
           choices: { none, ...list(areas) },
         },
         ...(transferred.length ? {} : { source: {
@@ -461,7 +461,7 @@ export async function verifyOperation(
     );
     trace.push(...Object.values(routes));
     const mismatch = routes["source"] && routes["source"].label !== args["from"] ? routes["source"]
-      : routes["destination"]?.label !== "none" && routes["destination"]?.label !== args["to"] ? routes["destination"] : undefined;
+      : routes["destination"]?.label !== args["to"] ? routes["destination"] : undefined;
     if (mismatch) throw new MatchHalt("Drex không xác nhận nguồn hoặc đích của thao tác chuyển bài.", mismatch.requestId);
   }
   const top = state.frames.at(-1);
@@ -498,18 +498,10 @@ export async function verifyOperation(
     if (incomplete) throw new MatchHalt("Drex chưa xác nhận hiệu ứng đã hoàn tất.", incomplete.requestId);
   }
   const question = operation === "control"
-    ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${state.phase === "Main" && args["intents"]?.includes("grow")
-      ? "Main-phase grow here is Assist Grow only. It is legal when the selected side LRIG has printed timing Main Phase, matching type, legal cost and Center-level condition. The pass option may coexist with this optional Assist Grow. If all such Assist Grows have been declined or no longer apply, a submitted pass completes Main and the table must advance to PreAttack."
-      : ""} ${state.phase === "SigniAttack" && state.active === "A" && args["actor"] === "A" && args["intents"] === "pass"
-      ? "The prior SIGNI attack has already resolved its damage, Life Burst decision and Check cleanup. This pass window is the required opportunity to end A's remaining SIGNI attacks before the phase advances."
-      : ""} ${auditOperationPrompt}`
+    ? "Is this exact player window legal now? Check the seat, scope, offered actions and pending choices. Read current-turn passes in committed operations. A submitted phase-ending pass closes its window even after consume clears it. A completed nested choice returns control according to the current phase and remaining work. A pass-only window can be legal if the phase is still open. Reject a completed phase window, an illegal offered action, or a window that skips unresolved work."
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
-    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.${state.phase === "Main" && state.promptIntents.includes("choose")
-      ? "A printed Enter effect has staged a mandatory discard. Keep the frame-scoped choose window and do not reopen a match window until the selected card has been submitted and moved."
-      : ""}${operation === "pop" && state.phase === "Setup" && state.declaration !== null && state.frames.at(-1)?.declaration !== null && state.frames.at(-1)?.declaration?.actor !== state.declaration?.actor
-      ? " Setup exception: the top frame stores the already completed mulligan declaration of the first seat, while the current declaration is the other seat's mulligan. Closing that top frame with acknowledge false is the required bookkeeping step and preserves the current declaration for the other seat's exchange."
-      : ""}`;
+    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
   const answer = await drex.decide(
     facts,
     question,
