@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, selectOperationPrompt } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, selectOperationPrompt, targetFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -249,12 +249,13 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
       const sourceCard = state.frames.findLast((frame) => frame.source)?.source ?? state.declaration?.card;
       const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
+      const targetEffect = resolving?.text.includes("target SIGNI") || resolving?.burst.includes("target SIGNI");
       const effect = resolving ? JSON.stringify({
         name: resolving.name,
         text: state.frames.at(-1)?.kind === "burst" ? resolving.burst : resolving.text,
       }) : "Use the current frame, declaration and rules.";
       const matches = await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Pending requirement: ${effect} Candidate: ${description}. Can this card belong to any legal selection for the current step? A group quota limits the final selection, not the alternatives included in the candidate list.`,
+        question: `Pending requirement: ${effect} Candidate: ${description}. ${targetEffect ? targetFocus : ""} Can this card belong to any legal selection for the current step? A group quota limits the final selection, not the alternatives included in the candidate list.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }])));
