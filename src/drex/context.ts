@@ -65,9 +65,9 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
       : undefined,
     marks: visibleMarks.length ? visibleMarks : undefined,
   };
-  const focus = viewer === "table" && state.phase === "Setup" ? setupFocus
+  const focus = state.phase === "Setup" && viewer === "table" ? setupFocus
     : viewer === "table" && state.frames.at(-1)?.kind === "refresh" ? refreshFocus
-    : viewer === "table" && !state.frames.length && (state.phase === "PreAttack" || state.phase === "Defense") ? attackWindows : "";
+    : !state.frames.length && (state.phase === "PreAttack" || state.phase === "Defense") ? attackWindows : "";
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,

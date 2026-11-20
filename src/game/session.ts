@@ -146,7 +146,8 @@ export class GameSession {
   private tableHistory() {
     const oldestFrame = this.#state.frames[0]?.openedAt ?? this.#state.revision;
     const cutoff = Math.min(this.#state.revision - 20, oldestFrame - 1);
-    return this.#log.filter((entry) => entry.revision > cutoff && entry.action !== "rejected").map((entry) => entry.action);
+    return this.#log.filter((entry) => entry.revision > cutoff && entry.action !== "rejected")
+      .map(({ turn, phase, role, action }) => `Turn ${turn} ${phase} ${role}: ${action}`);
   }
 
   private commit(draft: State, role: Entry["role"], action: string, trace: Decision[], note?: string) {

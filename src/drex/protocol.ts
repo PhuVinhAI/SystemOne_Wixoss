@@ -171,7 +171,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
-  const operation = await ask(selectOperationPrompt, choices) as Operation;
+  const pending = state.declaration
+    ? " If the current declaration has completed its own purpose, acknowledge it with consume before opening or preparing another unrelated window. You can consume a completed declaration while preserving any staged candidates."
+    : "";
+  const operation = await ask(selectOperationPrompt + pending, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
@@ -288,6 +291,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const signiEvidence = Object.entries(cardOptions(state, deck, all.filter(({ seat, zone }) =>
         seat === args["actor"] && slots.has(zone)), "table")).map(([, card]) => card).join("; ") || "none";
       const evidence: Partial<Record<Intent, string>> = {
+        pass: "Check whether the player can end this window without taking the optional action. A staged candidate set does not remove a legal pass when the action itself is optional. An unresolved mandatory card choice is different.",
         grow: `Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
         retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
         attack: `An attack declaration names one attacker, even when a list is staged. Current SIGNI: ${signiEvidence}. A match-scoped SigniAttack window should offer attack if it has at least one eligible upped SIGNI. A match-scoped LrigAttack window uses the active Center LRIG. Staged candidates restrict which card can be named.`,
@@ -303,6 +307,13 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           },
         }])));
       const picked = intents.filter((intent) => options[intent] === "offer");
+      if (options.pass === "omit") {
+        const ending = await parameter("permission to end this player window", {
+          mayPass: "The player is allowed to close this exact window without submitting another action or card.",
+          mustDecide: "The player must supply a decision in this window before it can close.",
+        }, `Seat ${args["actor"]}, phase ${state.phase}, scope ${args["scope"]}. Review the rules and outstanding choice for this window. Ignore the previous pass classification. Staged cards describe inputs for an action; they do not make an optional phase action mandatory.`);
+        if (ending === "mayPass") picked.unshift("pass");
+      }
       if (!picked.length) throw new MatchHalt("Drex không tìm được lựa chọn hợp lệ cho cửa sổ.");
       args["intents"] = picked.join(",");
       break;
