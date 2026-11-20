@@ -261,14 +261,15 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       const source = all.find((entry) => entry.label === args["from"])!;
       const destinations = all.filter((entry) =>
         entry.label !== source.label && (!slots.has(entry.zone) || !entry.ids.length));
+      if (operation === "move") args["card"] = await parameter("card", cardOptions(state, deck, [source], "table"),
+        `From ${source.label}. Identify the exact card affected by the outstanding step.`);
       const destinationQuestion = state.phase === "Setup" && operation === "take"
         ? "Which pile receives cards at this Setup step: an opening or replacement hand below five, or a Life Cloth pile after both mulligans are complete? Check whether that pile has already been filled."
         : "destination zone";
       args["to"] = await parameter(destinationQuestion, list(destinations.map(({ label }) => label)),
-        `From ${source.label}.${setup}`);
+        `From ${source.label}.${operation === "move" ? ` Card: ${known[args["card"]!]}. ${transferFocus}` : setup}`);
       const destination = all.find((entry) => entry.label === args["to"])!;
-      if (operation === "move") args["card"] = await parameter("card", cardOptions(state, deck, [source], "table"), `From ${source.label} to ${destination.label}.`);
-      else args["count"] = await parameter("exact number of cards", list(range(1, slots.has(destination.zone) ? 1 : source.ids.length)),
+      if (operation !== "move") args["count"] = await parameter("exact number of cards", list(range(1, slots.has(destination.zone) ? 1 : source.ids.length)),
         `From ${source.label} to ${destination.label}. Select the rules-correct count for this step.`);
       args["face"] = await parameter("face orientation on arrival", faceOptions, `From ${source.label} to ${destination.label}.`);
       break;
