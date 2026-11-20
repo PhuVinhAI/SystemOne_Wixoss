@@ -505,8 +505,8 @@ export async function verifyOperation(
       : ""} ${auditOperationPrompt}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
-    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.${operation === "control" && state.phase === "Main" && state.promptIntents.includes("choose")
-      ? "After a printed Enter effect has staged a mandatory discard, keep the frame-scoped choose window and do not reopen a match window until the selected card has been submitted and moved."
+    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.${state.phase === "Main" && state.promptIntents.includes("choose")
+      ? "A printed Enter effect has staged a mandatory discard. Keep the frame-scoped choose window and do not reopen a match window until the selected card has been submitted and moved."
       : ""}${operation === "pop" && state.phase === "Setup" && state.declaration !== null && state.frames.at(-1)?.declaration !== null && state.frames.at(-1)?.declaration?.actor !== state.declaration?.actor
       ? " Setup exception: the top frame stores the already completed mulligan declaration of the first seat, while the current declaration is the other seat's mulligan. Closing that top frame with acknowledge false is the required bookkeeping step and preserves the current declaration for the other seat's exchange."
       : ""}`;
