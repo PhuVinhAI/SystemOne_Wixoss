@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v51";
+export const promptVersion = "wixoss-table-v52";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -58,6 +58,8 @@ export const targetFocus = "Use the actual zone, owner and eligibility condition
 export const selectionFocus = "Identify the exact obligation this card selection serves. For payment, read the printed cost or the cost before the colon of an ability. Ener payment uses only cards in the payer's Ener Zone. Colored Ener takes the matching printed color or Multi Ener. A multicolored Ener can pay one unit of an eligible color. Colorless requirements accept any color. Stage all cards that can belong to at least one legal payment set. The submitted set still has to pay the entire cost. For an effect target, use only requirements of the current clause.";
 
 export const chooserFocus = "Distinguish who chooses from whose cards are eligible. A target instruction belongs to the source ability's controller unless it explicitly tells another player to choose. An opponent's card or zone can be the target of that controller's choice. The owner of a crushed Life Cloth chooses whether to use its Burst. For a handoff between phase windows or for Guard, use the player designated by the rules for that particular window.";
+
+export const windowFocus = "Identify the single unresolved decision this window serves. An activation response and a subsequent selection of targets or payment are separate decisions. Use committed declarations and the current staged candidates to tell them apart. A recorded response remains in effect after consume. Offer generic choose for a staged effect selection. Offer decline only if this exact selection or payment is optional. Phase actions belong to their own window after the current frame resolves.";
 
 export const frameFocus = "A frame records and preserves pending work. Opening it does not activate or repeat any effect. Open a frame for a multi-step Enter, Auto, Cast or other effect before performing its first clause; it supplies the source and controller for any nested choices. A Grow frame records the payment and placement. Its newly placed LRIG's pending Enter belongs in an Enter frame before staging Enter targets. Keep that Enter frame until all its work is accounted for. An already-satisfied state outcome needs no mutation; acknowledge the selection and keep its committed result in scope. Handle a separate paid ability independently: offer its choice if fully payable, otherwise skip just that ability. Continue from the outstanding clause if an existing selection is already staged.";
 
