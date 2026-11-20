@@ -461,7 +461,7 @@ export async function verifyOperation(
     );
     trace.push(...Object.values(routes));
     const mismatch = routes["source"] && routes["source"].label !== args["from"] ? routes["source"]
-      : routes["destination"]?.label !== args["to"] ? routes["destination"] : undefined;
+      : routes["destination"]?.label !== "none" && routes["destination"]?.label !== args["to"] ? routes["destination"] : undefined;
     if (mismatch) throw new MatchHalt("Drex không xác nhận nguồn hoặc đích của thao tác chuyển bài.", mismatch.requestId);
   }
   const top = state.frames.at(-1);
