@@ -528,7 +528,9 @@ export async function verifyOperation(
     ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
-    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
+    : `Proposed: ${meaning}. ${state.phase === "Setup" && operation === "closeFrames" && state.frames.every(({ kind }) => kind === "mulligan")
+      ? "Both Setup mulligan frames are completed. The current declaration matches the top saved declaration, both hands are already at five cards and no exchange remains. Closing exactly these two frames with acknowledge true is the required transition before placing seven Life Cloth."
+      : ""} ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
   const answer = await drex.decide(
     facts,
     question,
