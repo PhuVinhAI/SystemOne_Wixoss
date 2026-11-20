@@ -175,7 +175,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     ? " The current declaration has a copy in a frame. When the active work requires a new player decision, control can hand off to that player while the saved copy remains. Unresolved work stays in that frame."
     : " If the current declaration has completed its purpose, use consume. If it still has work and needs a nested player decision, save it in a frame before handing off."
     : "";
-  const operation = await ask(selectOperationPrompt + pending, choices) as Operation;
+  const setup = state.phase === "Setup"
+    ? ` Current counts: A.hand ${state.players.A.hand.length}, B.hand ${state.players.B.hand.length}, A.life ${state.players.A.life.length}, B.life ${state.players.B.life.length}. Compare with recorded mulligans and actual transfers before dealing more cards.`
+    : "";
+  const operation = await ask(selectOperationPrompt + pending + setup, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
@@ -187,10 +190,15 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     case "take":
     case "random": {
       args["from"] = await parameter("source zone", list(nonempty.filter((entry) =>
-        operation !== "move" || entry.ids.some((id) => Object.hasOwn(known, id))).map((entry) => entry.label)));
+        operation !== "move" || entry.ids.some((id) => Object.hasOwn(known, id))).map((entry) => entry.label)), setup);
       const source = all.find((entry) => entry.label === args["from"])!;
-      args["to"] = await parameter("destination zone", list(all.filter((entry) =>
-        entry.label !== source.label && (!slots.has(entry.zone) || !entry.ids.length)).map((entry) => entry.label)), `From ${source.label}.`);
+      const destinations = all.filter((entry) =>
+        entry.label !== source.label && (!slots.has(entry.zone) || !entry.ids.length));
+      const destinationQuestion = state.phase === "Setup" && operation === "take"
+        ? "Which pile receives cards at this Setup step: an opening or replacement hand below five, or a Life Cloth pile after both mulligans are complete? Check whether that pile has already been filled."
+        : "destination zone";
+      args["to"] = await parameter(destinationQuestion, list(destinations.map(({ label }) => label)),
+        `From ${source.label}.${setup}`);
       const destination = all.find((entry) => entry.label === args["to"])!;
       if (operation === "move") args["card"] = await parameter("card", cardOptions(state, deck, [source], "table"), `From ${source.label} to ${destination.label}.`);
       else args["count"] = await parameter("exact number of cards", list(range(1, slots.has(destination.zone) ? 1 : source.ids.length)),

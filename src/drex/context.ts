@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
 import { displayedPower, lrigSlots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackFocus, phaseWindows, playerRole, refreshFocus, setupFocus, tableRole } from "./prompts.js";
+import { attackFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -77,7 +77,7 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
       : undefined,
     marks: visibleMarks.length ? visibleMarks : undefined,
   };
-  const focus = state.phase === "Setup" && viewer === "table" ? setupFocus
+  const focus = state.phase === "Setup" && viewer === "table" ? setupFocus + "\n" + setupProgress
     : viewer === "table" && state.frames.at(-1)?.kind === "refresh" ? refreshFocus
     : viewer === "table" ? phaseWindows : "";
   return [
