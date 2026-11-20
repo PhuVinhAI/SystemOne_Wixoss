@@ -240,7 +240,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
     : " If the current declaration has completed its purpose, use consume. If it still has work and needs a nested player decision, save it in a frame before handing off."
     : "";
   const setup = state.phase === "Setup"
-    ? ` Current counts: A.hand ${state.players.A.hand.length}, B.hand ${state.players.B.hand.length}, A.life ${state.players.A.life.length}, B.life ${state.players.B.life.length}. Compare with recorded mulligans and actual transfers before dealing more cards.`
+    ? ` Current counts: A.hand ${state.players.A.hand.length}, B.hand ${state.players.B.hand.length}, A.life ${state.players.A.life.length}, B.life ${state.players.B.life.length}. The first mulligan uses a direct control window. Open a mulligan frame only when it has an actual submitted declaration to save. Compare with recorded mulligans and actual transfers before dealing more cards.`
     : "";
   const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
     ? ` Current combat step: ${state.phase}. Turn player: ${state.active}. Current declaration: ${JSON.stringify(state.declaration)}. ${combatWindowFocus}` : "";
@@ -641,7 +641,7 @@ export async function verifyOperation(
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
     : operation === "turn" ? `Can ${meaning} now? Confirm the outgoing End obligations are complete, the incoming seat is correct, and the supplied phase is the first phase of the incoming turn.`
-    : operation === "push" ? `Proposed: ${meaning}. ${frameFocus} Check whether this frame records real outstanding work or a required rules check. Confirm frame kind, controller and source against the current declaration and history.`
+    : operation === "push" ? `Proposed: ${meaning}. ${frameFocus} Check whether this frame records real outstanding work or a required rules check. Confirm frame kind, controller and source against the current declaration and history.${state.phase === "Setup" ? " An empty mulligan submission is a keep and can be saved. A previous frame with no saved declaration did not record that keep. Verify that this push saves the actual submission and preserves the other seat's opportunity to decide." : ""}`
     : operation === "phase"
       ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
