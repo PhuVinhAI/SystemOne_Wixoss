@@ -85,6 +85,9 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     ? castFocus : "";
   const grow = viewer === "table" && (state.declaration?.intent === "grow"
     || state.frames.some(({ declaration }) => declaration?.intent === "grow")) ? growFocus : "";
+  const phasePrefix = `Turn ${state.turn} ${state.phase} `;
+  const phaseHistory = viewer === "table" ? recent.filter((entry) => entry.startsWith(phasePrefix)) : [];
+  const previousHistory = phaseHistory.length ? recent.filter((entry) => !entry.startsWith(phasePrefix)) : recent;
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,
@@ -93,12 +96,13 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
     grow,
     viewer === "table" && checkCards.length ? burstFocus : "",
     "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
+    phaseHistory.length ? "COMMITTED IN THIS PHASE (oldest first)\n" + phaseHistory.map((entry) => entry.slice(phasePrefix.length)).join("\n") : "",
     checkCards.length ? "CHECK ZONE RECORDS\n" + checkCards.map((id) => {
       const card = deck.cards[state.cards[id]!.definition]!;
       return `${id} ${card.name}. Printed Life Burst: ${card.burst || "none"}.`;
     }).join("\n") : "",
     viewer === "table" && sourceDefinitions.size ? "ACTIVE SOURCE RECORDS\n" + sources.filter(({ isSource }) => isSource).map(({ text }) => text).join("\n") : "",
-    recent.length ? "COMMITTED OPERATIONS (oldest first)\n" + recent.join("\n") : "",
+    previousHistory.length ? "PREVIOUS COMMITTED OPERATIONS (oldest first)\n" + previousHistory.join("\n") : "",
     sources.length ? "PRINTED CARDS\n" + sources.filter(({ isSource }) => viewer !== "table" || !isSource).map(({ text }) => text).join("\n") : "",
     "<RULES>\n" + rules + "\n</RULES>",
   ].filter(Boolean).join("\n\n");

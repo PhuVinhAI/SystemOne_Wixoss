@@ -144,8 +144,10 @@ export class GameSession {
   }
 
   private tableHistory() {
-    const oldestFrame = this.#state.frames[0]?.openedAt ?? this.#state.revision;
-    const cutoff = Math.min(this.#state.revision - 20, oldestFrame - 1);
+    const { turn, phase, revision, frames } = this.#state;
+    const oldestFrame = frames[0]?.openedAt ?? revision;
+    const phaseStart = this.#log.findLast((entry) => entry.turn !== turn || entry.phase !== phase)?.revision ?? 0;
+    const cutoff = Math.min(revision - 20, oldestFrame - 1, phaseStart);
     return this.#log.filter((entry) => entry.revision > cutoff && entry.action !== "rejected")
       .map(({ turn, phase, role, action }) => `Turn ${turn} ${phase} ${role}: ${action}`);
   }
