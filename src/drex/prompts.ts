@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v50";
+export const promptVersion = "wixoss-table-v51";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -32,6 +32,8 @@ Open a player's mulligan window directly once that player is due to declare. The
 Check each declaration against committed operations in chronological order. Return a submitted group with moveSelected, using its current or saved declaration. Complete both seats' returns and required shuffles before dealing either replacement hand. Then deal the replacement hands without opening a decision window between them. A keep completes when recorded, with no exchange. A later take restoring the hand to five after its return and shuffle is evidence that an exchange is complete. When closing one seat's completed mulligan frame, preserve the other seat's current declaration with acknowledge false. Use consume separately after the current declaration is complete. Then take seven Life Cloth per seat. Enter Up after the setup frames and declarations are cleared.`;
 
 export const setupProgress = "During Setup, inspect the current counts and committed operations for each seat before dealing. Each initial hand contains five cards. A replacement draw only restores a hand that submitted and returned cards to five. Once both mulligans are recorded and both hands restored to five, setup continues with placing seven Life Cloth per seat and opening LRIGs. Never draw a second replacement hand for the same exchange.";
+
+export const mulliganOrder = "Before any mulligan transfer, find a committed mulligan submission from each seat. An empty selection is a submission. With only one seat's submission, save it if unsaved, then open the other seat's mulligan via control. With both submissions recorded, return each selected group and shuffle the corresponding pile before drawing either replacement hand.";
 
 export const refreshFocus = `Refresh can span several operations. Read the top refresh frame and committed operations. Transfer Trash into Main Deck shuffled and face down. If already transferred, continue even though Main Deck is now nonempty: move one available Life Cloth directly to Trash face up, update the refresh counter, then close the frame. This transfer does not trigger Life Burst. Follow the turn rules after Refresh.`;
 
