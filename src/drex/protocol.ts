@@ -64,7 +64,8 @@ function cardRequired(intent: Intent) {
 }
 
 export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, ask: Ask): Promise<Declaration> {
-  const intent = await ask("What do you choose to do in this window?", selectIntent(state)) as Intent;
+  const intent = state.promptIntents.length === 1 ? state.promptIntents[0]!
+    : await ask("Which offered action do you choose for this player window?", selectIntent(state)) as Intent;
   const visibleCards = cardOptions(state, deck, sources(state), actor);
   const selection = state.offeredSelection;
   const available = selection ? Object.fromEntries(selection.candidates.flatMap((id) =>
@@ -72,11 +73,13 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
   const card = cardRequired(intent) ? await ask(`Choose a visible card for ${intent}.`, available) : null;
   const cards: string[] = [];
   if (groupIntents.includes(intent)) {
-    for (;;) {
-      const remaining = cards.length < (selection?.max ?? 51)
-        ? Object.fromEntries(Object.entries(available).filter(([id]) => !cards.includes(id))) : {};
-      if (cards.length >= (selection?.min ?? 0)) remaining["done"] = "Submit the complete set of selected cards now.";
-      const selected = await ask(`Choose another card or finalize the complete selection for ${intent}. Current selection: ${cards.join(", ") || "empty"}.`,
+    const min = selection?.min ?? 0;
+    const max = Math.min(selection?.max ?? 51, Object.keys(available).length);
+    if (max < min) throw new MatchHalt("Không đủ lá có thể xem trong cửa sổ chọn bài.");
+    while (cards.length < max) {
+      const remaining = Object.fromEntries(Object.entries(available).filter(([id]) => !cards.includes(id)));
+      if (cards.length >= min) remaining["done"] = "Submit the complete set of selected cards now.";
+      const selected = await ask(`Seat ${actor}: make the player's selection. The table has opened ${intent} and supplied the candidates below. Choose the card you prefer to submit among these candidates. A set requires ${min}–${max} cards. Already picked: ${cards.join(", ") || "none"}. Select done only if offered and you want to stop adding cards.`,
         remaining);
       if (selected === "done") break;
       cards.push(selected);

@@ -20,6 +20,7 @@ type Entry = {
   trace: Decision[];
   note?: string;
   changedZones: Record<string, readonly string[]>;
+  publicEvent?: string;
 };
 
 export type MatchUpdate = ReturnType<GameSession["present"]>;
@@ -30,12 +31,14 @@ export class GameSession {
   #busy = false;
   #log: Entry[] = [];
   #last: string[] = [];
+  #publicHistory: string[] = [];
 
   constructor(private readonly deck: Deck, private readonly drex: DrexClient, saved?: { initial: State; state: State; log: Entry[] }) {
     this.#state = saved?.state ?? createState(deck);
     assertBoard(this.#state);
     this.#initial = saved?.initial ?? this.#state;
     this.#log = saved?.log ?? [];
+    this.#publicHistory = this.#log.slice(-20).flatMap(({ publicEvent }) => publicEvent ? [publicEvent] : []);
   }
 
   get id() { return this.#state.id; }
@@ -104,7 +107,7 @@ export class GameSession {
         trace = [];
         const state = this.#state;
         const role = state.control;
-        const recent = role === "table" ? this.tableHistory() : this.#last;
+        const recent = role === "table" ? this.tableHistory() : this.#publicHistory;
         const snapshot = context(state, this.deck, role, recent);
         const ask = askWith(this.drex, snapshot, trace);
         if (role === "B") {
@@ -151,13 +154,14 @@ export class GameSession {
     const previous = this.#state;
     this.#state = { ...draft, revision };
     this.#last = [this.publicEvent(previous, action, role)];
+    this.#publicHistory = [...this.#publicHistory.slice(-19), ...this.#last];
     const changedZones = Object.fromEntries(seats.flatMap((seat) => zones.flatMap((zone) => {
       const before = previous.players[seat][zone];
       const after = draft.players[seat][zone];
       return before.length !== after.length || after.some((id, index) => id !== before[index])
         ? [[`${seat}.${zone}`, [...after]] as const] : [];
     })));
-    this.#log.push({ revision, time: new Date().toISOString(), role, action, trace,
+    this.#log.push({ revision, time: new Date().toISOString(), role, action, trace, publicEvent: this.#last[0]!,
       ...(draft.failure ? { failure: draft.failure } : {}),
       turn: draft.turn, phase: draft.phase, changedZones, ...(note ? { note } : {}) });
   }
