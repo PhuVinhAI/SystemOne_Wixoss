@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v26";
+export const promptVersion = "wixoss-table-v27";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -43,7 +43,9 @@ export const attackFocus = "For this attack, locate the declared attacker and it
 
 export const castFocus = "A Spell or PIECE cast has distinct steps. Move the declared source face up to its owner's Check zone when used. Read committed costs for that declaration and pay only the unpaid cost before selecting targets. Resolve each applicable printed clause from Check. An impossible target may leave no effect, but the used source still moves from Check to its owner's Trash (Spell) or LRIG Trash (PIECE). Close the cast frame only after that cleanup. Moving a payment card into Trash does not move or finish the cast source.";
 
-export const growFocus = "Grow is distinct from casting a Spell or PIECE. For a Grow placement, compare the incoming LRIG with the current top card of the exact proposed stack: they must share a printed LRIG type and the incoming Level must be exactly one higher. Compare Assist Level with Center Level and check the printed use timing. Read the printed Grow cost and compare it with transfers committed since this exact declaration. Pay any remaining cost first. An Enter ability triggers only after placement. Each printed Enter is a distinct ability. A free Enter is mandatory, and an Enter with its own cost is a separate optional payment and effect. Offer modes only when printed. If a selected card already has its required state, acknowledge the satisfied result without a no-op mutation.";
+export const growEligibility = "For an Assist, first compare incoming Level with the current Center Level. An Assist above the Center Level is illegal even if its own stack and timing qualify. Then check its printed use timing. Check the top card of the destination stack: at least one printed LRIG type must match and incoming Level must be exactly one higher. Verify the full printed Grow cost.";
+
+export const growFocus = `Grow is distinct from casting a Spell or PIECE. ${growEligibility} Compare the printed Grow cost with transfers committed since this exact declaration. Pay any remaining cost first. An Enter ability triggers only after placement. Each printed Enter is a distinct ability. A free Enter is mandatory, and an Enter with its own cost is a separate optional payment and effect. Offer modes only when printed. If a selected card already has its required state, acknowledge the satisfied result without a no-op mutation.`;
 
 export const targetFocus = "Use the actual zone, owner and other conditions named by the first unresolved clause. Account for earlier clauses already resolved or skipped because they had no targets. For example, a choice of cards to discard uses the hand specified by that clause. A field target must come from the field specified by its clause.";
 

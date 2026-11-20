@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, growEligibility, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -55,6 +55,16 @@ function cardOptions(state: State, deck: Deck, input: Source[], viewer: "table" 
     })));
 }
 
+function growEvidence(state: State, deck: Deck, actor: Seat, id: string) {
+  const input = deck.cards[state.cards[id]!.definition]!;
+  const stacks = Array.from(lrigSlots, (zone) => {
+    const top = state.players[actor][zone][0];
+    const card = top && visible(state, actor, actor, zone, top) ? deck.cards[state.cards[top]!.definition] : undefined;
+    return `${zone}: ${card ? `${card.name}, Level ${card.level}, type ${card.group}` : "no visible top card"}`;
+  });
+  return `Current LRIG tops: ${stacks.join("; ")}. Incoming card: ${input.name}, ${input.type}, Level ${input.level}, type ${input.group}, printed timing ${input.timing}, Grow cost ${input.growCost}. ${growEligibility}`;
+}
+
 const range = (min: number, max: number) => Array.from({ length: Math.max(0, max - min + 1) }, (_, i) => String(i + min));
 const boolean = list(["true", "false"]);
 const faceOptions = { keep: "Preserve face orientation.", up: "Face up.", down: "Face down." };
@@ -72,6 +82,10 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
     Object.hasOwn(visibleCards, id) ? [[id, visibleCards[id]!]] : [])) : visibleCards;
   const candidateMenus: Partial<Record<Intent, Choices>> = {};
   const questions: Parameters<Ask["each"]>[0] = {};
+  const levelQuestions: Parameters<Ask["each"]>[0] = {};
+  const centerId = state.players[actor].centerLrig[0];
+  const center = centerId && visible(state, actor, actor, "centerLrig", centerId)
+    ? deck.cards[state.cards[centerId]!.definition] : undefined;
   for (const action of state.promptIntents.filter(cardRequired)) {
     const sourcesForAction = locations.filter(({ seat, zone }) => {
       if (action === "grow") return seat === actor && zone === "lrigDeck";
@@ -84,11 +98,22 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
       .filter(([id]) => Object.hasOwn(available, id)));
     candidateMenus[action] = menu;
     for (const [id, description] of Object.entries(menu)) {
+      const card = deck.cards[state.cards[id]!.definition]!;
+      if (action === "grow" && card.type === "ASSIST LRIG" && center) {
+        levelQuestions[id] = {
+          question: `Compare only these values. Current Center Level: ${center.level}. Incoming Assist Level: ${card.level}. Is the incoming Assist Level higher than the Center Level?`,
+          choices: { above: "Incoming Assist Level is greater than current Center Level.", within: "Incoming Assist Level is equal to or lower than current Center Level." },
+        };
+      }
       questions[`${action}_${id}`] = {
-        question: `Can seat ${actor} legally declare ${action} with ${description} at this exact window in ${state.phase}? A legal action has at least one legal destination where needed. Check the card type, printed timing, payable costs including Multi Ener, controller, and all prerequisites. ${action === "grow" ? growFocus : action === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} Judge legality only. Hidden cards never contribute to this decision.`,
+        question: `Can seat ${actor} legally declare ${action} with ${description} at this exact window in ${state.phase}? ${action === "grow" ? `A Center LRIG can only Grow in the Grow phase. This window is ${state.phase}. ${growEvidence(state, deck, actor, id)}` : action === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} A legal action has at least one legal destination where needed. Check the card type, printed timing, payable costs including Multi Ener, controller, and all prerequisites. Judge legality only. Hidden cards never contribute to this decision.`,
         choices: { legal: "At least one legal declaration of this action names this card.", illegal: "No legal declaration of this action can name this card now." },
       };
     }
+  }
+  const levels = await ask.each(levelQuestions);
+  for (const [id, level] of Object.entries(levels)) {
+    if (level === "above") delete questions[`grow_${id}`];
   }
   const eligibility = await ask.each(questions);
   const menu = selectIntent(state);
@@ -155,7 +180,7 @@ export async function auditDeclaration(drex: DrexClient, snapshot: string, state
   });
   const answer = await drex.decide(
     `PLAYER DECLARATION\n${JSON.stringify(declaration)}\n${detail}\n\n${snapshot}`,
-    `Judge the declaration now. Priority evidence: ${detail}. Check the card type and the exact set together. If two cards share a group with a printed one-per-group cap, the set is illegal although each is individually eligible. An empty submitted set counts as zero and is a fully declared choice where zero is permitted. Check the acting seat, timing and destination. ${declaration.intent === "grow" ? growFocus : declaration.intent === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} Do not perform a different choice.`,
+    `Judge the declaration now. Priority evidence: ${detail}. ${declaration.intent === "grow" && declaration.card ? growEvidence(state, deck, declaration.actor, declaration.card) : declaration.intent === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} Check the card type and the exact set together. If two cards share a group with a printed one-per-group cap, the set is illegal although each is individually eligible. An empty submitted set counts as zero and is a fully declared choice where zero is permitted. Check the acting seat, timing and destination. Do not perform a different choice.`,
     {
       legal: "This exact player declaration is legal now, including the combination of all selected cards.",
       illegal: "The declaration contradicts an identifiable rule or the printed instruction.",
