@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, growEligibility, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, frameFocus, growEligibility, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -239,7 +239,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
   const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
     ? ` ${combatWindowFocus}` : "";
   const operation = await ask(selectOperationPrompt + pending + setup + combatWindow
-    + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work.", choices) as Operation;
+    + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work. " + frameFocus, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
@@ -525,6 +525,7 @@ export async function verifyOperation(
   const meaning = operation === "control" ? `Open the ${args["scope"]} decision window for seat ${args["actor"]} with these intents: ${args["intents"]}. Preserve any staged selection and declarations saved in frames.`
     : operation === "consume" ? "Acknowledge the current declaration only. Keep every resolution frame and the staged candidates for the next decision."
     : operation === "turn" ? `Finish the outgoing turn for ${work.state.active} and start seat ${args["actor"]}'s turn in ${args["phase"]}`
+    : operation === "push" ? `Open a ${args["frame"]} frame for seat ${args["actor"]} with source ${args["source"]}, save the current declaration, and preserve staged candidates and all committed effects`
     : operation === "move" ? `Move ${args["card"]} from ${args["from"]} to ${args["to"]}`
     : operation === "pop" || operation === "closeFrames" ? `Close ${operation === "pop" ? "one frame" : args["count"] + " frames"}; acknowledge current declaration: ${args["acknowledge"]}. Closing frames removes declarations those frames store.`
     : operation === "chooseFrom" ? `Offer exactly these cards from ${args["source"]}: ${args["eligible"] || "none"}. Can select from ${args["min"]} to ${args["max"]} cards. Confirm each eligible card and every legal selection size; 'up to' permits zero.`
@@ -618,6 +619,7 @@ export async function verifyOperation(
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
     : operation === "turn" ? `Can ${meaning} now? Confirm the outgoing End obligations are complete, the incoming seat is correct, and the supplied phase is the first phase of the incoming turn.`
+    : operation === "push" ? `Proposed: ${meaning}. ${frameFocus} Check whether this frame records real outstanding work or a required rules check. Confirm frame kind, controller and source against the current declaration and history.`
     : operation === "phase"
       ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
