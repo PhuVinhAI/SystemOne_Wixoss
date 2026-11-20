@@ -81,6 +81,8 @@ export const auditTransferPrompt = `Independently choose the destination require
 
 export const directDamageFocus = "For an ordinary SIGNI attack whose opposing lane is empty, the next damage operation takes exactly one card from the defending player's Life Cloth to that player's Check Zone face up. The attacked SIGNI is already Down. Do not choose none, another source zone, or Ener for this direct damage. After the Life Cloth card enters Check, resolve its Life Burst decision and cleanup.";
 
+export const battleVanishFocus = "For an ordinary SIGNI attack into an occupied opposing lane, compare the attacker's effective Power with the opposing SIGNI's effective Power. When the attacker meets or exceeds the defender, the defender is Vanished by battle and moves from its field to its owner's Ener. This exact battle result supplies the move's meaning. Do not classify the move as optional or choose none after the committed attack result.";
+
 export const auditFieldResultPrompt = "Judge this field card alone. Read the active source's text and determine whether any result affecting this card is still required before cleanup. Check target restrictions, prior choices, and committed results for this specific card. If the source has an unresolved choice among several cards, flag it as evidence missing only if the choice is required and the history has not resolved it.";
 
 export const auditOperationPrompt = `<AUDIT>
