@@ -1,5 +1,5 @@
 import { flags, frames, intents, phases, seats, zones, type Declaration, type Intent, type Seat, type State, type Zone } from "../domain/types.js";
-import { boxName, displayedPower, slots } from "../game/board.js";
+import { boxName, displayedPower, lrigSlots, slots } from "../game/board.js";
 import { MatchHalt, type Choices } from "../game/options.js";
 import { areas, counterNames, declarationIsSaved, operations, selectedGroup, type Operation } from "../game/primitives.js";
 import { canSeeCard, visible } from "../game/view.js";
@@ -171,14 +171,14 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
-  const pending = state.declaration
-    ? " If the current declaration has completed its own purpose, acknowledge it with consume before opening or preparing another unrelated window. You can consume a completed declaration while preserving any staged candidates."
+  const pending = state.declaration ? declarationIsSaved(state)
+    ? " The current declaration has a copy in a frame. When the active work requires a new player decision, control can hand off to that player while the saved copy remains. Unresolved work stays in that frame."
+    : " If the current declaration has completed its purpose, use consume. If it still has work and needs a nested player decision, save it in a frame before handing off."
     : "";
   const operation = await ask(selectOperationPrompt + pending, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
-  const target = () => parameter("target", { ...list(nonempty.map((entry) => entry.label)), ...known });
   const subject = () => parameter("subject", { ...list(seats), ...known });
   const expires = () => parameter("expiry", { permanent: "Permanent until removed", [state.turn]: "End of current turn", [state.turn + 1]: "End of next turn" });
   const args: Record<string, string> = {};
@@ -267,10 +267,21 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
     }
     case "orient":
     case "freeze":
-    case "face":
-      args["target"] = await target();
-      args["value"] = await parameter("value", boolean, `Target ${args["target"]}. For orient true means Down, for freeze true means Frozen, and for face true means face up.`);
+    case "face": {
+      const field = operation === "orient" ? "down" : operation === "freeze" ? "frozen" : "faceUp";
+      const declaredCard = state.declaration?.card;
+      const inputs = operation === "face" ? nonempty : nonempty.filter(({ zone }) => slots.has(zone) || lrigSlots.has(zone));
+      const cards = cardOptions(state, deck, inputs, "table");
+      args["target"] = await parameter("affected card or zone", { ...list(inputs.map(({ label }) => label)), ...cards },
+        declaredCard ? `Current declaration named this card: ${known[declaredCard] ?? declaredCard}.` : "");
+      const ids = all.find(({ label }) => label === args["target"])?.ids ?? [args["target"]!];
+      const values = operation === "orient" ? { true: "Down", false: "Up" }
+        : operation === "freeze" ? { true: "Frozen", false: "Unfrozen" } : { true: "Face up", false: "Face down" };
+      const changes = Object.fromEntries(Object.entries(values).filter(([value]) =>
+        ids.some((id) => state.cards[id]![field] !== (value === "true"))));
+      args["value"] = await parameter("new state of this target", changes, `Target: ${cards[args["target"]] ?? args["target"]}.`);
       break;
+    }
     case "power":
     case "addPower":
       args["card"] = await parameter("card", known);
@@ -307,7 +318,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           },
         }])));
       const picked = intents.filter((intent) => options[intent] === "offer");
-      if (options.pass === "omit") {
+      if (options.pass === "omit" && !picked.includes("mulligan")) {
         const ending = await parameter("permission to end this player window", {
           mayPass: "The player is allowed to close this exact window without submitting another action or card.",
           mustDecide: "The player must supply a decision in this window before it can close.",
@@ -475,7 +486,9 @@ export async function verifyOperation(
     ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${auditOperationPrompt}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
-    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
+    : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.${operation === "pop" && state.phase === "Setup" && state.declaration && state.frames.at(-1)?.declaration && state.frames.at(-1)?.declaration.actor !== state.declaration.actor
+      ? " Setup exception: the top frame stores the already completed mulligan declaration of the first seat, while the current declaration is the other seat's mulligan. Closing that top frame with acknowledge false is the required bookkeeping step and preserves the current declaration for the other seat's exchange."
+      : ""}`;
   const answer = await drex.decide(
     facts,
     question,
