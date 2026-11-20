@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, selectOperationPrompt } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, selectOperationPrompt } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -178,7 +178,9 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
   const setup = state.phase === "Setup"
     ? ` Current counts: A.hand ${state.players.A.hand.length}, B.hand ${state.players.B.hand.length}, A.life ${state.players.A.life.length}, B.life ${state.players.B.life.length}. Compare with recorded mulligans and actual transfers before dealing more cards.`
     : "";
-  const operation = await ask(selectOperationPrompt + pending + setup, choices) as Operation;
+  const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
+    ? ` ${combatWindowFocus}` : "";
+  const operation = await ask(selectOperationPrompt + pending + setup + combatWindow, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
   const actor = () => parameter("actor", list(seats));
@@ -508,7 +510,7 @@ export async function verifyOperation(
     if (incomplete) throw new MatchHalt("Drex chưa xác nhận hiệu ứng đã hoàn tất.", incomplete.requestId);
   }
   const question = operation === "control"
-    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Check the window against this phase and any pending resolution. Earlier phases and turns cannot close this window. Prior offered actions describe an old menu and do not establish that a player submitted a choice. Check only proposed actions. The next API call handles the player's selection.`
+    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Check the window against this phase and any pending resolution. Earlier phases and turns cannot close this window. Prior offered actions describe an old menu and do not establish that a player submitted a choice. Check only proposed actions. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
