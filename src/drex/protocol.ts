@@ -254,7 +254,9 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
     : "";
   const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
     ? ` Current combat step: ${state.phase}. Turn player: ${state.active}. ${combatWindowFocus}` : "";
-  const operation = await ask(selectOperationPrompt + pending + setup + combatWindow
+  const signiAttack = state.phase === "SigniAttack" ? ` Turn player's SIGNI: ${Object.values(cardOptions(state, deck,
+    all.filter(({ seat, zone }) => seat === state.active && slots.has(zone)), "table")).join("; ") || "none"}. Each eligible upped SIGNI can attack. Power, color and the presence of an opposing SIGNI affect the result of the attack, not its basic eligibility. Continue the SIGNI window after one attack while another legal attacker remains and the player has not passed.` : "";
+  const operation = await ask(selectOperationPrompt + pending + setup + combatWindow + signiAttack
     + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work. " + frameFocus, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
@@ -337,7 +339,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
         filtered: "At least one card in this pool is individually excluded by a rule or the outstanding clause, or the whole pool needs inspection.",
       }, `Source text: ${effect}. Staging from ${args["source"]}. ${targetFocus} When the instruction asks the player to discard a card without further restrictions, each card in that player's hand is individually eligible.`);
       const matches = restrictions === "filtered" ? await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Source: ${effect}. Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} ${selectionFocus} Judge individual eligibility for this exact clause.`,
+        question: `Source: ${effect}. Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} ${selectionFocus}${!frame && !state.declaration ? signiAttack : ""} Judge individual eligibility for this exact clause.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }]))) : {};
