@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v23";
+export const promptVersion = "wixoss-table-v24";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -43,7 +43,7 @@ export const attackFocus = "For this attack, locate the declared attacker and it
 
 export const castFocus = "A Spell or PIECE cast has distinct steps. Move the declared source face up to its owner's Check zone when used. Read committed costs for that declaration and pay only the unpaid cost before selecting targets. Resolve each applicable printed clause from Check. An impossible target may leave no effect, but the used source still moves from Check to its owner's Trash (Spell) or LRIG Trash (PIECE). Close the cast frame only after that cleanup. Moving a payment card into Trash does not move or finish the cast source.";
 
-export const targetFocus = "When a printed effect says target SIGNI on a field, candidate eligibility is limited to the opponent's SIGNI zones, their current Power and the printed target restriction. Never include hand cards or other non-field zones in that target set. A staged target set must contain only cards that can be selected now.";
+export const targetFocus = "Use the actual zone, owner and other conditions named by the first unresolved clause. Account for earlier clauses already resolved or skipped because they had no targets. For example, a choice of cards to discard uses the hand specified by that clause. A field target must come from the field specified by its clause.";
 
 export const burstFocus = "Use the actual move into Check to identify how the card arrived. If a Life Cloth was crushed, read its printed Life Burst. With no printed Burst, send that card straight from Check to Ener. With a printed Burst not yet offered, ask its owner whether to use it, offering burst and decline. Check history for a decision about this exact card before opening a window. Resolve any accepted Burst in printed order and move the card to Ener after it resolves. A Spell or PIECE in Check from a cast follows its own cast sequence instead.";
 

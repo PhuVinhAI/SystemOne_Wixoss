@@ -64,13 +64,44 @@ function cardRequired(intent: Intent) {
 }
 
 export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, ask: Ask): Promise<Declaration> {
-  const intent = state.promptIntents.length === 1 ? state.promptIntents[0]!
-    : await ask("Which offered action do you choose for this player window?", selectIntent(state)) as Intent;
-  const visibleCards = cardOptions(state, deck, sources(state), actor);
+  const locations = sources(state);
+  const visibleCards = cardOptions(state, deck, locations, actor);
   const selection = state.offeredSelection;
   const available = selection ? Object.fromEntries(selection.candidates.flatMap((id) =>
     Object.hasOwn(visibleCards, id) ? [[id, visibleCards[id]!]] : [])) : visibleCards;
-  const card = cardRequired(intent) ? await ask(`Choose a visible card for ${intent}.`, available) : null;
+  const candidateMenus: Partial<Record<Intent, Choices>> = {};
+  const questions: Parameters<Ask["each"]>[0] = {};
+  for (const action of state.promptIntents.filter(cardRequired)) {
+    const sourcesForAction = locations.filter(({ seat, zone }) => {
+      if (action === "grow") return seat === actor && zone === "lrigDeck";
+      if (action === "cast") return seat === actor && (zone === "hand" || zone === "lrigDeck");
+      if (action === "attack" || action === "ability") return slots.has(zone) || lrigSlots.has(zone);
+      if (action === "charge") return seat === actor && (zone === "hand" || slots.has(zone));
+      return seat === actor && zone === "hand";
+    });
+    const menu = Object.fromEntries(Object.entries(cardOptions(state, deck, sourcesForAction, actor))
+      .filter(([id]) => Object.hasOwn(available, id)));
+    candidateMenus[action] = menu;
+    for (const [id, description] of Object.entries(menu)) {
+      questions[`${action}_${id}`] = {
+        question: `Can seat ${actor} legally declare ${action} with ${description} at this exact window in ${state.phase}? A legal action has at least one legal destination where needed. Check printed timing, full payable costs including Multi Ener, controller, and all prerequisites. For Assist Grow the new level cannot exceed Center level. Judge legality only. Hidden cards never contribute to this decision.`,
+        choices: { legal: "At least one legal declaration of this action names this card.", illegal: "No legal declaration of this action can name this card now." },
+      };
+    }
+  }
+  const eligibility = await ask.each(questions);
+  const menu = selectIntent(state);
+  for (const [action, cards] of Object.entries(candidateMenus)) {
+    const legal = Object.fromEntries(Object.entries(cards).filter(([id]) => eligibility[`${action}_${id}`] === "legal"));
+    candidateMenus[action as Intent] = legal;
+    if (Object.keys(legal).length) menu[action] += ` Candidates: ${Object.values(legal).join("; ")}.`;
+    else delete menu[action];
+  }
+  const options = Object.keys(menu);
+  if (!options.length) throw new MatchHalt("Drex không tìm được khai báo hợp lệ trong cửa sổ đã mở.");
+  const intent = (options.length === 1 ? options[0] :
+    await ask("Choose a strategic action among the legal declarations for this player window.", menu)) as Intent;
+  const card = cardRequired(intent) ? await ask(`Choose a card for ${intent}.`, candidateMenus[intent]!) : null;
   const cards: string[] = [];
   if (groupIntents.includes(intent)) {
     const min = selection?.min ?? 0;
@@ -249,13 +280,12 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
       const sourceCard = state.frames.findLast((frame) => frame.source)?.source ?? state.declaration?.card;
       const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
-      const targetEffect = resolving?.text.includes("target SIGNI") || resolving?.burst.includes("target SIGNI");
       const effect = resolving ? JSON.stringify({
         name: resolving.name,
         text: state.frames.at(-1)?.kind === "burst" ? resolving.burst : resolving.text,
       }) : "Use the current frame, declaration and rules.";
       const matches = await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Pending requirement: ${effect} Candidate: ${description}. ${targetEffect ? targetFocus : ""} Can this card belong to any legal selection for the current step? A group quota limits the final selection, not the alternatives included in the candidate list.`,
+        question: `Source text: ${effect} Candidate: ${description}. ${targetFocus} Can this card belong to any legal selection for the first outstanding choice? A group quota limits the final selection, not the alternatives included in the candidate list.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }])));
@@ -345,15 +375,6 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           },
         }])));
       const picked = intents.filter((intent) => options[intent] === "offer");
-      if (state.frames.at(-1)?.kind === "attack") {
-        const index = picked.indexOf("decline");
-        if (index >= 0) picked.splice(index, 1);
-      }
-      if (state.phase === "Ener" && state.offeredSelection) {
-        if (!picked.includes("choose")) picked.unshift("choose");
-        const index = picked.indexOf("pass");
-        if (index >= 0) picked.splice(index, 1);
-      }
       if (options.pass === "omit" && !picked.includes("mulligan") && !picked.includes("decline") && !mulliganWindow) {
         const ending = await parameter("permission to end this player window", {
           mayPass: "The player is allowed to close this exact window without submitting another action or card.",
@@ -529,8 +550,8 @@ export async function verifyOperation(
     ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
-    : `Proposed: ${meaning}. ${state.phase === "Setup" && operation === "closeFrames" && state.frames.every(({ kind }) => kind === "mulligan")
-      ? "Both Setup mulligan frames are completed. The current declaration matches the top saved declaration, both hands are already at five cards and no exchange remains. Closing exactly these two frames with acknowledge true is the required transition before placing seven Life Cloth."
+    : `Proposed: ${meaning}. ${state.phase === "Setup" && closesFrame
+      ? "Review each saved mulligan separately. Empty selections count as keeps. Multiple completed frames may close together when the current declaration is preserved or its own work is also complete."
       : ""} ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
   const answer = await drex.decide(
     facts,
