@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, frameFocus, growEligibility, growFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, eligibilityFocus, frameFocus, growEligibility, growFocus, mulliganOrder, selectOperationPrompt, selectionFocus, targetFocus, transferFocus, windowFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -118,7 +118,7 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
         guard: "Check that this hand card has Guard and the open window resolves an opposing Center LRIG attack.",
       };
       questions[`${action}_${id}`] = {
-        question: `Can seat ${actor} legally declare ${action} with ${description} in this ${state.phase} window? ${action === "grow" ? `Turn player: ${state.active}. ${card.type === "ASSIST LRIG" ? "Evaluate the printed Assist timing for this window. A Colorless Grow cost can use any Ener. The Enter effect and any separate Enter payment happen after Grow." : "Center LRIG Grow is available only in the Grow phase."} ${growEvidence(state, deck, actor, id)}` : eligibilityFocus[action] ?? "Check timing, controller, card type, costs and any other prerequisite. A legal placement needs at least one legal destination."} Judge legality only using visible evidence.`,
+        question: `Can seat ${actor} legally declare ${action} with ${description} in this ${state.phase} window? ${eligibilityFocus} ${action === "grow" ? `Turn player: ${state.active}. ${card.type === "ASSIST LRIG" ? "Evaluate the printed Assist timing for this window. A Colorless Grow cost can use any Ener. The Enter effect and any separate Enter payment happen after Grow." : "Center LRIG Grow is available only in the Grow phase."} ${growEvidence(state, deck, actor, id)}` : eligibilityFocus[action] ?? "Check timing, controller, card type, costs and any other prerequisite. A legal placement needs at least one legal destination."} Judge legality only using visible evidence.`,
         choices: { legal: "At least one legal declaration of this action names this card.", illegal: "No legal declaration of this action can name this card now." },
       };
     }

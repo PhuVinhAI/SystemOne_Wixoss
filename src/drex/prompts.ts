@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v53";
+export const promptVersion = "wixoss-table-v54";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -60,6 +60,8 @@ export const selectionFocus = "Identify the exact obligation this card selection
 export const chooserFocus = "Distinguish who chooses from whose cards are eligible. A target instruction belongs to the source ability's controller unless it explicitly tells another player to choose. An opponent's card or zone can be the target of that controller's choice. The owner of a crushed Life Cloth chooses whether to use its Burst. For a handoff between phase windows or for Guard, use the player designated by the rules for that particular window.";
 
 export const windowFocus = "Identify the single unresolved decision this window serves. An activation response and a subsequent selection of targets or payment are separate decisions. Use committed declarations and the current staged candidates to tell them apart. A recorded response remains in effect after consume. Offer generic choose for a staged effect selection. Offer decline only if this exact selection or payment is optional. Phase actions belong to their own window after the current frame resolves.";
+
+export const eligibilityFocus = "For an actor's own visible hand or LRIG Deck, inspect the printed record and current phase directly. Mark legal when one legal destination or use is available. Mark illegal only when a named rule, timing, level, cost, slot or condition excludes the card. Do not use halt for low confidence, a strategic choice, a hidden opponent card, or a card that is simply not a good move. Use halt only when the supplied state contains a concrete contradiction that prevents judging the candidate.";
 
 export const frameFocus = "A frame records and preserves pending work. Opening it does not activate or repeat any effect. Open a frame for a multi-step Enter, Auto, Cast or other effect before performing its first clause; it supplies the source and controller for any nested choices. A Grow frame records the payment and placement. Its newly placed LRIG's pending Enter belongs in an Enter frame before staging Enter targets. Keep that Enter frame until all its work is accounted for. An already-satisfied state outcome needs no mutation; acknowledge the selection and keep its committed result in scope. Handle a separate paid ability independently: offer its choice if fully payable, otherwise skip just that ability. Continue from the outstanding clause if an existing selection is already staged.";
 
