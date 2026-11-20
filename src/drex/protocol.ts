@@ -301,9 +301,11 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
         }).join("; ");
       const signiEvidence = Object.entries(cardOptions(state, deck, all.filter(({ seat, zone }) =>
         seat === args["actor"] && slots.has(zone)), "table")).map(([, card]) => card).join("; ") || "none";
+      const mulliganWindow = state.phase === "Setup" && state.offeredSelection !== null
+        && state.offeredSelection.candidates.length > 0
+        && state.offeredSelection.candidates.every((id) => state.players[args["actor"] as Seat].hand.includes(id));
       const evidence: Partial<Record<Intent, string>> = {
-        mulligan: state.phase === "Setup" && state.offeredSelection?.source === `${args["actor"]}.hand`
-          ? `Setup has staged this seat's opening hand. Mulligan is the required declaration for this hand window, including an empty selection to keep. Do not omit mulligan or replace it with pass.` : undefined,
+        ...(mulliganWindow ? { mulligan: `Setup has staged this seat's opening hand. Mulligan is the required declaration for this hand window, including an empty selection to keep. Do not omit mulligan or replace it with pass.` } : {}),
         pass: "Check whether the player can end this window without taking the optional action. A staged candidate set does not remove a legal pass when the action itself is optional. An unresolved mandatory card choice is different.",
         grow: `Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
         retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
@@ -320,7 +322,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
           },
         }])));
       const picked = intents.filter((intent) => options[intent] === "offer");
-      if (options.pass === "omit" && !picked.includes("mulligan") && !(state.phase === "Setup" && state.offeredSelection?.source === `${args["actor"]}.hand`)) {
+      if (options.pass === "omit" && !picked.includes("mulligan") && !mulliganWindow) {
         const ending = await parameter("permission to end this player window", {
           mayPass: "The player is allowed to close this exact window without submitting another action or card.",
           mustDecide: "The player must supply a decision in this window before it can close.",
