@@ -551,6 +551,12 @@ export async function verifyOperation(
     && [...lrigSlots].some((zone) => args["to"]?.endsWith(`.${zone}`)) && state.phase !== "Setup";
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
+    : operation === "phase" && state.phase === "SigniAttack" && args["value"] === "LrigAttack"
+      ? "The active seat has completed or passed SigniAttack. Set phase to LrigAttack before opening the active seat's LRIG Attack window. This transition is required even when no SIGNI attack resolved."
+    : operation === "phase" && state.phase === "Defense" && args["value"] === "SigniAttack"
+      ? "The defending seat's Defense window has completed. Set phase to SigniAttack before opening the active seat's SIGNI Attack window."
+    : operation === "phase" && state.phase === "PreAttack" && args["value"] === "Defense"
+      ? "The active seat's PreAttack window has completed. Set phase to Defense before opening the opposing seat's Defense window."
     : operation === "control"
     ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
