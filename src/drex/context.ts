@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
-import { displayedPower, lrigSlots } from "../game/board.js";
+import { displayedPower, lrigSlots, slots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackFocus, burstFocus, castFocus, growFocus, lrigAttackFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
+import { attackFocus, burstFocus, castFocus, growFocus, lrigAttackFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole, upFocus } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -88,11 +88,16 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   const grow = viewer === "table" && (state.declaration?.intent === "grow"
     || state.frames.some(({ declaration }) => declaration?.intent === "grow")) ? growFocus : "";
   const phasePrefix = `Turn ${state.turn} ${state.phase} `;
+  const upCards = viewer === "table" && state.phase === "Up" ? [...slots, ...lrigSlots].flatMap((zone) => {
+    const id = state.players[state.active][zone][0];
+    return id ? [`${zone} ${id}: ${state.cards[id]!.down ? "Down" : "Up"}${state.cards[id]!.frozen ? ", Frozen" : ""}`] : [];
+  }) : null;
   const phaseHistory = viewer === "table" ? recent.filter((entry) => entry.startsWith(phasePrefix)) : [];
   const previousHistory = phaseHistory.length ? recent.filter((entry) => !entry.startsWith(phasePrefix)) : recent;
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,
+    upCards ? `${upFocus}\nCurrent field of turn player ${state.active}: ${upCards.join("; ") || "empty"}.` : "",
     combat,
     cast,
     grow,

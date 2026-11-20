@@ -281,7 +281,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       const destination = all.find((entry) => entry.label === args["to"])!;
       if (operation !== "move") args["count"] = await parameter("exact number of cards", list(range(1, slots.has(destination.zone) ? 1 : source.ids.length)),
         `From ${source.label} to ${destination.label}. Select the rules-correct count for this step.`);
-      args["face"] = await parameter("face orientation on arrival", faceOptions, `From ${source.label} to ${destination.label}.`);
+      args["face"] = await parameter("face orientation on arrival", faceOptions, `From ${source.label} to ${destination.label}. Check the destination's visibility and the event's rules. A card entering a public zone such as Trash is face up unless a rule or effect explicitly puts it face down. Choose keep only if its current face already matches.`);
       break;
     }
     case "moveSelected": {
@@ -293,7 +293,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       args["to"] = await parameter("common destination for this group", list(all.filter(({ ids, zone }) =>
         !group.some((id) => ids.includes(id)) && (!slots.has(zone) || (!ids.length && group.length === 1)))
         .map(({ label }) => label)), `Submitted group: ${group.map((id) => known[id] ?? id).join("; ")}. ${transferFocus}`);
-      args["face"] = await parameter("face orientation on arrival", faceOptions, `Move all selected cards to ${args["to"]} together.`);
+      args["face"] = await parameter("face orientation on arrival", faceOptions, `Move all selected cards to ${args["to"]} together. A card entering a public zone such as Trash is face up unless a rule or effect explicitly puts it face down. Choose keep only if every selected card already has the required face.`);
       break;
     }
     case "distribute": {
