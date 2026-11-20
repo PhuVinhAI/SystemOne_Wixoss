@@ -499,7 +499,7 @@ export async function verifyOperation(
   }
   const question = operation === "control"
     ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${state.phase === "Main" && args["intents"]?.includes("grow")
-      ? "Main-phase grow here is Assist Grow only. It is legal when the selected side LRIG has printed timing Main Phase, matching type, legal cost and Center-level condition. The pass option may coexist with this optional Assist Grow."
+      ? "Main-phase grow here is Assist Grow only. It is legal when the selected side LRIG has printed timing Main Phase, matching type, legal cost and Center-level condition. The pass option may coexist with this optional Assist Grow. If all such Assist Grows have been declined or no longer apply, a submitted pass completes Main and the table must advance to PreAttack."
       : ""} ${state.phase === "SigniAttack" && state.active === "A" && args["actor"] === "A" && args["intents"] === "pass"
       ? "The prior SIGNI attack has already resolved its damage, Life Burst decision and Check cleanup. This pass window is the required opportunity to end A's remaining SIGNI attacks before the phase advances."
       : ""} ${auditOperationPrompt}`
