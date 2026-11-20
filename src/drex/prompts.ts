@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v43";
+export const promptVersion = "wixoss-table-v44";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -50,6 +50,8 @@ export const growEligibility = "For an Assist, first compare incoming Level with
 export const growFocus = `Grow is distinct from casting a Spell or PIECE. ${growEligibility} Compare the printed Grow cost with transfers committed since this exact declaration. Pay any remaining cost first. An Enter ability triggers only after placement. Each printed Enter is a distinct ability. A free Enter is mandatory, and an Enter with its own cost is a separate optional payment and effect. Offer modes only when printed. If a selected card already has its required state, acknowledge the satisfied result without a no-op mutation.`;
 
 export const targetFocus = "Use the actual zone, owner and eligibility conditions named by the first unresolved clause. Account for clauses already resolved or skipped. A player's field means all three SIGNI zones. A requested outcome such as Down, Up or Frozen is not a target restriction. Apply a state restriction only when the target phrase specifies it. A legal target already in the requested state still qualifies. After selection, skip only the redundant mutation and resolve all other requested outcomes, including later outcomes on the same target.";
+
+export const selectionFocus = "Identify the exact obligation this card selection serves. For payment, read the printed cost or the cost before the colon of an ability. Colored Ener takes the matching printed color or Multi Ener. A multicolored Ener can pay one unit of an eligible color. Colorless requirements accept any color. Stage all cards that can belong to at least one legal payment set. The submitted set still has to pay the entire cost. For an effect target, use only requirements of the current clause.";
 
 export const chooserFocus = "Distinguish who chooses from whose cards are eligible. A target instruction belongs to the source ability's controller unless it explicitly tells another player to choose. An opponent's card or zone can be the target of that controller's choice. The owner of a crushed Life Cloth chooses whether to use its Burst. For a handoff between phase windows or for Guard, use the player designated by the rules for that particular window.";
 

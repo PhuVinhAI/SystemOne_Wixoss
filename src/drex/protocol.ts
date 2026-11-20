@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, frameFocus, growEligibility, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, frameFocus, growEligibility, growFocus, selectOperationPrompt, selectionFocus, targetFocus, transferFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -313,6 +313,8 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
       const effect = resolving ? JSON.stringify({
         name: resolving.name,
+        cost: resolving.cost,
+        growCost: resolving.growCost,
         text: frame?.kind === "burst" ? resolving.burst : resolving.text,
       }) : "Use the current frame, declaration and rules.";
       args["source"] = await parameter("candidate source", {
@@ -328,7 +330,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
         filtered: "At least one card in this pool is individually excluded by a rule or the outstanding clause, or the whole pool needs inspection.",
       }, `Source text: ${effect}. Staging from ${args["source"]}. ${targetFocus} When the instruction asks the player to discard a card without further restrictions, each card in that player's hand is individually eligible.`);
       const matches = restrictions === "filtered" ? await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Source text: ${effect}. Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} Judge individual eligibility for this exact clause. Apply any group quota to the submitted set.`,
+        question: `Source: ${effect}. Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} ${selectionFocus} Judge individual eligibility for this exact clause.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }]))) : {};
@@ -641,10 +643,15 @@ export async function verifyOperation(
     const card = deck.cards[state.cards[id]!.definition]!;
     return `${id} ${card.name} (${card.type}): ${card.text || "no printed ability"}`;
   }).join("; ") || "empty"}.` : "";
+  const selectionOrigin = operation === "chooseFrom" ? (top?.source ?? state.declaration?.card) : undefined;
+  const selectionCard = selectionOrigin ? deck.cards[state.cards[selectionOrigin]!.definition] : undefined;
+  const selectionEvidence = selectionCard ? JSON.stringify({ name: selectionCard.name, cost: selectionCard.cost,
+    growCost: selectionCard.growCost, text: top?.kind === "burst" ? selectionCard.burst : selectionCard.text }) : "Use the current rule and declaration.";
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
     : operation === "turn" ? `Can ${meaning} now? Confirm the outgoing End obligations are complete, the incoming seat is correct, and the supplied phase is the first phase of the incoming turn.`
     : operation === "push" ? `Proposed: ${meaning}. ${frameFocus} Check whether this frame records real outstanding work or a required rules check. Confirm frame kind, controller and source against the current declaration and history.${state.phase === "Setup" ? " An empty mulligan submission is a keep and can be saved. A previous frame with no saved declaration did not record that keep. Verify that this push saves the actual submission and preserves the other seat's opportunity to decide." : ""}`
+    : operation === "chooseFrom" ? `Audit a staged selection. ${meaning} Active source: ${selectionEvidence}. Current declaration: ${JSON.stringify(state.declaration)}. ${selectionFocus} Confirm the source, full candidate set, and allowed count for this single pending requirement. Staging does not submit a choice or move any cards.`
     : operation === "phase"
       ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
