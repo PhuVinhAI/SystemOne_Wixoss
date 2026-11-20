@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, growFocus, selectOperationPrompt, targetFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -85,7 +85,7 @@ export async function chooseDeclaration(state: State, deck: Deck, actor: Seat, a
     candidateMenus[action] = menu;
     for (const [id, description] of Object.entries(menu)) {
       questions[`${action}_${id}`] = {
-        question: `Can seat ${actor} legally declare ${action} with ${description} at this exact window in ${state.phase}? A legal action has at least one legal destination where needed. Check printed timing, full payable costs including Multi Ener, controller, and all prerequisites. For Assist Grow the new level cannot exceed Center level. Judge legality only. Hidden cards never contribute to this decision.`,
+        question: `Can seat ${actor} legally declare ${action} with ${description} at this exact window in ${state.phase}? A legal action has at least one legal destination where needed. Check the card type, printed timing, payable costs including Multi Ener, controller, and all prerequisites. ${action === "grow" ? growFocus : action === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} Judge legality only. Hidden cards never contribute to this decision.`,
         choices: { legal: "At least one legal declaration of this action names this card.", illegal: "No legal declaration of this action can name this card now." },
       };
     }
@@ -155,7 +155,7 @@ export async function auditDeclaration(drex: DrexClient, snapshot: string, state
   });
   const answer = await drex.decide(
     `PLAYER DECLARATION\n${JSON.stringify(declaration)}\n${detail}\n\n${snapshot}`,
-    `Judge the declaration now. Priority evidence: ${detail}. Check the exact set together. If two cards share a group with a printed one-per-group cap, the set is illegal although each is individually eligible. An empty submitted set counts as zero and is a fully declared choice where zero is permitted. Check the acting seat, timing and destination. Do not perform a different choice.`,
+    `Judge the declaration now. Priority evidence: ${detail}. Check the card type and the exact set together. If two cards share a group with a printed one-per-group cap, the set is illegal although each is individually eligible. An empty submitted set counts as zero and is a fully declared choice where zero is permitted. Check the acting seat, timing and destination. ${declaration.intent === "grow" ? growFocus : declaration.intent === "cast" ? "Use cast for a Spell or PIECE. An Assist LRIG enters by Grow." : ""} Do not perform a different choice.`,
     {
       legal: "This exact player declaration is legal now, including the combination of all selected cards.",
       illegal: "The declaration contradicts an identifiable rule or the printed instruction.",
@@ -249,7 +249,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       const group = selectedGroup(state, args["from"]);
       args["to"] = await parameter("common destination for this group", list(all.filter(({ ids, zone }) =>
         !group.some((id) => ids.includes(id)) && (!slots.has(zone) || (!ids.length && group.length === 1)))
-        .map(({ label }) => label)));
+        .map(({ label }) => label)), `Submitted group: ${group.map((id) => known[id] ?? id).join("; ")}. ${transferFocus}`);
       args["face"] = await parameter("face orientation on arrival", faceOptions, `Move all selected cards to ${args["to"]} together.`);
       break;
     }
@@ -501,6 +501,7 @@ export async function verifyOperation(
     .map(({ question, label }) => `${question}\nDrex classification: ${label}`).join("\n");
   const facts = `OPERATION TO AUDIT\n${JSON.stringify(selected)}\nPhysical meaning: ${meaning}.\n${evidence}\n\n${snapshot}`;
   const { state, deck } = work;
+  const top = state.frames.at(-1);
   if (args["to"] && ["move", "take", "stack", "random", "moveSelected"].includes(operation) && state.phase !== "Setup") {
     const transferred = operation === "move" ? [args["card"]!]
       : operation === "moveSelected" ? selectedGroup(state, args["from"]!) : [];
@@ -508,9 +509,27 @@ export async function verifyOperation(
     const known = cardOptions(state, deck, locations, "table");
     const declaration = state.declaration;
     const declaredCard = declaration?.card ? known[declaration.card] : undefined;
+    const frameCard = top?.source ? deck.cards[state.cards[top.source]!.definition] : undefined;
+    const frameEvidence = top && JSON.stringify({
+      ...top, sourceCard: frameCard && { name: frameCard.name, type: frameCard.type, cost: frameCard.cost,
+        growCost: frameCard.growCost, text: top.kind === "burst" ? frameCard.burst : frameCard.text },
+    });
     const none = "The current instruction does not require this transfer.";
+    const transferEvidence = `ACTIVE FRAME\n${frameEvidence ?? "none"}\nCURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS OR PILE POSITIONS UNDER REVIEW\n${transferred.length ? transferred.map((id) => known[id] ?? id).join("\n") : `${operation} from ${args["from"]}, count ${args["count"] ?? "all"}`}\n${evidence}\n\n${snapshot}`;
+    const purpose = operation === "moveSelected" ? await drex.decide(transferEvidence,
+      `What is the immediate purpose of moving this exact group now? ${transferFocus}`, {
+        payment: "The cards were selected to pay a still-unpaid cost for the outstanding action or ability.",
+        result: "The cards are ready to move as an effect result or rule action other than a cost payment.",
+        none,
+      }) : undefined;
+    if (purpose) {
+      trace.push(purpose);
+      if (purpose.label === "none" || purpose.label === "halt") {
+        throw new MatchHalt("Drex chưa xác định mục đích chuyển nhóm bài.", purpose.requestId);
+      }
+    }
     const routes = await drex.decideBatch(
-      `CURRENT DECLARATION\n${JSON.stringify(declaration)}\n${declaredCard ?? ""}\nCARDS OR PILE POSITIONS UNDER REVIEW\n${transferred.length ? transferred.map((id) => known[id] ?? id).join("\n") : `${operation} from ${args["from"]}, count ${args["count"] ?? "all"}`}\n${evidence}\n\n${snapshot}`,
+      (purpose ? `DREX CLASSIFIED IMMEDIATE TRANSFER PURPOSE: ${purpose.label}\n` : "") + transferEvidence,
       {
         destination: {
           question: `Source is ${args["from"]}. ${auditTransferPrompt} For a SIGNI attack, use the actual opposing lane and determine battle or damage before answering. For a draw, the source is the applicable Main Deck and the destination is the drawing seat's hand.`,
@@ -527,7 +546,6 @@ export async function verifyOperation(
       : routes["destination"]?.label !== args["to"] ? routes["destination"] : undefined;
     if (mismatch) throw new MatchHalt("Drex không xác nhận nguồn hoặc đích của thao tác chuyển bài.", mismatch.requestId);
   }
-  const top = state.frames.at(-1);
   const closesFrame = operation === "pop" || operation === "closeFrames";
   const sourceFrame = operation === "move" && args["from"]?.endsWith(".check")
     ? state.frames.findLast(({ source }) => source === args["card"]) : undefined;
