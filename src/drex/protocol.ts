@@ -313,7 +313,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       const pool = args["source"] === "selection" ? state.selection : args["source"] === "visible"
         ? Object.keys(known) : all.find((entry) => entry.label === args["source"])!.ids;
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
-      const restrictions = await parameter("whether this candidate pool needs individual filtering", {
+      const restrictions = args["source"] === "visible" || args["source"] === "selection" ? "filtered" : await parameter("whether this named zone needs individual filtering", {
         unrestricted: "Every card in this pool qualifies individually for the outstanding choice. Any quotas constrain the submitted group only.",
         filtered: "At least one card in this pool is individually excluded by a rule or the outstanding clause, or the whole pool needs inspection.",
       }, `Source text: ${effect}. Staging from ${args["source"]}. ${targetFocus} When the instruction asks the player to discard a card without further restrictions, each card in that player's hand is individually eligible.`);
