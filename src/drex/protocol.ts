@@ -224,6 +224,9 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
   if (!state.selection.length && !state.offeredSelection) {
     delete choices["clearSelection"];
   }
+  if (state.declaration?.intent === "attack" && !state.offeredSelection && !state.frames.length) {
+    delete choices["chooseFrom"];
+  }
   const hasExpiringState = state.marks.some(({ ends }) => ends !== null && ends <= state.turn)
     || Object.values(state.cards).some(({ adjustments }) => adjustments.some(({ expires }) => expires <= state.turn));
   if (!hasExpiringState) delete choices["clearTurn"];
