@@ -235,15 +235,15 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
   if (!selectionSources.length || state.selection.length < 2 || state.selection.length > emptySlots.length) {
     delete choices["distribute"];
   }
-  const pending = state.declaration ? declarationIsSaved(state)
-    ? " The current declaration has a copy in a frame. When the active work requires a new player decision, control can hand off to that player while the saved copy remains. Unresolved work stays in that frame."
-    : " If the current declaration has completed its purpose, use consume. If it still has work and needs a nested player decision, save it in a frame before handing off."
+  const pending = state.declaration ? ` Current declaration: ${JSON.stringify(state.declaration)}. ${state.declaration.intent === "charge" ? "Charge is the voluntary Ener move. Apply the named card's transfer to the declaring seat's Ener if it is still outstanding. Printed effects of that card do not resolve merely because it is charged." : ""} ${declarationIsSaved(state)
+    ? "The current declaration has a copy in a frame. When the active work requires a new player decision, control can hand off to that player while the saved copy remains. Unresolved work stays in that frame."
+    : "If the current declaration has completed its purpose, use consume. If it still has work and needs a nested player decision, save it in a frame before handing off."}`
     : "";
   const setup = state.phase === "Setup"
     ? ` Current counts: A.hand ${state.players.A.hand.length}, B.hand ${state.players.B.hand.length}, A.life ${state.players.A.life.length}, B.life ${state.players.B.life.length}. The first mulligan uses a direct control window. Open a mulligan frame only when it has an actual submitted declaration to save. Compare with recorded mulligans and actual transfers before dealing more cards.`
     : "";
   const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
-    ? ` Current combat step: ${state.phase}. Turn player: ${state.active}. Current declaration: ${JSON.stringify(state.declaration)}. ${combatWindowFocus}` : "";
+    ? ` Current combat step: ${state.phase}. Turn player: ${state.active}. ${combatWindowFocus}` : "";
   const operation = await ask(selectOperationPrompt + pending + setup + combatWindow
     + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work. " + frameFocus, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
