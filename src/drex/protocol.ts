@@ -651,13 +651,15 @@ export async function verifyOperation(
   const selectionCard = selectionOrigin ? deck.cards[state.cards[selectionOrigin]!.definition] : undefined;
   const selectionEvidence = selectionCard ? JSON.stringify({ name: selectionCard.name, cost: selectionCard.cost,
     growCost: selectionCard.growCost, text: top?.kind === "burst" ? selectionCard.burst : selectionCard.text }) : "Use the current rule and declaration.";
+  const phaseTransition = operation === "phase" && state.phase === "SigniAttack" && args["value"] === "LrigAttack"
+    ? `Turn player's SIGNI: ${Object.values(cardOptions(state, deck, sources(state).filter(({ seat, zone }) => seat === state.active && slots.has(zone)), "table")).join("; ") || "none"}. Moving to LRIG Attack is legal after a closing pass or when no legal SIGNI attacker remains, once the current attack and its consequences are complete.` : "";
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
     : operation === "turn" ? `Can ${meaning} now? Confirm the outgoing End obligations are complete, the incoming seat is correct, and the supplied phase is the first phase of the incoming turn.`
     : operation === "push" ? `Proposed: ${meaning}. ${frameFocus} Check whether this frame records real outstanding work or a required rules check. Confirm frame kind, controller and source against the current declaration and history.${state.phase === "Setup" ? " An empty mulligan submission is a keep and can be saved. A previous frame with no saved declaration did not record that keep. Verify that this push saves the actual submission and preserves the other seat's opportunity to decide." : ""}`
     : operation === "chooseFrom" ? `Audit a staged selection. ${meaning} Active source: ${selectionEvidence}. Current declaration: ${JSON.stringify(state.declaration)}. ${selectionFocus} Confirm the source, full candidate set, and allowed count for this single pending requirement. Staging does not submit a choice or move any cards.`
     : operation === "phase"
-      ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
+      ? `Can the table leave ${state.phase} for ${args["value"]} now? ${phaseTransition} Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
     ? guardAttack && args["scope"] === "frame"
       ? `Audit Guard for seat ${args["actor"]}. Offered actions: ${args["intents"]}. ${guardEvidence} Confirm the attacker is Down and the defender has not answered for this exact attack. An earlier pass in a different phase does not answer Guard. A pass or decline is sufficient when the defender has no card with Guard. Offer guard when the defender can legally use one.`
