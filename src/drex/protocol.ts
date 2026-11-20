@@ -348,6 +348,11 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
         const index = picked.indexOf("decline");
         if (index >= 0) picked.splice(index, 1);
       }
+      if (state.phase === "Ener" && state.offeredSelection) {
+        if (!picked.includes("choose")) picked.unshift("choose");
+        const index = picked.indexOf("pass");
+        if (index >= 0) picked.splice(index, 1);
+      }
       if (options.pass === "omit" && !picked.includes("mulligan") && !picked.includes("decline") && !mulliganWindow) {
         const ending = await parameter("permission to end this player window", {
           mayPass: "The player is allowed to close this exact window without submitting another action or card.",
