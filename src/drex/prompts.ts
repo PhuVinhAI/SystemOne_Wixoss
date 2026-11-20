@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v27";
+export const promptVersion = "wixoss-table-v28";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -47,7 +47,9 @@ export const growEligibility = "For an Assist, first compare incoming Level with
 
 export const growFocus = `Grow is distinct from casting a Spell or PIECE. ${growEligibility} Compare the printed Grow cost with transfers committed since this exact declaration. Pay any remaining cost first. An Enter ability triggers only after placement. Each printed Enter is a distinct ability. A free Enter is mandatory, and an Enter with its own cost is a separate optional payment and effect. Offer modes only when printed. If a selected card already has its required state, acknowledge the satisfied result without a no-op mutation.`;
 
-export const targetFocus = "Use the actual zone, owner and other conditions named by the first unresolved clause. Account for earlier clauses already resolved or skipped because they had no targets. For example, a choice of cards to discard uses the hand specified by that clause. A field target must come from the field specified by its clause.";
+export const targetFocus = "Use the actual zone, owner and conditions named by the first unresolved clause. Account for clauses already resolved or skipped. A player's field means all three SIGNI zones. Check every lane when a clause refers to the field or to its SIGNI. Apply an Up, Down or other state restriction only if the rule or clause specifies it. If a legal target already has the requested state, resolve the choice once and acknowledge the satisfied result without changing that state.";
+
+export const chooserFocus = "Distinguish who chooses from whose cards are eligible. A target instruction belongs to the source ability's controller unless it explicitly tells another player to choose. An opponent's card or zone can be the target of that controller's choice. The owner of a crushed Life Cloth chooses whether to use its Burst. For a handoff between phase windows or for Guard, use the player designated by the rules for that particular window.";
 
 export const burstFocus = "Use the actual move into Check to identify how the card arrived. If a Life Cloth was crushed, read its printed Life Burst. With no printed Burst, send that card straight from Check to Ener. With a printed Burst not yet offered, ask its owner whether to use it, offering burst and decline. Check history for a decision about this exact card before opening a window. Resolve any accepted Burst in printed order and move the card to Ener after it resolves. A Spell or PIECE in Check from a cast follows its own cast sequence instead.";
 

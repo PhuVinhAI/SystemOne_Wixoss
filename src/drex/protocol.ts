@@ -5,7 +5,7 @@ import { areas, counterNames, declarationIsSaved, operations, selectedGroup, typ
 import { canSeeCard, visible } from "../game/view.js";
 import type { Deck } from "../domain/types.js";
 import type { Decision, DrexClient } from "./client.js";
-import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, combatWindowFocus, growEligibility, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
+import { auditCompletionPrompt, auditFieldResultPrompt, auditOperationPrompt, auditTransferPrompt, chooserFocus, combatWindowFocus, growEligibility, growFocus, selectOperationPrompt, targetFocus, transferFocus } from "./prompts.js";
 
 type Source = { seat: Seat; zone: Zone; ids: string[]; label: string };
 type Ask = ((question: string, choices: Choices) => Promise<string>) & {
@@ -297,20 +297,21 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       args["card"] = await parameter("card to reset", known);
       break;
     case "chooseFrom": {
+      const frame = state.frames.at(-1);
+      const sourceCard = frame?.source ?? state.declaration?.card;
+      const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
+      const effect = resolving ? JSON.stringify({
+        name: resolving.name,
+        text: frame?.kind === "burst" ? resolving.burst : resolving.text,
+      }) : "Use the current frame, declaration and rules.";
       args["source"] = await parameter("candidate source", {
         ...list(nonempty.map((entry) => entry.label)),
         ...(state.selection.length ? { selection: "Use the current working selection." } : {}),
         visible: "Consider cards across all zones, including separate field lanes. Judge each card for eligibility.",
-      }, "Offer the full eligible set. If the rule refers to a field or to multiple zones, choose visible so every qualifying lane and zone is considered.");
+      }, `Source text: ${effect}. Offer the full eligible set. ${targetFocus} Choose visible for multiple lanes or zones.`);
       const pool = args["source"] === "selection" ? state.selection : args["source"] === "visible"
         ? Object.keys(known) : all.find((entry) => entry.label === args["source"])!.ids;
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
-      const sourceCard = state.frames.findLast((frame) => frame.source)?.source ?? state.declaration?.card;
-      const resolving = sourceCard ? deck.cards[state.cards[sourceCard]!.definition] : undefined;
-      const effect = resolving ? JSON.stringify({
-        name: resolving.name,
-        text: state.frames.at(-1)?.kind === "burst" ? resolving.burst : resolving.text,
-      }) : "Use the current frame, declaration and rules.";
       const matches = await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
         question: `Source text: ${effect} Candidate: ${description}. ${targetFocus} Can this card belong to any legal selection for the first outstanding choice? A group quota limits the final selection, not the alternatives included in the candidate list.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
@@ -367,7 +368,10 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
       if (operation === "addPower") args["expires"] = await parameter("turn when this expires", list([String(state.turn), String(state.turn + 1)]));
       break;
     case "control": {
-      args["actor"] = await actor();
+      const frame = state.frames.at(-1);
+      const source = frame?.source ? deck.cards[state.cards[frame.source]!.definition] : undefined;
+      args["actor"] = await parameter("seat that makes the next decision", list(seats),
+        `Turn player: ${state.active}. Phase: ${state.phase}. Top frame: ${frame?.kind ?? "none"}. Frame actor: ${frame?.actor ?? "none"}. Source: ${source?.name ?? "none"}. Printed instruction: ${(frame?.kind === "burst" ? source?.burst : source?.text) ?? "none"}. ${chooserFocus}`);
       args["scope"] = state.frames.length ? "frame" : "match";
       const window = `Seat ${args["actor"]}, phase ${state.phase}, scope ${args["scope"]}. A frame window covers only the unresolved decision of the top frame. A match window covers actions available in the current phase. Judge this action type independently of all other choices and of strategy.`;
       const side = state.players[args["actor"] as Seat];
@@ -610,7 +614,7 @@ export async function verifyOperation(
     : operation === "phase"
       ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
-    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. Identify whether this is a phase window or an interrupting choice such as Guard or Life Burst. Confirm the owner, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
+    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${chooserFocus} Confirm the chooser, timing and presence of required options. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${state.phase === "Setup" && closesFrame
