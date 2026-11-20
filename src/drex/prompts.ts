@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v56";
+export const promptVersion = "wixoss-table-v57";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -61,7 +61,7 @@ export const chooserFocus = "Distinguish who chooses from whose cards are eligib
 
 export const windowFocus = "Identify the single unresolved decision this window serves. An activation response and a subsequent selection of targets or payment are separate decisions. Use committed declarations and the current staged candidates to tell them apart. A recorded response remains in effect after consume. Offer generic choose for a staged effect selection. Offer decline only if this exact selection or payment is optional. Phase actions belong to their own window after the current frame resolves.";
 
-export const modeFocus = "When the active printed instruction offers alternative modes, check the declaration and committed responses for this exact source and activation. Acceptance of an effect does not select a mode. When a mode is still outstanding, open control for the effect controller and offer every legal printed mode by its position. A target restriction in one mode does not apply to other modes. After a mode is declared, follow its clause and any common clauses. Do not stage targets, carry out an outcome or close the effect before the mode decision.";
+export const modeFocus = "A mode requires the printed instruction to explicitly offer alternative effects. Separate abilities, optional payments, conditions and sequential clauses do not create modes. For a genuine mode choice, check committed responses for this exact activation. Acceptance alone does not select a mode. If the choice is outstanding, open control for the effect controller and offer every legal printed mode by position before resolving any of its targets or outcomes. Follow the selected mode and common clauses after the declaration.";
 
 export const eligibilityFocus = "For an actor's own visible hand or LRIG Deck, inspect the printed record and current phase directly. Mark legal when one legal destination or use is available. Mark illegal only when a named rule, timing, level, cost, slot or condition excludes the card. Do not use halt for low confidence, a strategic choice, a hidden opponent card, or a card that is simply not a good move. Use halt only when the supplied state contains a concrete contradiction that prevents judging the candidate.";
 

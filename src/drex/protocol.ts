@@ -265,7 +265,9 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
   const frame = state.frames.at(-1);
   const sourceCard = frame?.source ? deck.cards[state.cards[frame.source]!.definition] : undefined;
   const frameInstruction = sourceCard ? ` Active ${frame!.kind} source, controller ${frame!.actor}: ${frame!.kind === "burst" ? sourceCard.burst : sourceCard.text}. ${modeFocus}` : "";
-  const operation = await ask(selectOperationPrompt + setup + frameInstruction + pending + combatWindow + signiAttack
+  const growth = state.declaration?.intent === "grow" ? state.declaration : frame?.kind === "grow" ? frame.declaration : null;
+  const growthContext = growth?.card && frame?.kind !== "enter" ? ` Grow declaration: ${growEvidence(state, deck, growth.actor, growth.card)} A LRIG still in the LRIG Deck has no pending Enter. For a paid Grow, preserve the declaration in a Grow frame before staging the outstanding cost from the declaring seat's Ener. If the current payment is already committed, continue with placement.` : "";
+  const operation = await ask(selectOperationPrompt + setup + growthContext + frameInstruction + pending + combatWindow + signiAttack
     + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work. " + frameFocus, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
     ask(`For ${operation} only, choose ${name} consistent with the current step and arguments already selected. ${detail}`, options);
@@ -339,7 +341,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
         ...list(nonempty.map((entry) => entry.label)),
         ...(state.selection.length ? { selection: "Use the current working selection." } : {}),
         visible: "Consider cards across all zones, including separate field lanes. Judge each card for eligibility.",
-      }, `Source text: ${effect}. Offer the full eligible set. ${targetFocus} Choose visible for multiple lanes or zones.`);
+      }, `Source text: ${effect}.${growthContext} ${selectionFocus} Offer the full eligible set. ${targetFocus} Choose visible for multiple lanes or zones.`);
       const pool = args["source"] === "selection" ? state.selection : args["source"] === "visible"
         ? Object.keys(known) : all.find((entry) => entry.label === args["source"])!.ids;
       const candidates = Object.fromEntries(pool.flatMap((id) => Object.hasOwn(known, id) ? [[id, known[id]!]] : []));
@@ -348,7 +350,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
         filtered: "At least one card in this pool is individually excluded by a rule or the outstanding clause, or the whole pool needs inspection.",
       }, `Source text: ${effect}. Staging from ${args["source"]}. ${targetFocus} When the instruction asks the player to discard a card without further restrictions, each card in that player's hand is individually eligible.`);
       const matches = restrictions === "filtered" ? await ask.each(Object.fromEntries(Object.entries(candidates).map(([id, description]) => [id, {
-        question: `Source: ${effect}. Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} ${selectionFocus}${!frame && !state.declaration ? signiAttack : ""} Judge individual eligibility for this exact clause.`,
+        question: `Source: ${effect}.${growthContext} Effect controller: ${frame?.actor ?? state.declaration?.actor ?? state.active}. Selected pool: ${args["source"]}. Candidate: ${description}. ${targetFocus} ${selectionFocus}${!frame && !state.declaration ? signiAttack : ""} Judge individual eligibility for this exact clause.`,
         choices: { eligible: "This card satisfies the individual requirements and can appear in at least one legal selection.",
           excluded: "A rule or printed restriction excludes this card from every legal selection." },
       }]))) : {};
