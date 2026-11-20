@@ -627,6 +627,13 @@ export async function verifyOperation(
   }
   const growing = operation === "move" && args["from"]?.endsWith(".lrigDeck")
     && [...lrigSlots].some((zone) => args["to"]?.endsWith(`.${zone}`)) && state.phase !== "Setup";
+  const guardAttack = operation === "control" && state.phase === "LrigAttack" && !state.players.A.check.length
+    && !state.players.B.check.length && [state.declaration, top?.declaration].find((item) =>
+      item?.intent === "attack" && state.players[item.actor].centerLrig[0] === item.card);
+  const guardEvidence = guardAttack ? `Center attack: ${JSON.stringify(guardAttack)}. Defender's hand records: ${state.players[guardAttack.actor === "A" ? "B" : "A"].hand.map((id) => {
+    const card = deck.cards[state.cards[id]!.definition]!;
+    return `${id} ${card.name} (${card.type}): ${card.text || "no printed ability"}`;
+  }).join("; ") || "empty"}.` : "";
   const question = growing
     ? `Audit the proposed LRIG placement. ${growFocus} Confirm the printed Grow cost and the committed payment for this specific placement before approving it.`
     : operation === "turn" ? `Can ${meaning} now? Confirm the outgoing End obligations are complete, the incoming seat is correct, and the supplied phase is the first phase of the incoming turn.`
@@ -634,7 +641,9 @@ export async function verifyOperation(
     : operation === "phase"
       ? `Can the table leave ${state.phase} for ${args["value"]} now? Check the current turn's committed operations, phase-ending actions, and the resolution stack. Confirm that the required window and effects are complete and that the proposed phase follows under the rules.`
     : operation === "control"
-    ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${chooserFocus} Confirm the chooser, timing and presence of required options. If this is a phase window, inspect COMMITTED IN THIS PHASE for a closing pass or completed once-only phase action in this exact window. A closing pass remains in effect after consume. If the phase window already closed, stop. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
+    ? guardAttack && args["scope"] === "frame"
+      ? `Audit Guard for seat ${args["actor"]}. Offered actions: ${args["intents"]}. ${guardEvidence} Confirm the attacker is Down and the defender has not answered for this exact attack. An earlier pass in a different phase does not answer Guard. A pass or decline is sufficient when the defender has no card with Guard. Offer guard when the defender can legally use one.`
+      : `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${chooserFocus} Confirm the chooser, timing and presence of required options. If this is a phase window, inspect COMMITTED IN THIS PHASE for a closing pass or completed once-only phase action in this exact window. A closing pass remains in effect after consume. If the phase window already closed, stop. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
       ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed phase transition after the pass proves that declaration is complete, even when the incoming phase belongs to another seat. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${state.phase === "Setup" && closesFrame

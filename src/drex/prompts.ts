@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v38";
+export const promptVersion = "wixoss-table-v39";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
