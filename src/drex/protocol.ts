@@ -243,7 +243,7 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask, exclud
     ? ` Current counts: A.hand ${state.players.A.hand.length}, B.hand ${state.players.B.hand.length}, A.life ${state.players.A.life.length}, B.life ${state.players.B.life.length}. Compare with recorded mulligans and actual transfers before dealing more cards.`
     : "";
   const combatWindow = ["PreAttack", "Defense", "SigniAttack", "LrigAttack"].includes(state.phase)
-    ? ` ${combatWindowFocus}` : "";
+    ? ` Current combat step: ${state.phase}. Turn player: ${state.active}. Current declaration: ${JSON.stringify(state.declaration)}. ${combatWindowFocus}` : "";
   const operation = await ask(selectOperationPrompt + pending + setup + combatWindow
     + " Before opening a phase window, check committed actions in this phase. If its closing pass or once-only phase action already resolved, advance phase after its pending work. " + frameFocus, choices) as Operation;
   const parameter = (name: string, options: Choices, detail = "") =>
@@ -636,7 +636,7 @@ export async function verifyOperation(
     : operation === "control"
     ? `Audit the proposed window for seat ${args["actor"]} on turn ${state.turn} in ${state.phase}. Offered actions: ${args["intents"]}. ${chooserFocus} Confirm the chooser, timing and presence of required options. If this is a phase window, inspect COMMITTED IN THIS PHASE for a closing pass or completed once-only phase action in this exact window. A closing pass remains in effect after consume. If the phase window already closed, stop. A pending Life Burst must offer both use and decline. Read committed responses for the exact window. The next API call handles the player's selection.${args["scope"] === "match" && ["PreAttack", "Defense"].includes(state.phase) ? ` ${combatWindowFocus}` : ""}${state.phase === "Ener" && args["scope"] === "match" ? " Staging a card set does not use the Ener Charge. If the turn player has an eligible card and has not yet charged or passed, offer charge and pass." : ""}`
     : operation === "consume"
-      ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
+      ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed phase transition after the pass proves that declaration is complete, even when the incoming phase belongs to another seat. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${state.phase === "Setup" && closesFrame
       ? "Review each saved mulligan separately. Empty selections count as keeps. Multiple completed frames may close together when the current declaration is preserved or its own work is also complete."
       : ""} ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
