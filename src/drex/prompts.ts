@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v12";
+export const promptVersion = "wixoss-table-v14";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -33,7 +33,9 @@ Check each declaration against committed operations in chronological order. Retu
 
 export const refreshFocus = `Refresh can span several operations. Read the top refresh frame and committed operations. Transfer Trash into Main Deck shuffled and face down. If already transferred, continue even though Main Deck is now nonempty: move one available Life Cloth directly to Trash face up, update the refresh counter, then close the frame. This transfer does not trigger Life Burst. Follow the turn rules after Refresh.`;
 
-export const selectOperationPrompt = "Which physical operation addresses the earliest still-unresolved requirement? Compare the active source's full printed text and any active abilities with the declaration, frame and committed operations. Continue remaining clauses after a choice, and clean up only after all applicable clauses have been handled. Choose one operation.";
+export const attackWindows = "Read the committed pass declarations since entry into this Attack step. Pass closes the current seat's window. After the turn player passes PreAttack, advance to Defense before offering the opponent a window. After the opponent passes Defense, advance to SigniAttack. If both seats already passed these opportunities, continue to SigniAttack without asking either seat again.";
+
+export const selectOperationPrompt = "Which physical operation addresses the earliest still-unresolved requirement? Compare the active source's full printed text and any active abilities with the declaration, frame and committed operations. Acknowledge an applied declaration before opening the next unrelated player window. Continue remaining clauses after a choice, and clean up only after all applicable clauses have been handled. Choose one operation.";
 
 export const auditCompletionPrompt = "Classify the first outstanding obligation belonging to FRAMES TO CHECK that must finish before the proposed cleanup. Match each listed frame's actor, saved declaration and source text to its own committed results. Follow every instruction in a compound sentence. An earlier result cannot satisfy a later result affecting a different card or value. Account for a result skipped due to inapplicability, impossibility or a legal choice. Later phase work may remain after a completed frame closes. Use halt if the evidence leaves completion undetermined.";
 

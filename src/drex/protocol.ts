@@ -21,7 +21,7 @@ const actionText: Record<Intent, string> = {
   cast: "Declare use of a Spell or PIECE.",
   ability: "Declare an Action ability of a card on the board.",
   retire: "In the player's own Main Phase, declare their once-per-turn simultaneous Retire of one to three SIGNI currently on their field.",
-  attack: "Declare an attack with one of your field cards.",
+  attack: "Name one eligible upped attacker in the current SigniAttack or LrigAttack step.",
   guard: "Choose a card from hand to Guard.",
   burst: "Use the revealed card's Life Burst.",
   choose: "Submit a set of cards from the prepared candidates for the pending decision, such as discard, cost or targets.",
@@ -287,12 +287,13 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       const evidence: Partial<Record<Intent, string>> = {
         grow: `Check Center Grow and Assist Grow separately. Center Grow is in Grow phase. For Assist Grow, compare printed timing, cost, current top LRIG of the matching type and Center level. Current top LRIGs followed by LRIG Deck records: ${lrigEvidence}.`,
         retire: `This seat's SIGNI on the field: ${signiEvidence}. Use committed operations, saved declarations and marks to check whether Retire has already been used this turn. Consider the effect of Retire even when field Level equals Limit.`,
-        choose: `Staged candidates: ${JSON.stringify(state.offeredSelection)}. Decide whether the selected seat needs to submit this card selection next.`,
+        attack: `An attack declaration names one attacker, even when a list is staged. Current SIGNI: ${signiEvidence}. A match-scoped SigniAttack window should offer attack if it has at least one eligible upped SIGNI. A match-scoped LrigAttack window uses the active Center LRIG. Staged candidates restrict which card can be named.`,
+        choose: `Staged candidates: ${JSON.stringify(state.offeredSelection)}. Omit generic choose when this staged list supplies parameters for a named action available in the phase, such as attack. Offer choose for a pending card-selection decision where no named action expresses the declaration.`,
       };
       const options = await ask.each(Object.fromEntries(intents
         .filter((intent) => intent !== "choose" || state.offeredSelection)
         .map((intent) => [intent, {
-          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Only offer a printed mode in its mode decision window. ${evidence[intent] ?? ""}`,
+          question: `${window} Should this exact window offer ${intent}? ${actionText[intent]} To offer it, identify at least one legal declaration from the rules, printed use timing, and live table. Use specific intents for phase actions, even if candidate cards were staged. Use choose for card selections inside a resolution. Only offer a printed mode in its mode decision window. ${evidence[intent] ?? ""}`,
           choices: {
             offer: "There is at least one rules-legal declaration of this type in this window, with any required inputs available.",
             omit: "This declaration type has no legal instance in this window.",
@@ -459,7 +460,7 @@ export async function verifyOperation(
   const question = operation === "control"
     ? `Audit this decision-window transition. Confirm the selected actor, scope, exact intents, current phase, and any offered selection. Opening a legal player window is an intermediate table step. It does not resolve the player's choice. Accept it when the prior declaration is complete and the window is the next required step. ${auditOperationPrompt}`
     : operation === "consume"
-      ? "Can the CURRENT TABLE declaration be acknowledged now? Compare the exact current declaration (not a saved parent declaration) with committed operations. If its requested result was already applied, acknowledge it. This leaves all frames and staged candidates intact, so work remaining in a parent frame does not prevent acknowledging this declaration."
+      ? "Has the exact CURRENT TABLE declaration already completed its own job? Compare it with committed operations in order. A pass is complete once it closed its decision window. A committed transition to the next step after the pass is evidence of that closure. The next player action, staged candidate set and parent frame can still be pending. Acknowledge the completed declaration and preserve that later work."
     : `Proposed: ${meaning}. ${auditOperationPrompt} A staged candidate list is evidence of a pending player choice. Check whether this operation applies a recorded declaration or instead makes the player's decision on their behalf.`;
   const answer = await drex.decide(
     facts,

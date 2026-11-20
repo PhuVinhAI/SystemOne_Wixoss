@@ -31,10 +31,11 @@ export class GameSession {
   #log: Entry[] = [];
   #last: string[] = [];
 
-  constructor(private readonly deck: Deck, private readonly drex: DrexClient) {
-    this.#state = createState(deck);
+  constructor(private readonly deck: Deck, private readonly drex: DrexClient, saved?: { initial: State; state: State; log: Entry[] }) {
+    this.#state = saved?.state ?? createState(deck);
     assertBoard(this.#state);
-    this.#initial = this.#state;
+    this.#initial = saved?.initial ?? this.#state;
+    this.#log = saved?.log ?? [];
   }
 
   get id() { return this.#state.id; }

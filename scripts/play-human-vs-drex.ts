@@ -1,15 +1,39 @@
-import { appendFile, mkdir } from "node:fs/promises";
+import { appendFile, mkdir, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { createInterface } from "node:readline";
 import { loadD01 } from "../src/catalog/d01.js";
-import { DrexClient } from "../src/drex/client.js";
+import { DrexClient, model } from "../src/drex/client.js";
+import { promptVersion } from "../src/drex/prompts.js";
 import { GameSession, type MatchUpdate } from "../src/game/session.js";
 import { submitSchema } from "../src/domain/types.js";
 
-const session = new GameSession(await loadD01(), DrexClient.fromEnvironment());
+const deck = await loadD01();
+const [mode, matchId, ...extraArgs] = process.argv.slice(2);
+if (mode !== undefined && (mode !== "--resume" || !matchId || !/^[\da-f]{8}(?:-[\da-f]{4}){3}-[\da-f]{12}$/i.test(matchId) || extraArgs.length)) {
+  throw new Error("Cách tiếp tục: npm run play -- --resume <ID trận>.");
+}
+const saved = matchId ? await readSavedMatch(matchId) : undefined;
+const session = new GameSession(deck, DrexClient.fromEnvironment(), saved);
 await mkdir("logs", { recursive: true });
 const log = resolve("logs", session.id + ".jsonl");
-let written = 0;
+let written = saved?.log.length ?? 0;
+
+async function readSavedMatch(id: string) {
+  type Replay = ReturnType<GameSession["replay"]>;
+  const lines = await readFile(resolve("logs", id + ".jsonl"), "utf8");
+  const records = lines.trim().split(/\r?\n/).map((line) => JSON.parse(line)) as Array<
+    Partial<Pick<Replay, "matchId" | "deckId" | "model" | "initial">> & { snapshot?: Replay["state"] } & Partial<Replay["log"][number]>
+  >;
+  const header = records[0];
+  const state = records.at(-1)?.snapshot;
+  const entries = records.filter((entry) => typeof entry.action === "string") as Replay["log"];
+  if (!header?.initial || header.matchId !== id || header.initial.id !== id || header.deckId !== deck.id
+    || header.model !== model || !state || state.id !== id || state.control !== "A" || state.status !== "active"
+    || entries.at(-1)?.revision !== state.revision) {
+    throw new Error("Chỉ tiếp tục ván của đúng deck và model ở snapshot đã lưu đang chờ A.");
+  }
+  return { initial: header.initial, state, log: entries };
+}
 async function save() {
   const replay = session.replay(written);
   const entries = replay.log;
@@ -29,6 +53,7 @@ function display(update: MatchUpdate) {
 }
 
 console.log(`Trận ${session.id} | A do người chơi điều khiển, B do Drex điều khiển. Log: ${log}`);
+if (saved) await appendFile(log, JSON.stringify({ resumedAt: saved.state.revision, promptVersion, snapshot: saved.state }) + "\n", "utf8");
 let update = await session.advance(undefined, report);
 await save();
 display(update);

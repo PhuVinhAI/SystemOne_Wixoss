@@ -9,6 +9,7 @@ Cần Node.js 22 trở lên. Chạy `npm ci` rồi khai báo `NACE_API_KEY` tron
 - `npm run check` kiểm tra TypeScript.
 - `npm run start` chạy Fastify tại `127.0.0.1:3000`. Có thể đặt `PORT` và `WIXOSS_UI_ORIGIN` nếu frontend chạy ở origin riêng.
 - `npm run play` mở bàn D01, sau đó chờ người chơi nhập từng quyết định của A. Ví dụ: `mulligan A12 A19`, `play A12 signiLeft`, `choose A9 A23`, `pass`. Dùng các ID và lựa chọn từ bàn hiện tại. `npm run test:wixoss` gọi cùng runner live.
+- `npm run play -- --resume <ID trận>` mở lại snapshot cục bộ của ván đang chờ A. Đóng runner cũ trước khi mở lại. Ván đã dừng hoặc đã kết thúc giữ nguyên kết quả.
 
 ### Ranh giới vận hành
 
