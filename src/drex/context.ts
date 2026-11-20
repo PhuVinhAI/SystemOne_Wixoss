@@ -1,7 +1,7 @@
 import { seats, zones, type Deck, type Seat, type State } from "../domain/types.js";
 import { displayedPower, lrigSlots } from "../game/board.js";
 import { canSeeCard, visible } from "../game/view.js";
-import { attackFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
+import { attackFocus, castFocus, phaseWindows, playerRole, refreshFocus, setupFocus, setupProgress, tableRole } from "./prompts.js";
 
 export function context(state: State, deck: Deck, viewer: "table" | Seat, recent: string[]) {
   const definitions = new Set<string>();
@@ -80,10 +80,13 @@ export function context(state: State, deck: Deck, viewer: "table" | Seat, recent
   const focus = state.phase === "Setup" && viewer === "table" ? setupFocus + "\n" + setupProgress
     : viewer === "table" && state.frames.at(-1)?.kind === "refresh" ? refreshFocus
     : viewer === "table" ? phaseWindows : "";
+  const cast = viewer === "table" && (state.declaration?.intent === "cast" || state.frames.some(({ kind }) => kind === "cast"))
+    ? castFocus : "";
   return [
     viewer === "table" ? tableRole : playerRole,
     focus,
     combat,
+    cast,
     "<CURRENT_TABLE>\n" + JSON.stringify(info) + "\n" + board.join("\n") + "\n</CURRENT_TABLE>",
     viewer === "table" && sourceDefinitions.size ? "ACTIVE SOURCE RECORDS\n" + sources.filter(({ isSource }) => isSource).map(({ text }) => text).join("\n") : "",
     recent.length ? "COMMITTED OPERATIONS (oldest first)\n" + recent.join("\n") : "",

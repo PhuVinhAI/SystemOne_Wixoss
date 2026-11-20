@@ -1,4 +1,4 @@
-export const promptVersion = "wixoss-table-v21";
+export const promptVersion = "wixoss-table-v22";
 
 export const tableRole = `<ROLE>
 You operate the WIXOSS table. Select one physical operation per step, with explicit arguments. The host mutates the table exactly as directed. Use the supplied rules, printed card records, FAQ, current snapshot and committed operations as the complete evidence for the decision. A player declaration is an input, not an executed operation.
@@ -40,6 +40,8 @@ export const phaseWindows = "Read the current turn and phase before using any re
 export const combatWindowFocus = "Check the current combat phase and its seat before opening a match-scoped window. PreAttack belongs to the active seat, Defense to the opponent, and SigniAttack and LrigAttack to the active seat. After a recorded closing pass, choose phase before opening the next window, even if consume has cleared that pass.";
 
 export const attackFocus = "For this attack, locate the declared attacker and its opposing slot using the lane pairs. Use committed operations after this exact declaration to distinguish the attacker turning Down, triggers, battle, damage, and cleanup. After declaration and triggers, an ordinary SIGNI facing an occupied lane resolves a battle. If its Power meets or exceeds the defender's, move that defender to its owner's Ener as Vanish. Otherwise both stay. Only a valid rule or effect such as Assassin permits direct damage through an occupied lane, and a battle Vanish by itself never deals direct damage. When damage applies and Life Cloth remain, take from the defending seat's life pile into that seat's check zone face up. Use the latest committed result to avoid resolving the same attack twice.";
+
+export const castFocus = "A Spell or PIECE cast has distinct steps. Move the declared source face up to its owner's Check zone when used. Read committed costs for that declaration and pay only the unpaid cost before selecting targets. Resolve each applicable printed clause from Check. An impossible target may leave no effect, but the used source still moves from Check to its owner's Trash (Spell) or LRIG Trash (PIECE). Close the cast frame only after that cleanup. Moving a payment card into Trash does not move or finish the cast source.";
 
 export const selectOperationPrompt = "Which physical operation addresses the earliest still-unresolved requirement? Compare the active source's full printed text and any active abilities with the declaration, frame and committed operations. For an attack, check the exact attacker and both corresponding lanes before choosing battle, Guard, damage, or cleanup. Continue remaining clauses after a choice, and clean up only after all applicable operations have been handled. Choose one operation.";
 
