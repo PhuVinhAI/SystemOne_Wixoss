@@ -340,11 +340,16 @@ export async function chooseOperation(state: State, deck: Deck, ask: Ask) {
       args["value"] = await parameter("new counter value", list(range(0, 51)), `Counter ${args["actor"]}.${args["name"]}.`);
       break;
     case "phase": args["value"] = await parameter("next phase", list(phases)); break;
-    case "push":
+    case "push": {
       args["frame"] = await parameter("resolution frame kind", list(frames));
-      args["actor"] = await parameter("controller", list(seats), `Opening ${args["frame"]} frame.`);
+      const frameActorChoices = state.phase === "Setup" && state.declaration?.intent === "mulligan"
+        ? { [state.declaration.actor]: `The current mulligan declaration belongs to ${state.declaration.actor}; save it in this frame.` }
+        : list(seats);
+      args["actor"] = await parameter("controller", frameActorChoices,
+        `Opening ${args["frame"]} frame.${state.declaration ? ` Current declaration actor: ${state.declaration.actor}.` : ""}`);
       args["source"] = await parameter("source card or none", { none: "No source card", ...known }, `Opening ${args["frame"]} frame for ${args["actor"]}.`);
       break;
+    }
     case "step": args["value"] = await parameter("new frame step", list(range(0, 16))); break;
     case "mark":
     case "unmark":
